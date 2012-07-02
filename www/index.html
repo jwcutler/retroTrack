@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>RetroTrack Demonstration</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="retroTrack.css" />
+	<script src="predictlib_retro.js" type="text/javascript"></script>
+	<script src="retroTrack.js" type="text/javascript"></script>
+	<script type="text/javascript" src="jquery.js"></script>  
+	<script type="text/javascript" src="retroTrack_display.js"></script>
+</head>
+<body onload="load()">
+	<!-- Satellite Selection Menu -->
+	<div id="select_sat" style="width: 860px; height: 2px;"/> 
+		<div id='position8'><p>Select a satellite:</p>
+			<table id="table_sats" border="0">
+				<tbody id="table_sats2">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<!-- Tracking Controls -->
+	<div id="select_controls" style="width: 860px; height: 2px;"/> 
+		<div id='position9'>
+		<table id='table_controls' style="margin-left: auto; margin-right: 0; spacing:2">
+			<tbody id="table_controls2">
+			<tr>
+				<td class='cb-title' id='pb-menu'>Track Controls</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class='cb-cell-active' id='cb-sun' onclick='Orb.toggleFeature("sun",this)'>Sun</td>
+				<td>&nbsp;</td>
+				<td class='cb-cell-active' id='cb-tracks' onclick='Orb.toggleFeature("tracks")'>Tracks</td>
+				<td>&nbsp;</td>
+				<td class='cb-cell-active' id='cb-multi' onclick='Orb.toggleFeature("multi")'>Multi Sats</td>
+				<td>&nbsp;</td>
+				<td class='cb-cell-active' id='cb-foot' onclick='Orb.toggleFeature("foot")'>Footprint</td>
+			</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+	
+	<!-- Satellite Information Container -->
+	<div id="position0" style="width: 860px; height: 24px;"/> 
+		<table id='pb' style="background:#000000;width: 860px; border-collapse: collapse; margin-left: 0; margin-right: auto;">
+			<tr>
+				<td class='pb-cell' id='pb-menu-sat' width='24'><pbm>&#9660;</pbm><td>
+				<td class='pb-name' id='pb-name' align='left'><div class='position8'>-</div><td>
+				<td class='pb-cell' id='pb-orbit'>-<td>
+				<td class='pb-cell' id='pb-lat'>-<td>
+				<td class='pb-cell' id='pb-lon'>-<td>
+				<td class='pb-cell' id='pb-alt'>-<td>
+				<td class='pb-cell' id='pb-time' align='right'>-<td>
+				<td class='pb-cell' id='pb-gs' width='24' alight='right'><img height='16' border='0' src='images/gs_select2.gif'><td>
+				<td class='pb-cell' id='pb-menu-controls' width='24' align='right'><pbm>&#9660;</pbm><td>
+			</tr>
+		</table>
+	</div>
+	
+	<!-- Main Canvas Container -->
+	<div id="position1" style="width: 860px; height: 430px;"> 
+		<canvas id="canvas" width="860px" height="430px"></canvas>
+	</div>
+	
+	<!-- Satellite Information & Controls Container -->
+	<div id="positionGS" style="width: 860px; height: 24px;"/> 
+		<table id='gs' style="background:#000000;width: 860px; border-collapse: collapse; 
+		                      margin-left: 0; margin-right: auto;">
+			<tr>
+				<td class='pb-cell' id='' width='24'><pbm>&#9660;</pbm></td>
+				<td class='pb-name' id='' align='left'>GS</td>
+				<td class='pb-cell' id='gs_lat'>-</td>
+				<td class='pb-cell' id='gs_lon'>-</td>
+				<td class='pb-cell' id='gs_az'>-</td>
+				<td class='pb-cell' id='gs_el'>-</td>
+				<td class='pb-cell' id='gs_range'>-</td>
+			</tr>
+		<tbody>
+		</tbody>
+		</table>
+	</div>
+	
+	<!-- Notices & Copy Right Information -->
+	<div style="font-size: 10px;margin-top: 20px;">
+		<span style="color: red;">Disclaimer: This script is currently in an ALPHA state and may behave unexpectedly.</span>
+		<br />
+		Copyright &copy; 2012 James W. Cutler and <a href="http://exploration.engin.umich.edu/">MXL</a>
+	</div>
+</body>
+</html>
