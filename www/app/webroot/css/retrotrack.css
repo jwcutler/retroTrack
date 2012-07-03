@@ -1,0 +1,93 @@
+/*
+retroTrack Primary CSS File
+*/
+
+/* Page Styles */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Arial",sans-serif;
+	font-size: 12px;
+}
+
+body:before {
+    /* Opera fix for CSS sticky footer */
+    content: "";
+    height: 100%;
+    float: left;
+    width: 0;
+    margin-top: -32767px;
+}
+
+/* Text Styles */
+a:link {color: #000000; text-decoration: underline;}
+a:visited {color: #000000; text-decoration: underline;}
+a:hover {color: #666666; text-decoration: none;}
+a:active {color: #666666; text-decoration: none;}
+
+.form_header {
+    color: #224479;
+    font-size: 20px;
+}
+
+.login_form_label {
+    color: #666666;
+    font-size: 16px;
+}
+
+/* Layout Styles */
+#wrap {
+    min-height: 100%;
+}
+
+#content_container {
+    overflow: auto;
+    padding-bottom: 56px; /* Footer height + borders + vertical margins/padding */
+    width: 70%;
+    min-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+}
+
+#footer {
+    position: relative;
+    margin-top: -56px; /* Negation of footer height + borders + vertical margins/padding */
+    height: 50px;
+    clear: both;
+    width: 70%;
+    min-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px dotted #cccccc;
+    border-width: 2px 0px 0px 0px;
+    color: #666666;
+	font-size: 12px;
+    padding-top: 4px;
+}
+
+#footer_left {
+    width: 130px;
+    float: left;
+}
+
+#footer_middle {
+    width: 200px;
+    float: left;
+}
+
+#footer_right {
+    width: 250px;
+    float: right;
+}
+
+#login_form {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
