@@ -59,8 +59,9 @@ CREATE TABLE tles (
     mean_motion varchar(50) NOT NULL,
     revs int NOT NULL,
     checksum_l2 int NOT NULL,
+    raw_l1 text NOT NULL,
+    raw_l2 text NOT NULL,
     created_on datetime NOT NULL,
-    last_updated datetime NOT NULL,
     PRIMARY KEY(`id`)
 );
 
@@ -68,7 +69,18 @@ CREATE TABLE admins (
     id int AUTO_INCREMENT,
     username VARCHAR(50),
     password VARCHAR(50),
-    created_on datetime NOT NULL,
-    last_updated datetime NOT NULL,
     PRIMARY KEY(`id`)
 );
+
+CREATE TABLE configurations (
+    id int AUTO_INCREMENT,
+    name varchar(50) NOT NULL,
+    value text,
+    PRIMARY KEY (`id`)
+);
+
+/*
+Load in initial data.
+*/
+INSERT INTO `admins` (`id`, `username`, `password`) VALUES (1, 'admin', '194b948cb2a8834e39f540514cb7ce430efdba60');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('tle_last_update', '0');
