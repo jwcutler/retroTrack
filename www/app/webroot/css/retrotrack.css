@@ -132,3 +132,21 @@ h3 {
     border-radius: 2px;
     -moz-border-radius: 2px;
 }
+
+.form_error {
+    border-color: #B94A48 !important;
+}
+
+.form_errors ul {
+    margin-left: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.form_errors li {
+    padding-left: 20px;
+    background-image: url(images/bullet_error.png);
+    background-repeat: no-repeat;
+    background-position: 0 1px;;
+    color: #D61C1C;
+}

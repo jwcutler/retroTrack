@@ -25,7 +25,7 @@
             <li <?php if($this->params['controller']=='group'){echo "class=\"active\"";} ?>>
                 <a href="/admin/group">Satellite Groups</a>
             </li>
-            <li <?php if($this->params['controller']=='stations'){echo "class=\"active\"";} ?>>
+            <li <?php if($this->params['controller']=='station'){echo "class=\"active\"";} ?>>
                 <a href="/admin/station">Ground Stations</a>
             </li>
             <li class="divider"></li>

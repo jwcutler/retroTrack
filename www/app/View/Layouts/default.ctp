@@ -7,6 +7,8 @@
     <?php echo $this->Html->css('bootstrap.min.css'); ?>
     <?php echo $this->Html->script('jquery-1.7.2.min'); ?>
     <?php echo $this->Html->script('bootstrap.min.js'); ?>
+    <?php echo $this->Html->script('jquery.validate.min.js'); ?>
+    <?php echo $this->Html->script('additional-methods.min.js'); ?>
     <!--[if !IE 7]>
 	<style type="text/css">
 	    #wrap {display:table;height:100%}

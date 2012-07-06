@@ -21,14 +21,14 @@ $this->start('panel_content');
 				<tr>
 					<td width="26%"><?php echo $satellite['Satellite']['name']; ?></td>
 					<td width="37%"><?php echo $satellite['Satellite']['description']; ?></td>
-					<td width="37%"><a href="#" class="btn btn-mini btn-primary">Delete</a> <a href="#" class="btn btn-mini btn-primary">Edit</a></td>
+					<td width="37%"><a href="/admin/satellite/<?php echo $satellite['Satellite']['id']; ?>/delete" class="btn btn-mini btn-primary">Delete</a> <a href="/admin/satellite/<?php echo $satellite['Satellite']['id']; ?>/edit" class="btn btn-mini btn-primary">Edit</a></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
 	</table>
 <?php endif; ?>
 <div style="padding-top: 5px;">
-	<a href="/admin/satellite/add" class="btn btn-primary" style="text-decoration: none;">Add New Satellite</a>
+	<a href="/admin/satellite/add" class="btn btn-primary">Add New Satellite</a>
 </div>
 <?php
 $this->end();

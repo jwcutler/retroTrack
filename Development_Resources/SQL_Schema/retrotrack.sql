@@ -14,7 +14,7 @@ CREATE TABLE satellites (
 CREATE TABLE groups (
     id int AUTO_INCREMENT,
     name varchar(255) NOT NULL,
-    title varchar(255) NOT NULL,
+    description text,
     created_on datetime NOT NULL,
     updated_on datetime NOT NULL,
     PRIMARY KEY(`id`)
@@ -27,10 +27,12 @@ CREATE TABLE groups_satellites (
     PRIMARY KEY(`id`)
 );
 
-CREATE TABLE ground_stations (
+CREATE TABLE stations (
     id int AUTO_INCREMENT,
     longitude text NOT NULL,
     latitude text NOT NULL,
+    name varchar(50) NOT NULL,
+    description text,
     created_on datetime NOT NULL,
     updated_on datetime NOT NULL,
     PRIMARY KEY(`id`)
@@ -84,3 +86,12 @@ Load in initial data.
 */
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES (1, 'admin', '194b948cb2a8834e39f540514cb7ce430efdba60');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('tle_last_update', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('clock_period', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('map_update_period', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('default_ground_station', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('show_grid', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('show_sun', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_color', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('ground_station_color', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('eclipse_color', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_size', '0');
