@@ -56,10 +56,10 @@ class SatelliteController extends AppController {
                 
                 if ($save_satellite){
                     $this->Session->setFlash('The satellite has been added successfully.', 'default', array('class' => 'alert alert-success'));
-                    CakeLog::write('satellites', '[success] New satellite \''.$_POST['satellite_name'].'\' added.');
+                    CakeLog::write('admin', '[success] New satellite \''.$_POST['satellite_name'].'\' added.');
                 } else {
                     $this->Session->setFlash('An error occured while adding that satellite. Please try again.', 'default', array('class' => 'alert alert-error'));
-                    CakeLog::write('satellites', '[error] Error adding satellite \''.$_POST['satellite_name'].'\' added.');
+                    CakeLog::write('admin', '[error] Error adding satellite \''.$_POST['satellite_name'].'\' added.');
                 }
                 
                 $this->redirect(array('controller' => 'satellite', 'action' => 'index'));
@@ -101,9 +101,11 @@ class SatelliteController extends AppController {
             $delete_attempt = $this->Satellite->delete($this->params->id);
             if ($delete_attempt){
                 $this->Session->setFlash('Satellite \''.$satellite['Satellite']['name'].'\' successfully deleted.', 'default', array('class' => 'alert alert-success'));
+                CakeLog::write('admin', '[success] Satellite \''.$satellite['Satellite']['name'].'\' deleted.');
                 $this->redirect(array('controller' => 'satellite', 'action' => 'index', 'admin' => true));
             } else {
                 $this->Session->setFlash('There was an error deleting the \''.$satellite['Satellite']['name'].'\' satellite.', 'default', array('class' => 'alert alert-error'));
+                CakeLog::write('admin', '[success] Satellite \''.$satellite['Satellite']['name'].'\' could not be deleted.');
                 $this->redirect(array('controller' => 'satellite', 'action' => 'index', 'admin' => true));
             }
         } else {
@@ -147,9 +149,11 @@ class SatelliteController extends AppController {
             $edit_attempt = $this->Satellite->save($satellite_changes);
             if ($edit_attempt){
                 $this->Session->setFlash('Satellite \''.$satellite['Satellite']['name'].'\' successfully edited', 'default', array('class' => 'alert alert-success'));
+                CakeLog::write('admin', '[success] Satellite \''.$satellite['Satellite']['name'].'\' edited.');
                 $this->redirect(array('controller' => 'satellite', 'action' => 'index', 'admin' => true));
             } else {
                 $this->Session->setFlash('There was an error editing the \''.$satellite['Satellite']['name'].'\' satellite.', 'default', array('class' => 'alert alert-error'));
+                CakeLog::write('admin', '[success] Satellite \''.$satellite['Satellite']['name'].'\' could not be edited.');
                 $this->redirect(array('controller' => 'satellite', 'action' => 'index', 'admin' => true));
             }
         } else {

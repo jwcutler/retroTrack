@@ -11,11 +11,57 @@ App::import('model','Configuration');
 class Tle extends AppModel {
     var $name = 'Tle';
     
+    public function tle_json(){
+        /*
+        Generates a JSON representation of all TLE's.
+        
+        Returns:
+            A JSON string representing the TLE's.
+        */
+        
+        // Load the tle's
+        $tles = $this->find('all');
+        
+        // Assemble an array of TLE information
+        $tles_array = array();
+        foreach ($tles as $tle){
+            $temp_tle = array(
+                'id' => $tle['Tle']['id'],
+                'name' => $tle['Tle']['name'],
+                'satellite_number' => $tle['Tle']['satellite_number'],
+                'classification' => $tle['Tle']['classification'],
+                'launch_year' => $tle['Tle']['launch_year'],
+                'launch_number' => $tle['Tle']['launch_number'],
+                'launch_piece' => $tle['Tle']['launch_piece'],
+                'epoch_year' => $tle['Tle']['epoch_year'],
+                'epoch' => $tle['Tle']['epoch'],
+                'ftd_mm_d2' => $tle['Tle']['ftd_mm_d2'],
+                'std_mm_d6' => $tle['Tle']['std_mm_d6'],
+                'bstar_drag' => $tle['Tle']['bstar_drag'],
+                'element_number' => $tle['Tle']['element_number'],
+                'checksum_l1' => $tle['Tle']['checksum_l1'],
+                'inclination' => $tle['Tle']['inclination'],
+                'right_ascension' => $tle['Tle']['right_ascension'],
+                'eccentricity' => $tle['Tle']['eccentricity'],
+                'perigee' => $tle['Tle']['perigee'],
+                'mean_anomaly' => $tle['Tle']['mean_anomaly'],
+                'mean_motion' => $tle['Tle']['mean_motion'],
+                'revs' => $tle['Tle']['revs'],
+                'checksum_l2' => $tle['Tle']['checksum_l2']
+            );
+            
+            array_push($tles_array, $temp_tle);
+        }
+        
+        // Return the JSON
+        return json_encode($tles_array);
+    }
+    
     public function updateTles(){
         /*
         Loads & parses the specified TLE source and saves the entries into the database.
         
-        @returns:
+        Returns:
             TRUE on success.
             FALSE on failure.
         */

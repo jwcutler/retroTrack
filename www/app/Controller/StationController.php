@@ -55,10 +55,10 @@ class StationController extends AppController {
                 
                 if ($save_station){
                     $this->Session->setFlash('The station has been added successfully.', 'default', array('class' => 'alert alert-success'));
-                    CakeLog::write('stations', '[success] New station \''.$_POST['station_name'].'\' added.');
+                    CakeLog::write('admin', '[success] New station \''.$_POST['station_name'].'\' added.');
                 } else {
                     $this->Session->setFlash('An error occured while adding that station. Please try again.', 'default', array('class' => 'alert alert-error'));
-                    CakeLog::write('stations', '[error] Error adding station \''.$_POST['station_name'].'\' added.');
+                    CakeLog::write('admin', '[error] Error adding station \''.$_POST['station_name'].'\' added.');
                 }
                 
                 $this->redirect(array('controller' => 'station', 'action' => 'index'));
@@ -100,9 +100,11 @@ class StationController extends AppController {
             $delete_attempt = $this->Station->delete($this->params->id);
             if ($delete_attempt){
                 $this->Session->setFlash('Ground station \''.$station['Station']['name'].'\' successfully deleted.', 'default', array('class' => 'alert alert-success'));
+                CakeLog::write('admin', '[success] Ground station \''.$station['Station']['name'].'\' deleted.');
                 $this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
             } else {
                 $this->Session->setFlash('There was an error deleting the \''.$station['Station']['name'].'\' station.', 'default', array('class' => 'alert alert-error'));
+                CakeLog::write('admin', '[error] Ground station \''.$station['Station']['name'].'\' could not be deleted.');
                 $this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
             }
         } else {
@@ -156,9 +158,11 @@ class StationController extends AppController {
                 $edit_attempt = $this->Station->save($station_changes);
                 if ($edit_attempt){
                     $this->Session->setFlash('Ground station \''.$station['Station']['name'].'\' successfully edited', 'default', array('class' => 'alert alert-success'));
+                    CakeLog::write('admin', '[success] Ground station \''.$station['Station']['name'].'\' edited.');
                     $this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
                 } else {
                     $this->Session->setFlash('There was an error editing the \''.$station['Station']['name'].'\' ground station.', 'default', array('class' => 'alert alert-error'));
+                    CakeLog::write('admin', '[error] Ground station \''.$station['Station']['name'].'\' could not be edited.');
                     $this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
                 }
             }

@@ -150,3 +150,92 @@ h3 {
     background-position: 0 1px;;
     color: #D61C1C;
 }
+
+/* retroTrack Display Styles */
+#tracker_container {
+    width: 860px;
+    margin: 0px auto 0px auto;
+}
+
+#top_menu {
+    background-color: #071831;
+    color: white;
+    padding: 5px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#top_controls li, #bottom_menu li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+
+#top_menu a, #bottom_menu a {
+    cursor: pointer;
+}
+
+#top_menu a:hover, #bottom_menu a:hover {
+    color: #F6DC00;
+}
+
+#top_menu a:after {
+    content: " ▼";
+}
+
+#top_menu a.active, #bottom_menu a.active {
+    color: #F6DC00;
+}
+
+#top_menu a.active:after {
+    content: " ▲";
+}
+
+.menu_pane {
+    display: none;
+    background-color: #eeeeee;
+    padding: 5px;
+    border: 1px solid #071831;
+    border-width: 0px 1px 0px 1px;
+}
+
+.menu_pane_header {
+    font-size: 10px;
+}
+
+#bottom_menu {
+    background-color: #071831;
+    color: white;
+    padding: 5px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+#bottom_menu a:after {
+    content: " ▲";
+}
+
+#bottom_menu a.active:after {
+    content: " ▼";
+}
+
+.menu_list {
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.menu_list li {
+    display: inline;
+    padding: 3px;
+    border: 1px solid #cccccc;
+    margin-right: 5px;
+    background-color: #DBD9D9;
+    cursor: pointer;
+}
+
+.menu_list li:hover {
+    background-color: #C0BFBF;
+}
+
+.menu_list li.ui-selected {
+    background-color: #C0BFBF;
+}
+

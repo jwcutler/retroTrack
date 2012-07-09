@@ -62,10 +62,10 @@ class GroupController extends AppController {
                 
                 if ($save_group){
                     $this->Session->setFlash('The group has been added successfully.', 'default', array('class' => 'alert alert-success'));
-                    CakeLog::write('groups', '[success] New group \''.$_POST['group_name'].'\' added.');
+                    CakeLog::write('admin', '[success] New group \''.$_POST['group_name'].'\' added.');
                 } else {
                     $this->Session->setFlash('An error occured while adding that group. Please try again.', 'default', array('class' => 'alert alert-error'));
-                    CakeLog::write('groups', '[error] Error adding group \''.$_POST['group_name'].'\' added.');
+                    CakeLog::write('admin', '[error] Error adding group \''.$_POST['group_name'].'\' added.');
                 }
                 
                 $this->redirect(array('controller' => 'group', 'action' => 'index'));
@@ -107,9 +107,11 @@ class GroupController extends AppController {
             $delete_attempt = $this->Group->delete($this->params->id);
             if ($delete_attempt){
                 $this->Session->setFlash('Group \''.$group['Group']['name'].'\' successfully deleted.', 'default', array('class' => 'alert alert-success'));
+                CakeLog::write('admin', '[success] Group \''.$group['Group']['name'].'\' deleted.');
                 $this->redirect(array('controller' => 'group', 'action' => 'index', 'admin' => true));
             } else {
                 $this->Session->setFlash('There was an error deleting the \''.$group['Group']['name'].'\' group.', 'default', array('class' => 'alert alert-error'));
+                CakeLog::write('admin', '[error] Group \''.$group['Group']['name'].'\' could not be deleted.');
                 $this->redirect(array('controller' => 'group', 'action' => 'index', 'admin' => true));
             }
         } else {
@@ -179,10 +181,10 @@ class GroupController extends AppController {
                 
                 if ($edit_group){
                     $this->Session->setFlash('The group has been edited successfully.', 'default', array('class' => 'alert alert-success'));
-                    CakeLog::write('groups', '[success] The group \''.$_POST['group_name'].'\' has been edited.');
+                    CakeLog::write('admin', '[success] The group \''.$_POST['group_name'].'\' has been edited.');
                 } else {
                     $this->Session->setFlash('An error occured while editing that group. Please try again.', 'default', array('class' => 'alert alert-error'));
-                    CakeLog::write('groups', '[error] Error editing the group \''.$_POST['group_name'].'\'.');
+                    CakeLog::write('admin', '[error] Error editing the group \''.$_POST['group_name'].'\'.');
                 }
                 
                 $this->redirect(array('controller' => 'group', 'action' => 'index'));

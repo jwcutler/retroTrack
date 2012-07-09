@@ -9,71 +9,64 @@ $this->start('panel_content');
 	<div class="control-group">
 		<label class="control-label" for="clock_period">Clock Period</label>
 		<div class="controls">
-			<input type="text" name="clock_period" value="<?php echo $clock_period['Configuration']['value']; ?>" />
-			<input type="hidden" name="clock_period_id" value="<?php echo $clock_period['Configuration']['id']; ?>" />
+			<input type="text" name="config[<?php echo $clock_period['Configuration']['id']; ?>]" value="<?php echo $clock_period['Configuration']['value']; ?>" />
 			<p class="help-block">How frequently satellite positions should be recalculated.</p>
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="map_update_period">Map Update Period</label>
 		<div class="controls">
-			<input type="text" name="map_update_period" value="<?php echo $map_update_period['Configuration']['value']; ?>" />
-			<input type="hidden" name="map_update_period_id" value="<?php echo $map_update_period['Configuration']['id']; ?>" />
+			<input type="text" name="config[<?php echo $map_update_period['Configuration']['id']; ?>]" value="<?php echo $map_update_period['Configuration']['value']; ?>" />
 			<p class="help-block">How frequently the map should be redrawn.</p>
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="default_ground_station">Default Ground Station</label>
 		<div class="controls">
-			<select name="default_ground_station">
+			<select name="config[<?php echo $default_ground_station['Configuration']['id']; ?>]">
 				<?php foreach($stations as $station): ?>
 					<option value="<?php echo $station['Station']['id']; ?>" <?php if($default_ground_station['Configuration']['value']==$station['Station']['id']){echo "selected='selected'";} ?>><?php echo $station['Station']['name']; ?></option>
 				<?php endforeach;?>
 			</select>
-			<input type="hidden" name="default_ground_station_id" value="<?php echo $default_ground_station['Configuration']['id']; ?>" />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="satellite_size">Satellite Size</label>
 		<div class="controls">
-			<input type="text" name="satellite_size" value="<?php echo $satellite_size['Configuration']['value']; ?>" />
-			<input type="hidden" name="satellite_size_id" value="<?php echo $satellite_size['Configuration']['id']; ?>" />
+			<input type="text" name="config[<?php echo $satellite_size['Configuration']['id']; ?>]" value="<?php echo $satellite_size['Configuration']['value']; ?>" />
 			<p class="help-block">Edge length of satellite indicator.</p>
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="satellite_color">Satellite Color</label>
 		<div class="controls">
-			<input type="text" name="satellite_color" value="<?php echo $satellite_color['Configuration']['value']; ?>" />
-			<input type="hidden" name="satellite_color_id" value="<?php echo $satellite_color['Configuration']['id']; ?>" />
+			<input type="text" name="config[<?php echo $satellite_color['Configuration']['id']; ?>]" value="<?php echo $satellite_color['Configuration']['value']; ?>" />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="ground_station_color">Ground Station Color</label>
 		<div class="controls">
-			<input type="text" name="ground_station_color" value="<?php echo $ground_station_color['Configuration']['value']; ?>" />
-			<input type="hidden" name="ground_station_color_id" value="<?php echo $ground_station_color['Configuration']['id']; ?>" />
+			<input type="text" name="config[<?php echo $ground_station_color['Configuration']['id']; ?>]" value="<?php echo $ground_station_color['Configuration']['value']; ?>" />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="eclipse_color">Eclipse Color</label>
 		<div class="controls">
-			<input type="text" name="eclipse_color" value="<?php echo $eclipse_color['Configuration']['value']; ?>" />
-			<input type="hidden" name="eclipse_color_id" value="<?php echo $eclipse_color['Configuration']['id']; ?>" />
+			<input type="text" name="config[<?php echo $eclipse_color['Configuration']['id']; ?>]" value="<?php echo $eclipse_color['Configuration']['value']; ?>" />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="show_grid">Show Grid Overlay</label>
 		<div class="controls">
-			<input type="checkbox" name="show_grid" value="<?php echo $show_grid['Configuration']['value']; ?>" <?php if($show_grid['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
-			<input type="hidden" name="show_grid_id" value="<?php echo $show_grid['Configuration']['id']; ?>" />
+			<input type="checkbox" name="config_bool[<?php echo $show_grid['Configuration']['id']; ?>]" value="<?php echo $show_grid['Configuration']['value']; ?>" <?php if($show_grid['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
+			<input type="hidden" name="config_bool_list[<?php echo $show_grid['Configuration']['id']; ?>]" value="" />
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="show_sun">Show Sun</label>
 		<div class="controls">
-			<input type="checkbox" name="show_sun" value="<?php echo $show_sun['Configuration']['value']; ?>" <?php if($show_sun['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
-			<input type="hidden" name="show_sun_id" value="<?php echo $show_sun['Configuration']['id']; ?>" />
+			<input type="checkbox" name="config_bool[<?php echo $show_sun['Configuration']['id']; ?>]" value="<?php echo $show_sun['Configuration']['value']; ?>" <?php if($show_sun['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
+			<input type="hidden" name="config_bool_list[<?php echo $show_sun['Configuration']['id']; ?>]" value="" />
 		</div>
 	</div>
 	<button type="submit" class="btn btn-success">Update Configuration</button>

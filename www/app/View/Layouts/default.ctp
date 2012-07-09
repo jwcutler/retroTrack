@@ -5,6 +5,7 @@
     <link rel="shortcut icon" href="favicon.ico" />
     <?php echo $this->Html->css('retrotrack'); ?>
     <?php echo $this->Html->css('bootstrap.min.css'); ?>
+    <?php echo $this->Html->css('jquery-ui-1.8.21.custom.css'); ?>
     <?php echo $this->Html->script('jquery-1.7.2.min'); ?>
     <?php echo $this->Html->script('bootstrap.min.js'); ?>
     <?php echo $this->Html->script('jquery.validate.min.js'); ?>

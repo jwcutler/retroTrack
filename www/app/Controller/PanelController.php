@@ -45,6 +45,58 @@ class PanelController extends AppController {
         Method: POST
         */
         
+        if ($this->request->is('post')){
+            // Loop through the configuration fields
+            $new_configuration = array();
+            foreach($_POST['config'] as $field_id => $field_value){
+                $temp_field = array(
+                    'id' => $field_id,
+                    'value' => $field_value
+                );
+                
+                array_push($new_configuration, $temp_field);
+            }
+            
+            // Loop through the boolean configuration options
+            $new_configuration_bool = array();
+            foreach($_POST['config_bool_list'] as $field_id => $field_value){
+                if (isset($_POST['config_bool'][$field_id])){
+                    // Enable field
+                    $temp_field = array(
+                        'id' => $field_id,
+                        'value' => '1'
+                    );
+                    
+                    array_push($new_configuration_bool, $temp_field);
+                } else {
+                    // Disable field
+                    $temp_field = array(
+                        'id' => $field_id,
+                        'value' => '0'
+                    );
+                    
+                    array_push($new_configuration_bool, $temp_field);
+                }
+            }
+            
+            
+            // Save the configuration
+            $new_configuration = array_merge($new_configuration, $new_configuration_bool);
+            $save_attempt = $this->Configuration->saveMany($new_configuration);
+            
+            if ($save_attempt){
+                $this->Session->setFlash('The general configuration has been updated successfully.', 'default', array('class' => 'alert alert-success'));
+                CakeLog::write('admin', '[success] Configuration successfully saved.');
+                $this->redirect(array('controller' => 'panel', 'action' => 'index'));
+            } else {
+                $this->Session->setFlash('There was an error saving the general configuration. Please try again.', 'default', array('class' => 'alert alert-error'));
+                CakeLog::write('admin', '[error] Error saving the configuration, please try again.');
+                $this->redirect(array('controller' => 'panel', 'action' => 'index'));
+            }
+        } else {
+            // Redirect them to the add form
+            $this->redirect(array('controller' => 'panel', 'action' => 'index'));
+        }
     }
     
     public function admin_tleupdate(){

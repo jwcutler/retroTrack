@@ -8,12 +8,39 @@ Manages site-wide configuration options.
 class Configuration extends AppModel {
     var $name = 'Configuration';
     
+    public function configuration_json(){
+        /*
+        Generates a JSON representation of the tracker configuration options.
+        
+        Returns:
+            A JSON string of configuration options.
+        */
+        
+        // Load the configuration settings
+        $configurations = $this->find('all');
+        
+        // Assemble the configuration settings into an array
+        $configuration_settings = array();
+        foreach($configurations as $configuration){
+            $temp_configuration = array(
+                'name' => $configuration['Configuration']['name'],
+                'value' => $configuration['Configuration']['value']
+            );
+            
+            array_push($configuration_settings, $temp_configuration);
+        }
+        
+        // Output the JSON
+        return json_encode($configuration_settings);
+    }
+    
     public function convertTimestamp($option_name){
         /*
         Loads the specified configuration option and converts the value from UNIX time.
         
         @params $option_name: Key to convert to UNIX time.
-        @returns:
+        
+        Returns:
             String representation of the UNIX timestamp on success.
             'Invalid Timestamp' on failure.
         */
