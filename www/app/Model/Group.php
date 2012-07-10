@@ -57,10 +57,21 @@ class Group extends AppModel {
             $temp_group = array(
                 'id' => $group['Group']['id'],
                 'name' => $group['Group']['name'],
-                'description' => $group['Group']['description']
+                'description' => $group['Group']['description'],
+                'satellites' => array()
             );
             
-            array_push($group_array, $temp_group);
+            // Add all of the group's satellites
+            foreach($group['Satellite'] as $satellite){
+                $temp_satellite = array(
+                    'id' => $satellite['id'],
+                    'name' => $satellite['name']
+                );
+                
+                array_push($temp_group['satellites'], $temp_satellite);
+            }
+            
+            $group_array[$group['Group']['id']] = $temp_group;
         }
         
         // Return the JSON representation

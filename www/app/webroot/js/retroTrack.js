@@ -6,8 +6,6 @@ Based on Version By: James Cutler
 */
 
 var retroTrack = {
-    // Setup
-    var canvas_context = null;
     
     initialize: function(tracker_canvas){
         /*

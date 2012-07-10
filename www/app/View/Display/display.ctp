@@ -5,6 +5,15 @@
 <?php echo $this->Html->script('retroTrack_interface.js'); ?>
 <?php echo $this->Html->script('jquery-ui-1.8.21.custom.min.js'); ?>
 <script type="text/javascript">
+// Global Variables
+var satellites = null;
+var active_satellites = new Array();
+var groups = null;
+var stations = null;
+var active_station = null;
+var tles = null;
+var configuration = null;
+    
 $().ready(function(){
     /*
     Initialize retroTrack
@@ -18,22 +27,22 @@ $().ready(function(){
     
     // Tracker Configuration
     $("#load_progress_message").html('Loading configuration.');
-    var satellites = jQuery.parseJSON('<?php echo $satellite_json; ?>'); // All satellites this page can display
-    var active_satellites = new Array();
-    var groups = jQuery.parseJSON('<?php echo $group_json; ?>'); // All groups this page can display
-    var active_groups = new Array();
-    var stations = jQuery.parseJSON('<?php echo $station_json; ?>'); // All ground stations this page can display
-    var active_station = null;
-    var tles = jQuery.parseJSON('<?php echo $tle_json; ?>');
-    var configuration = jQuery.parseJSON('<?php echo $configuration_json; ?>');
+    satellites = jQuery.parseJSON('<?php echo $satellite_json; ?>'); // All satellites this page can display
+    active_satellites = new Array(); // Array of the IDs of all active satellites (the IDs are also the indexes in satellites)
+    groups = jQuery.parseJSON('<?php echo $group_json; ?>'); // All groups this page can display
+    stations = jQuery.parseJSON('<?php echo $station_json; ?>'); // All ground stations this page can display
+    active_station = null;
+    tles = jQuery.parseJSON('<?php echo $tle_json; ?>');
+    configuration = jQuery.parseJSON('<?php echo $configuration_json; ?>');
     $("#load_bar").css('width','20%');
     
     // Setup menus
     $("#load_progress_message").html('Setting up application menus.');
     populateSatellitesMenu(satellites, active_satellites);
-    populateGroupsMenu(groups, active_groups);
+    populateGroupsMenu(groups);
     populateStationsMenu(stations, active_station);
-    populateOptionsMenu(configuration);
+    populateOptionsMenu();
+    initializeActiveSatellites();
     $("#load_bar").css('width', '50%');
     
     // Initialize retroTracker object

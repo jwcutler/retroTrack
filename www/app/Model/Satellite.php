@@ -68,7 +68,7 @@ class Satellite extends AppModel {
                 array_push($temp_satellite['groups'], $temp_group);
             }
             
-            array_push($satellite_array, $temp_satellite);
+            $satellite_array[$satellite['Satellite']['id']] = $temp_satellite;
         }
         
         // Return the JSON representation

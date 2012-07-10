@@ -178,7 +178,7 @@ h3 {
     color: #F6DC00;
 }
 
-#top_menu a:after {
+#top_menu a:after, #bottom_menu a:after {
     content: " ▼";
 }
 
@@ -186,7 +186,7 @@ h3 {
     color: #F6DC00;
 }
 
-#top_menu a.active:after {
+#top_menu a.active:after, #bottom_menu a.active:after {
     content: " ▲";
 }
 

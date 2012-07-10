@@ -38,7 +38,7 @@ class Station extends AppModel {
                 'description' => $station['Station']['description']
             );
             
-            array_push($station_array, $temp_station);
+            $station_array[$station['Station']['id']] = $temp_station;
         }
         
         // Return the JSON string
