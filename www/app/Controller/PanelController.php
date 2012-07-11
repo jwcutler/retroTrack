@@ -124,18 +124,22 @@ class PanelController extends AppController {
         Process administrator login requests.
         */
         
-        if ($this->request->is('post')) {
-            // Store user credentials
-            $this->data['Admin']['username'] = $_POST['username'];
-            $this->data['Admin']['password'] = $_POST['password'];
-            
-            if ($this->Auth->login($this->data)) {
-                $this->Session->setFlash('You have been logged in. Welcome back.', 'default', array('class' => 'alert alert-success'));
-                $this->redirect($this->Auth->redirect());
-            } else {
-                $this->Session->setFlash('Invalid username or password. Please try again.', 'default', array('class' => 'alert alert-error'));
-            }
-        }
+		if ($this->Auth->user()){
+			$this->redirect(array('controller' => 'panel', 'action' => 'index', 'admin' => true));
+		} else {
+			if ($this->request->is('post')) {
+				// Store user credentials
+				$this->data['Admin']['username'] = $_POST['username'];
+				$this->data['Admin']['password'] = $_POST['password'];
+				
+				if ($this->Auth->login($this->data)) {
+					$this->Session->setFlash('You have been logged in. Welcome back.', 'default', array('class' => 'alert alert-success'));
+					$this->redirect($this->Auth->redirect());
+				} else {
+					$this->Session->setFlash('Invalid username or password. Please try again.', 'default', array('class' => 'alert alert-error'));
+				}
+			}
+		}
     }
 
     public function admin_logout(){

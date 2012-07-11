@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <title>retroTrack - <?php echo $title_for_layout; ?></title>
     <link rel="shortcut icon" href="favicon.ico" />

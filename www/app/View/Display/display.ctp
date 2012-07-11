@@ -4,6 +4,7 @@
 <?php echo $this->Html->script('retroTrack.js'); ?>
 <?php echo $this->Html->script('retroTrack_interface.js'); ?>
 <?php echo $this->Html->script('jquery-ui-1.8.21.custom.min.js'); ?>
+<?php echo $this->Html->script('modernizr.custom.js'); ?>
 <script type="text/javascript">
 // Global Variables
 var satellites = null;
@@ -13,11 +14,22 @@ var stations = null;
 var active_station = null;
 var tles = null;
 var configuration = null;
-    
+
 $().ready(function(){
     /*
     Initialize retroTrack
     */
+	
+	// Make sure canvas is supported
+	$('#canvas_modal').modal({
+        keyboard: false,
+        backdrop: 'static',
+        show: false
+    });
+	if (!Modernizr.canvas){
+		$("#canvas_modal").modal('show');
+	}
+	
     // Initialize the loading progress modal
     $('#load_modal').modal({
         keyboard: false,
@@ -119,4 +131,30 @@ $().ready(function(){
     </div>
 </div>
 <!-- END Loading Modal -->
+
+<!-- START Canvas Support Modal -->
+<div class="modal hide" id="canvas_modal" style="width: 400px;margin-left: -200px;display: none;">
+    <div class="modal-header">
+        <h3>Your browser does not support HTML5 canvas.</h3>
+    </div>
+    <div class="modal-body">
+		<p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render retroTracker. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
+		<center>
+			<div class="browser_warning_box">
+				<a href="https://www.google.com/intl/en/chrome/browser/" style="color: #666666;">
+					<?php echo $this->Html->image('browser_chrome.gif'); ?><br />Google Chrome 4.0+
+				</a>
+			</div>
+			<div class="browser_warning_box">
+				<a href="http://www.mozilla.org/en-US/firefox/new/" style="color: #666666;">
+					<?php echo $this->Html->image('browser_firefox.gif'); ?><br />Mozilla Firefox 2.0+
+				</a>
+			</div>
+		</center>
+    </div>
+	<div class="modal-footer">
+	<a href="#" class="btn" data-dismiss="modal">Continue Anyway</a>
+</div>
+</div>
+<!-- END Canvas Support Modal -->
 

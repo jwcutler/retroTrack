@@ -55,6 +55,8 @@ h3 {
 /* Layout Styles */
 #wrap {
     min-height: 100%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #content_container {
@@ -65,6 +67,7 @@ h3 {
     margin-left: auto;
     margin-right: auto;
     padding-top: 20px;
+	position: relative;
 }
 
 #footer {
@@ -151,6 +154,26 @@ h3 {
     color: #D61C1C;
 }
 
+.browser_warning_box {
+	background-color: #f3f5f2;
+	width: 110px;
+	text-align: center;
+	color: #666666;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px dotted #cccccc;
+	font-size: 10px;
+	display: inline-block;
+	padding: 5px;
+	margin: 5px;
+}
+
+.browser_warning_box img {
+	border: 1px solid #cccccc;
+	border-width: 0px 0px 1px 0px;
+}
+
 /* retroTrack Display Styles */
 #tracker_container {
     width: 860px;
@@ -207,14 +230,6 @@ h3 {
     color: white;
     padding: 5px;
     border-radius: 0px 0px 5px 5px;
-}
-
-#bottom_menu a:after {
-    content: " ▲";
-}
-
-#bottom_menu a.active:after {
-    content: " ▼";
 }
 
 .menu_list {

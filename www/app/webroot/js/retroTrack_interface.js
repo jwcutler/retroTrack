@@ -132,7 +132,7 @@ $().ready(function(){
             $(this).addClass("active");
         }
         menu_div = $(this).attr('rel');
-        $("#"+menu_div).toggle(400);
+        $("#"+menu_div).slideToggle(400);
     });
     
     // Handle satellite selection menu changes
