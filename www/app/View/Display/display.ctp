@@ -3,6 +3,7 @@
 <?php endif; ?>
 <?php echo $this->Html->script('retroTrack.js'); ?>
 <?php echo $this->Html->script('retroTrack_interface.js'); ?>
+<?php echo $this->Html->script('predictlib.js'); ?>
 <?php echo $this->Html->script('jquery-ui-1.8.21.custom.min.js'); ?>
 <?php echo $this->Html->script('modernizr.custom.js'); ?>
 <script type="text/javascript">
@@ -14,6 +15,7 @@ var stations = null;
 var active_station = null;
 var tles = null;
 var configuration = null;
+var selected_satellite = null;
 
 $().ready(function(){
     /*
@@ -53,20 +55,18 @@ $().ready(function(){
     populateSatellitesMenu(satellites, active_satellites);
     populateGroupsMenu(groups);
     populateStationsMenu(stations, active_station);
-    populateOptionsMenu();
+    populateOptionsMenu(configuration);
     initializeActiveSatellites();
     $("#load_bar").css('width', '50%');
     
     // Initialize retroTracker object
     $("#load_progress_message").html('Setting up retroTracker object.');
+    retroTrack.initialize('tracker_canvas');
     $("#load_progress_message").html('Complete.');
     $("#load_bar").css('width','100%');
     
     // Hide the load progress modal
-    $('#load_modal').modal('hide')
-    
-    // Create main program loops
-    
+    $('#load_modal').modal('hide')    
 });
 </script>
 
@@ -74,11 +74,17 @@ $().ready(function(){
 <div id="tracker_container">
     <!-- START top menu bar -->
     <div id="top_menu">
-        <ul id="top_controls">
-            <li><a id="show_menu_satellites" rel="menu_satellites">Satellites</a></li>
-            <li><a id="show_menu_groups" rel="menu_groups">Satellite Groups</a></li>
-            <li><a id="show_menu_options" rel="menu_options">Options</a></li>
-        </ul>
+        <div style="float: left;">
+            <ul id="top_controls">
+                <li><a id="show_menu_satellites" rel="menu_satellites">Satellites</a></li>
+                <li><a id="show_menu_groups" rel="menu_groups">Satellite Groups</a></li>
+                <li><a id="show_menu_options" rel="menu_options">Options</a></li>
+            </ul>
+        </div>
+        <div style="float: right;">
+            <div id="top_clock">-</div>
+        </div>
+        <div style="clear: both;"></div>
     </div>
     <div id="menu_satellites" class="menu_pane">
         <div class="menu_pane_header">Select the satellites you would like to display. Use CTRL to select multiple satellites.</div>
@@ -93,12 +99,13 @@ $().ready(function(){
         <ol id="option_list" class="menu_list">
             <li id="show_sun">Enable Sun</li>
             <li id="show_grid">Enable Grid</li>
+            <li id="show_satellite_names">Show Satellite Names</li>
         </ol>
     </div>
     <!-- END top menu bar -->
     
     <!-- START primary display canvas -->
-    test
+    <canvas id="tracker_canvas" width="860px" height="430px" style="border: 1px solid #071831;border-width: 0px 1px 0px 1px;margin-bottom: -3px;"></canvas>
     <!-- END primary display canvas -->
     
     <!-- START bottom menu bar -->

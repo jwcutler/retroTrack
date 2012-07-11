@@ -7,17 +7,17 @@ $this->start('panel_content');
 <div style="padding-bottom: 10px;">Use the form below to configure how the satellite tracker script behaves.</div>
 <form action="/admin/configuration" method="POST" class="form-horizontal">
 	<div class="control-group">
-		<label class="control-label" for="clock_period">Clock Period</label>
+		<label class="control-label" for="clock_update_period">Clock Update Period</label>
 		<div class="controls">
-			<input type="text" name="config[<?php echo $clock_period['Configuration']['id']; ?>]" value="<?php echo $clock_period['Configuration']['value']; ?>" />
-			<p class="help-block">How frequently satellite positions should be recalculated.</p>
+			<input type="text" name="config[<?php echo $clock_update_period['Configuration']['id']; ?>]" value="<?php echo $clock_update_period['Configuration']['value']; ?>" />
+			<p class="help-block">How frequently the clock should be recalculated in ms.</p>
 		</div>
 	</div>
 	<div class="control-group">
 		<label class="control-label" for="map_update_period">Map Update Period</label>
 		<div class="controls">
 			<input type="text" name="config[<?php echo $map_update_period['Configuration']['id']; ?>]" value="<?php echo $map_update_period['Configuration']['value']; ?>" />
-			<p class="help-block">How frequently the map should be redrawn.</p>
+			<p class="help-block">How frequently the map should be redrawn in ms.</p>
 		</div>
 	</div>
 	<div class="control-group">

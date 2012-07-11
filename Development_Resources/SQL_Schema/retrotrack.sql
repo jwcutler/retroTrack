@@ -86,12 +86,18 @@ Load in initial data.
 */
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES (1, 'admin', '194b948cb2a8834e39f540514cb7ce430efdba60');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('tle_last_update', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('clock_period', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('map_update_period', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('map_file', 'map_bg.jpg');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('clock_update_period', '1000');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('map_update_period', '5000');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('default_ground_station', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('show_grid', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('show_sun', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_color', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('ground_station_color', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('eclipse_color', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_size', '0');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('show_grid', '1');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('show_sun', '1');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('show_satellite_names', '1');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_color', 'FFFFFF');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_selected_color', 'FFFF00');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_label_color', 'FFFFFF');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('sun_color', 'FFFF00');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('grid_color', 'A5A2A2');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('ground_station_color', 'FF0000');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('eclipse_color', 'DDDDDD');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_size', '6');

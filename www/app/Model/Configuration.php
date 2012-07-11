@@ -27,7 +27,7 @@ class Configuration extends AppModel {
                 'value' => $configuration['Configuration']['value']
             );
             
-            array_push($configuration_settings, $temp_configuration);
+            $configuration_settings[$configuration['Configuration']['name']] = $temp_configuration;
         }
         
         // Output the JSON

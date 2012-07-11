@@ -47,10 +47,12 @@ class Tle extends AppModel {
                 'mean_anomaly' => $tle['Tle']['mean_anomaly'],
                 'mean_motion' => $tle['Tle']['mean_motion'],
                 'revs' => $tle['Tle']['revs'],
-                'checksum_l2' => $tle['Tle']['checksum_l2']
+                'checksum_l2' => $tle['Tle']['checksum_l2'],
+                'raw_l1' => $tle['Tle']['raw_l1'],
+                'raw_l2' => $tle['Tle']['raw_l2']
             );
             
-            array_push($tles_array, $temp_tle);
+            $tles_array[$tle['Tle']['name']] = $temp_tle;
         }
         
         // Return the JSON

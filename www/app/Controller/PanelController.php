@@ -27,7 +27,7 @@ class PanelController extends AppController {
         $this->set('stations', $this->Station->find('all'));
         
         // Fetch the configuration options
-        $this->set('clock_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'clock_period'))));
+        $this->set('clock_update_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'clock_update_period'))));
         $this->set('map_update_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'map_update_period'))));
         $this->set('default_ground_station', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'default_ground_station'))));
         $this->set('show_grid', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_grid'))));

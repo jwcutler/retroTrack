@@ -33,7 +33,7 @@ function populateSatellitesMenu(satellites, active_satellites){
         // Loop through all of the satellites and add them to the list
         for (curr_satellite_id in satellites){
             // Append the satellite to the menu
-            $("#satellite_list").append('<li id="select_satellite_'+curr_satellite_id+'" rel="'+curr_satellite_id+'">'+satellites[curr_satellite_id]['name']+'</li>');
+            $("#satellite_list").append('<li id="select_satellite_'+curr_satellite_id+'" rel="'+satellites[curr_satellite_id]['name']+'">'+satellites[curr_satellite_id]['name']+'</li>');
         }
         
         // Enable selectable
@@ -87,13 +87,23 @@ function populateGroupsMenu(groups){
     }
 }
 
-function populateOptionsMenu(){
+function populateOptionsMenu(configuration){
     /*
-    Populate the option select menu. Because we don't want to show all options in the menu, just convert the existing list to selectable.
+    Populate the option select menu. Because we don't want to show all options in the menu, just loop through and select the existing buttons based on default value.
+    
+    @param configuration: Object containing the configuration options.
     */
     
-    // Enable selectable
-    $("#option_list").selectable({
+    // Loop through each menu item and check it's value in configuration
+    $("#option_list").children().each(function(){
+        // Grab the option's ID
+        option_name = $(this).attr('id');
+        
+        // Check the default value
+        if (configuration[option_name]['value']=='1'){
+            // Select it
+            $(this).addClass('ui-selected');
+        }
     });
 }
 
@@ -109,8 +119,11 @@ function initializeActiveSatellites(){
     active_satellites = [];
     for (curr_satellite_index in satellites){
         // Add to active_satellites
-        active_satellites[active_satellites.length] = satellites[curr_satellite_index]['id'];
+        active_satellites[active_satellites.length] = satellites[curr_satellite_index]['name'];
     }
+    
+    // Set the active satellite to the first one in the list
+    selected_satellite = active_satellites[0];
     
     // Select all satellites in the menu
     $("#satellite_list").children().addClass('ui-selected');
@@ -148,6 +161,15 @@ $().ready(function(){
             // Add the satellite ID to active_satellites
             active_satellites[active_satellites.length] = $(this).attr('rel');
         });
+        
+        // Set the active satellite to the first one in the list
+        selected_satellite = active_satellites[0];
+        
+        // Reload the PLib Satellites
+        retroTrack.setPlibSatellites();
+        
+        // Update plot
+        retroTrack.updatePlot();
     });
     
     // Handle group selection menu changes
@@ -164,12 +186,39 @@ $().ready(function(){
             group_id = $(this).attr('rel');
             for (satellite_index in groups[group_id]['satellites']){
                 // Add the satellite to active_satellites
-                temp_satellite_id = groups[group_id]['satellites'][satellite_index]['id'];
-                active_satellites[active_satellites.length] = temp_satellite_id;
+                active_satellites[active_satellites.length] = groups[group_id]['satellites'][satellite_index]['name'];
                 
                 // Select the satellite in the menu
-                $("#select_satellite_"+temp_satellite_id).addClass('ui-selected');
+                $("#select_satellite_"+groups[group_id]['satellites'][satellite_index]['id']).addClass('ui-selected');
             }
+            
+            // Set the active satellite to the first one in the list
+            selected_satellite = active_satellites[0];
         });
+        
+        // Reload the PLib Satellites
+        retroTrack.setPlibSatellites();
+        
+        // Update plot
+        retroTrack.updatePlot();
+    });
+    
+    // Handle group selection menu changes
+    $("#option_list").children().click(function(){
+        option_key = $(this).attr('id');
+        
+        // Toggle the option in the configuration array
+        if (configuration[option_key]['value']=='1'){
+            // Disable
+            configuration[option_key]['value'] = '0';
+            $(this).removeClass('ui-selected');
+        } else {
+            // Enable
+            configuration[option_key]['value'] = '1';
+            $(this).addClass('ui-selected');
+        }
+        
+        // Update plot
+        retroTrack.updatePlot();
     });
 });
