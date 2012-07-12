@@ -21,18 +21,18 @@ $this->start('panel_content');
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="config[<?php echo $step_size['Configuration']['id']; ?>]">Step Size</label>
+		<label class="control-label" for="config[<?php echo $map_file['Configuration']['id']; ?>]">Map Background File</label>
 		<div class="controls">
-			<input type="text" name="config[<?php echo $step_size['Configuration']['id']; ?>]" value="<?php echo $step_size['Configuration']['value']; ?>" />
-			<p class="help-block">The step size to use when calculating orbits. Higher values will be more CPU intensive.</p>
+			<input type="text" name="config[<?php echo $map_file['Configuration']['id']; ?>]" value="<?php echo $map_file['Configuration']['value']; ?>" />
+			<p class="help-block">This file must be located in webroot/img.</p>
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="default_ground_station">Default Ground Station</label>
+		<label class="control-label" for="config[<?php echo $default_ground_station['Configuration']['id']; ?>]">Default Ground Station</label>
 		<div class="controls">
 			<select name="config[<?php echo $default_ground_station['Configuration']['id']; ?>]">
 				<?php foreach($stations as $station): ?>
-					<option value="<?php echo $station['Station']['id']; ?>" <?php if($default_ground_station['Configuration']['value']==$station['Station']['id']){echo "selected='selected'";} ?>><?php echo $station['Station']['name']; ?></option>
+					<option value="<?php echo $station['Station']['name']; ?>" <?php if($default_ground_station['Configuration']['value']==$station['Station']['id']){echo "selected='selected'";} ?>><?php echo $station['Station']['name']; ?></option>
 				<?php endforeach;?>
 			</select>
 		</div>
@@ -94,6 +94,23 @@ $this->start('panel_content');
 		</div>
 	</div>
 	<div class="control-group">
+		<label class="control-label" for="config[<?php echo $satellite_footprint_color['Configuration']['id']; ?>]">Satellite Footprint Color</label>
+		<div class="controls">
+			<input type="text" name="config[<?php echo $satellite_footprint_color['Configuration']['id']; ?>]" value="<?php echo $satellite_footprint_color['Configuration']['value']; ?>" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config[<?php echo $path_color['Configuration']['id']; ?>]">Satellite Path Color</label>
+		<div class="controls">
+			<input type="text" name="config[<?php echo $path_color['Configuration']['id']; ?>]" value="<?php echo $path_color['Configuration']['value']; ?>" />
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<p class="help-block">All of the following indicate tracker defaults that can be changed by the end user.</p>
+		</div>
+	</div>
+	<div class="control-group">
 		<label class="control-label" for="config_bool[<?php echo $show_grid['Configuration']['id']; ?>]">Show Grid Overlay</label>
 		<div class="controls">
 			<input type="checkbox" name="config_bool[<?php echo $show_grid['Configuration']['id']; ?>]" value="<?php echo $show_grid['Configuration']['value']; ?>" <?php if($show_grid['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
@@ -105,6 +122,27 @@ $this->start('panel_content');
 		<div class="controls">
 			<input type="checkbox" name="config_bool[<?php echo $show_sun['Configuration']['id']; ?>]" value="<?php echo $show_sun['Configuration']['value']; ?>" <?php if($show_sun['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
 			<input type="hidden" name="config_bool_list[<?php echo $show_sun['Configuration']['id']; ?>]" value="" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config_bool[<?php echo $show_path['Configuration']['id']; ?>]">Show Satellite Path</label>
+		<div class="controls">
+			<input type="checkbox" name="config_bool[<?php echo $show_path['Configuration']['id']; ?>]" value="<?php echo $show_path['Configuration']['value']; ?>" <?php if($show_path['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
+			<input type="hidden" name="config_bool_list[<?php echo $show_path['Configuration']['id']; ?>]" value="" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config_bool[<?php echo $show_satellite_names['Configuration']['id']; ?>]">Show Satellite Names</label>
+		<div class="controls">
+			<input type="checkbox" name="config_bool[<?php echo $show_satellite_names['Configuration']['id']; ?>]" value="<?php echo $show_satellite_names['Configuration']['value']; ?>" <?php if($show_satellite_names['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
+			<input type="hidden" name="config_bool_list[<?php echo $show_satellite_names['Configuration']['id']; ?>]" value="" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config_bool[<?php echo $show_satellite_footprint['Configuration']['id']; ?>]">Show Satellite Footprint</label>
+		<div class="controls">
+			<input type="checkbox" name="config_bool[<?php echo $show_satellite_footprint['Configuration']['id']; ?>]" value="<?php echo $show_satellite_footprint['Configuration']['value']; ?>" <?php if($show_satellite_footprint['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
+			<input type="hidden" name="config_bool_list[<?php echo $show_satellite_footprint['Configuration']['id']; ?>]" value="" />
 		</div>
 	</div>
 	<button type="submit" class="btn btn-success">Update Configuration</button>

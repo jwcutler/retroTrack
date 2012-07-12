@@ -190,7 +190,7 @@ h3 {
 #top_controls li, #bottom_menu li {
     display: inline;
     list-style-type: none;
-    padding-right: 20px;
+    padding-right: 10px;
 }
 
 #top_menu a, #bottom_menu a {
@@ -252,5 +252,11 @@ h3 {
 
 .menu_list li.ui-selected {
     background-color: #C0BFBF;
+}
+
+#satellite_parameters li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 10px;
 }
 

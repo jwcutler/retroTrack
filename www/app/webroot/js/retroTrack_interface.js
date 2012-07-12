@@ -33,7 +33,7 @@ function populateSatellitesMenu(satellites, active_satellites){
         // Loop through all of the satellites and add them to the list
         for (curr_satellite_id in satellites){
             // Append the satellite to the menu
-            $("#satellite_list").append('<li id="select_satellite_'+curr_satellite_id+'" rel="'+satellites[curr_satellite_id]['name']+'">'+satellites[curr_satellite_id]['name']+'</li>');
+            $("#satellite_list").append('<li id="select_satellite_'+curr_satellite_id+'" rel="'+satellites[curr_satellite_id]['name']+'" title="'+satellites[curr_satellite_id]['description']+'">'+satellites[curr_satellite_id]['name']+'</li>');
         }
         
         // Enable selectable
@@ -56,7 +56,7 @@ function populateStationsMenu(stations, active_station){
         // Loop through all of the stations and add them to the list
         for (curr_station_id in stations){
             // Append the satellite to the menu
-            $("#station_list").append('<li id="select_station_'+curr_station_id+'" rel="'+curr_station_id+'">'+stations[curr_station_id]['name']+'</li>');
+            $("#station_list").append('<li id="select_station_'+curr_station_id+'" rel="'+stations[curr_station_id]['name']+'" title="'+stations[curr_station_id]['description']+'">'+stations[curr_station_id]['name']+'</li>');
         }
         
         // Enable selectable
@@ -78,7 +78,7 @@ function populateGroupsMenu(groups){
         // Loop through all of the groups and add them to the list
         for (curr_group_id in groups){
             // Append the group to the menu
-            $("#group_list").append('<li id="select_group_'+curr_group_id+'" rel="'+curr_group_id+'">'+groups[curr_group_id]['name']+'</li>');
+            $("#group_list").append('<li id="select_group_'+curr_group_id+'" rel="'+curr_group_id+'" title="'+groups[curr_group_id]['description']+'">'+groups[curr_group_id]['name']+'</li>');
         }
 
         // Enable selectable
@@ -128,6 +128,31 @@ function initializeActiveSatellites(){
     $("#satellite_list").children().addClass('ui-selected');
 }
 
+function initializeActiveStations(){
+    /*
+    Initializes active_stations to be all available stations.
+    */
+    
+    // Loop through all of the available stations
+    active_stations = [];
+    for (curr_station_index in stations){
+        // Add to active_stations
+        active_stations[active_stations.length] = stations[curr_station_index]['name'];
+    }
+    
+    // Set the active station
+    if (configuration['default_ground_station']['value'] in stations){
+        // Default present, use it
+        selected_station = configuration['default_ground_station']['value'];
+    } else {
+        // Default not present, use first
+        selected_station = active_stations[0];
+    }
+    
+    // Select all satellites in the menu
+    $("#station_list").children().addClass('ui-selected');
+}
+
 /*
 This document ready handles most interface interactions (menus, clock, etc).
 */
@@ -166,6 +191,24 @@ $().ready(function(){
         
         // Reload the PLib Satellites
         retroTrack.setPlibSatellites();
+        
+        // Update plot
+        retroTrack.updatePlot();
+    });
+    
+    // Handle station selection menu changes
+    $("#station_list").bind("selectablestop", function(event, ui) {
+        // Clear active_stations
+        active_stations = [];
+        
+        // Loop through the selected children and add the rel value to 'active_stations'
+        $(this).children('.ui-selected').each(function(){
+            // Add the station to active_stations
+            active_stations[active_stations.length] = $(this).attr('rel');
+        });
+        
+        // Set the active station to be the first one in the list
+        selected_station = active_stations[0];
         
         // Update plot
         retroTrack.updatePlot();

@@ -29,7 +29,6 @@ class PanelController extends AppController {
         // Fetch the configuration options
         $this->set('clock_update_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'clock_update_period'))));
         $this->set('map_update_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'map_update_period'))));
-        $this->set('step_size', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'step_size'))));
         $this->set('default_ground_station', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'default_ground_station'))));
         $this->set('show_grid', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_grid'))));
         $this->set('show_sun', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_sun'))));
@@ -42,6 +41,12 @@ class PanelController extends AppController {
         $this->set('eclipse_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'eclipse_color'))));
         $this->set('satellite_size', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_size'))));
         $this->set('grid_alpha', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'grid_alpha'))));
+        $this->set('map_file', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'map_file'))));
+        $this->set('show_path', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_path'))));
+        $this->set('show_satellite_footprint', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_satellite_footprint'))));
+        $this->set('show_satellite_names', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_satellite_names'))));
+        $this->set('satellite_footprint_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_footprint_color'))));
+        $this->set('path_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'path_color'))));
     }
     
     public function admin_update_configuration(){

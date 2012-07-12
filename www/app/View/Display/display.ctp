@@ -12,10 +12,12 @@ var satellites = null;
 var active_satellites = new Array();
 var groups = null;
 var stations = null;
+var active_stations = new Array();
 var active_station = null;
 var tles = null;
 var configuration = null;
 var selected_satellite = null;
+var selected_station = null;
 
 $().ready(function(){
     /*
@@ -57,6 +59,7 @@ $().ready(function(){
     populateStationsMenu(stations, active_station);
     populateOptionsMenu(configuration);
     initializeActiveSatellites();
+    initializeActiveStations();
     $("#load_bar").css('width', '50%');
     
     // Initialize retroTracker object
@@ -81,6 +84,9 @@ $().ready(function(){
                 <li><a id="show_menu_options" rel="menu_options">Options</a></li>
             </ul>
         </div>
+        <div style="float: left;padding-left: 30px;">
+            <ol id="satellite_parameters"></ol>
+        </div>
         <div style="float: right;">
             <div id="top_clock">-</div>
         </div>
@@ -100,6 +106,8 @@ $().ready(function(){
             <li id="show_sun">Enable Sun</li>
             <li id="show_grid">Enable Grid</li>
             <li id="show_satellite_names">Show Satellite Names</li>
+            <li id="show_path">Show Satellite Path</li>
+            <li id="show_satellite_footprint">Show Satellite Footprint</li>
         </ol>
     </div>
     <!-- END top menu bar -->
@@ -114,9 +122,15 @@ $().ready(function(){
         <ol id="station_list" class="menu_list"></ol>
     </div>
     <div id="bottom_menu">
-        <ul id="bottom_controls">
-            <li><a id="show_menu_stations" rel="menu_stations">Ground Stations</a></li>
-        </ul>
+        <div style="float: left;">
+            <ul id="bottom_controls">
+                <li><a id="show_menu_stations" rel="menu_stations">Ground Stations</a></li>
+            </ul>
+        </div>
+        <div style="float: right;">
+            <ol id="station_parameters">-</ol>
+        </div>
+        <div style="clear: both;"></div>
     </div>
     <!-- END bottom menu bar -->
 </div>

@@ -98,8 +98,13 @@ INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_selected_color
 INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_label_color', 'FFFFFF');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('sun_color', 'FFFF00');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('grid_color', 'A5A2A2');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('ground_station_color', 'FF0000');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('station_color', 'FD7E00');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('station_selected_color', 'FF0000');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('eclipse_color', 'DDDDDD');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_size', '6');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('step_size', '360');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('grid_alpha', '0.4');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('show_path', '1');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('path_color', '8888FF');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('show_satellite_footprint', '1');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_footprint_color', 'FFFFFF');
