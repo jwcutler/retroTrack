@@ -101,3 +101,5 @@ INSERT INTO `configurations` (`name`, `value`) VALUES ('grid_color', 'A5A2A2');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('ground_station_color', 'FF0000');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('eclipse_color', 'DDDDDD');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('satellite_size', '6');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('step_size', '360');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('grid_alpha', '0.4');

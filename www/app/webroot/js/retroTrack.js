@@ -88,6 +88,7 @@ var retroTrack = {
         
         // Draw horizontal grid lines
         tracker_canvas_context.fillStyle = '#'+configuration['grid_color']['value'];
+		tracker_canvas_context.globalAlpha = configuration['grid_alpha']['value'];
         for (line_num = 1; line_num <= 6; line_num++){
             tracker_canvas_context.fillRect(0, line_num*(tracker_canvas_height/6), tracker_canvas_width, 1);
         }
@@ -96,6 +97,7 @@ var retroTrack = {
         for (line_num = 1; line_num <= 12; line_num++){
             tracker_canvas_context.fillRect(line_num*(tracker_canvas_width/12), 0, 1, tracker_canvas_height);
         }
+		tracker_canvas_context.globalAlpha = 1.0;
     },
     
     drawSun: function(){
@@ -188,7 +190,7 @@ var retroTrack = {
         @param curr_satellite_info: PLib satellite info object.
         @param curr_satellite_name: Name of the current satellite.
         */
-        
+		
         // Determine color
         if (curr_satellite_name==selected_satellite){
             tracker_canvas_context.fillStyle = '#'+configuration['satellite_selected_color']['value'];

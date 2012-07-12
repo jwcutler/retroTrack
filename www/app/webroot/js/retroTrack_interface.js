@@ -98,7 +98,6 @@ function populateOptionsMenu(configuration){
     $("#option_list").children().each(function(){
         // Grab the option's ID
         option_name = $(this).attr('id');
-        
         // Check the default value
         if (configuration[option_name]['value']=='1'){
             // Select it

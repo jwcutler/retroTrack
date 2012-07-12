@@ -29,13 +29,19 @@ class PanelController extends AppController {
         // Fetch the configuration options
         $this->set('clock_update_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'clock_update_period'))));
         $this->set('map_update_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'map_update_period'))));
+        $this->set('step_size', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'step_size'))));
         $this->set('default_ground_station', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'default_ground_station'))));
         $this->set('show_grid', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_grid'))));
         $this->set('show_sun', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_sun'))));
         $this->set('satellite_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_color'))));
+        $this->set('satellite_selected_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_selected_color'))));
+        $this->set('satellite_label_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_label_color'))));
+        $this->set('grid_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'grid_color'))));
+        $this->set('sun_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'sun_color'))));
         $this->set('ground_station_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'ground_station_color'))));
         $this->set('eclipse_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'eclipse_color'))));
         $this->set('satellite_size', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_size'))));
+        $this->set('grid_alpha', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'grid_alpha'))));
     }
     
     public function admin_update_configuration(){

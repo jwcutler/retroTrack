@@ -105,7 +105,7 @@ $().ready(function(){
     <!-- END top menu bar -->
     
     <!-- START primary display canvas -->
-    <canvas id="tracker_canvas" width="860px" height="430px" style="border: 1px solid #071831;border-width: 0px 1px 0px 1px;margin-bottom: -3px;"></canvas>
+    <canvas id="tracker_canvas" width="860px" height="430px" style="border: 1px solid #071831;border-width: 0px 1px 0px 1px;display: block;"></canvas>
     <!-- END primary display canvas -->
     
     <!-- START bottom menu bar -->
