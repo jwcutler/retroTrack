@@ -150,40 +150,43 @@ var retroTrack = {
         Calculates and draws the path for the active satellite.
         */
         
-        // This is needed so that PLib will calculate the orbit of the selected satellite, not the last one that was configured
-        satInfo = PLib.QuickFind(selected_satellite);
-        
-        // Find the PLib sat object of the selected satellite
-        selected_satellite_plib = null;
-        for (plib_satellite_counter = 0; plib_satellite_counter < PLib.sat.length; plib_satellite_counter++){
-			if(PLib.sat[plib_satellite_counter].name == selected_satellite){
-				selected_satellite_plib = PLib.sat[plib_satellite_counter];
-				break;
+		// Make sure a satellite is selected
+		if (selected_satellite){
+			// This is needed so that PLib will calculate the orbit of the selected satellite, not the last one that was configured
+			satInfo = PLib.QuickFind(selected_satellite);
+			
+			// Find the PLib sat object of the selected satellite
+			selected_satellite_plib = null;
+			for (plib_satellite_counter = 0; plib_satellite_counter < PLib.sat.length; plib_satellite_counter++){
+				if(PLib.sat[plib_satellite_counter].name == selected_satellite){
+					selected_satellite_plib = PLib.sat[plib_satellite_counter];
+					break;
+				}
+			}
+			
+			// Calculate and display the path
+			tb = PLib.daynum - 0.05 * (1 / selected_satellite_plib.meanmo );
+			tf = PLib.daynum + 3 * (1 / selected_satellite_plib.meanmo );
+			PLib.daynum = tb;
+			while (PLib.daynum < tf){
+				// This works by running the simulation forwards to calculate the satellites position at various times
+				PLib.Calc();
+				
+				PLib.daynum += 10 / (24 * 3600);
+				
+				pos_lat = PLib.sat_lat;
+				pos_lon = PLib.sat_lon;
+				pos_lon = 360 - PLib.isplong;
+				if (pos_lon > 180){
+					pos_lon = -PLib.isplong;
+				}
+				
+				pos_x = Math.round((pos_lon + 180)/360 * tracker_canvas_width);
+				pos_y = Math.round((180 - (pos_lat + 90))/180 * tracker_canvas_height);
+				tracker_canvas_context.fillStyle = "#"+configuration['path_color']['value'];
+				tracker_canvas_context.fillRect(pos_x,pos_y,2,2); 
 			}
 		}
-        
-        // Calculate and display the path
-        tb = PLib.daynum - 0.05 * (1 / selected_satellite_plib.meanmo );
-        tf = PLib.daynum + 3 * (1 / selected_satellite_plib.meanmo );
-        PLib.daynum = tb;
-        while (PLib.daynum < tf){
-            // This works by running the simulation forwards to calculate the satellites position at various times
-            PLib.Calc();
-            
-            PLib.daynum += 10 / (24 * 3600);
-            
-            pos_lat = PLib.sat_lat;
-            pos_lon = PLib.sat_lon;
-            pos_lon = 360 - PLib.isplong;
-            if (pos_lon > 180){
-                pos_lon = -PLib.isplong;
-            }
-            
-            pos_x = Math.round((pos_lon + 180)/360 * tracker_canvas_width);
-            pos_y = Math.round((180 - (pos_lat + 90))/180 * tracker_canvas_height);
-            tracker_canvas_context.fillStyle = "#"+configuration['path_color']['value'];
-            tracker_canvas_context.fillRect(pos_x,pos_y,2,2); 
-        }
     },
     
     updatePlot: function(){
@@ -199,6 +202,7 @@ var retroTrack = {
         
         // Clear the satellite info pane
         $("#satellite_parameters").html("");
+		$("#station_parameters").html("");
         
         // Plot the grid (if configured)
         if (configuration['show_grid']['value']=='1'){
@@ -232,6 +236,10 @@ var retroTrack = {
         for (curr_station_index in active_stations){
             // Plot the station
             retroTrack.plotStationPosition(active_stations[curr_station_index]);
+			
+			if (active_stations[curr_station_index]==selected_station){
+				retroTrack.updateStationBar(selected_station);
+			}
         }
     },
     
@@ -248,16 +256,35 @@ var retroTrack = {
 		curr_satellite_orbit = PLib.rv;
         
         // Display the satellite information.
-        if (curr_satellite_name.length >= 8){
+        /*if (curr_satellite_name.length >= 8){
             curr_satellite_name = curr_satellite_name.substring(0,8) + "...";
-        }
+        }*/
         $("#satellite_parameters").append("<li id='satellite_info_name'><span style='color: #"+configuration['satellite_selected_color']['value']+";'>"+curr_satellite_name+"</span></li>");
         $("#satellite_parameters").append("<li>Lat: "+curr_satellite_info.latitude.toFixed(1)+"</li>");
         $("#satellite_parameters").append("<li>Lon: "+curr_satellite_info.longitude.toFixed(1)+"</li>");
         $("#satellite_parameters").append("<li>Alt: "+curr_satellite_info.altitude.toFixed(1)+" km</li>");
         $("#satellite_parameters").append("<li>Orbit: #"+curr_satellite_orbit+"</li>");
     },
-    
+	
+	updateStationBar: function(curr_station_name){
+        /*
+        Updates the station information bar with the currently selected ground station's parameters.
+        
+        @param curr_station_name: Name of the ground station.
+        */
+        
+		// Display the status bar
+		$("#station_parameters").append("<li id='station_info_name'><span style='color: #"+configuration['station_selected_color']['value']+";'>"+curr_station_name+"</span></li>");
+		$("#station_parameters").append("<li>Lat: "+Number(stations[curr_station_name]['latitude']).toFixed(3)+"</li>");
+		$("#station_parameters").append("<li>Lon: "+Number(stations[curr_station_name]['longitude']).toFixed(3)+"</li>");
+		if(selected_satellite){
+			selected_satellite_info = PLib.QuickFind(selected_satellite);
+			$("#station_parameters").append("<li>Az: "+selected_satellite_info.azimuth.toFixed(2)+"</li>");
+			$("#station_parameters").append("<li>El: "+selected_satellite_info.elevation.toFixed(2)+"</li>");
+			$("#station_parameters").append("<li>Range: "+selected_satellite_info.slantRange.toFixed(2)+" km</li>");
+		}
+    },
+	
     plotStationPosition: function(curr_station_name){
         /*
         Plots the provided ground station on the canvas.
@@ -269,9 +296,9 @@ var retroTrack = {
         temp_station = stations[curr_station_name];
         
         // Calculate the position of the station
-        station_x_pos = Math.round((temp_station['longitude']+180)/360*tracker_canvas_width);
-        station_y_pos = Math.round((180-(temp_station['latitude']+90))/180*tracker_canvas_height);
-        
+        station_x_pos = Math.round((Number(temp_station['longitude'])+180)/360*tracker_canvas_width);
+        station_y_pos = Math.round((180-(Number(temp_station['latitude'])+90))/180*tracker_canvas_height);
+		
         // Decide what color it should be
         if (curr_station_name==selected_station){
             tracker_canvas_context.fillStyle = "#"+configuration['station_selected_color']['value'];
@@ -280,39 +307,40 @@ var retroTrack = {
         }
         
         // Draw the station
+		tracker_canvas_context.beginPath();
         tracker_canvas_context.arc(station_x_pos, station_y_pos, configuration['satellite_size']['value']/2, 0, Math.PI*2, true);
-        tracker_canvas_context.fill();
-        
-        
-        /*var satInfo;
-		var sat_square = Orb.sat_square;
-
-		x = Math.round( (lon + 180) / 360 * map_width  );
-		y = Math.round( (180 - (lat + 90))  / 180 * map_height );
-		ctx.fillStyle = sat_sun;
-		ctx.fillStyle = Orb.gs_color;
-		//ctx.fillRect(x-sat_square/2,y-sat_square/2,sat_square,sat_square); 
-		ctx.arc(x,y,sat_square/2,0,Math.PI*2,true); 
-		//ctx.arc(89,102,2,0,Math.PI*2,true);  
-		ctx.fill();
-
-		ctx.fillStyle = "#FFFFFF";
-		PLib.configureGroundStation( lat, lon );
-		satInfo = PLib.QuickFind( sat_name );
-		PLib.calcFootPrint( Orb.footprint, Orb.stepSize, lat,
-		                    lon, satInfo.altitude, 0.0 );
-		for (k=0; k<360; k++ ){
-			x = Math.round( (Orb.footprint[k].lon + 180) / 360 * map_width );
-			y = Math.round( (180 - (Orb.footprint[k].lat + 90))  / 180 * map_height );
-			ctx.fillRect(x,y,1,1);
-		}
-		$('table#gs td#gs_lat').html( "Lat: " + lat + " N" );
-		$('table#gs td#gs_lon').html( "Lon: " + lon + " E" );
-		//$('table#gs td#gs_az').html( "Az: " + az );
-		//$('table#gs td#gs_el').html( "El: " + el );
-		$('table#gs td#gs_az').html( "Az: " + satInfo.azimuth );
-		$('table#gs td#gs_el').html( "El: " + satInfo.elevation );
-		$('table#gs td#gs_range').html( "Range: " + satInfo.slantRange + " km" );*/
+        tracker_canvas_context.closePath();
+		tracker_canvas_context.fill();
+		
+		// Draw the labels
+        if (configuration['show_station_names']['value']=='1'){
+            tracker_canvas_context.font = "10px Arial";
+            tracker_canvas_context.fillStyle = '#'+configuration['station_label_color']['value'];
+            text_x_pos = station_x_pos + configuration['satellite_size']['value']/2 + 3; // Move label 3px to the right of indicator
+            text_y_pos = station_y_pos + configuration['satellite_size']['value']/2;
+            text_width = tracker_canvas_context.measureText(curr_station_name).width;
+            if ((text_x_pos+text_width)>tracker_canvas_width){
+                // Label off the page, flip it to the other side of the indicator
+                text_x_pos = x_pos - configuration['satellite_size']['value']/2 - text_width - 3;
+            }
+            tracker_canvas_context.fillText(curr_station_name, text_x_pos, text_y_pos);
+        }
+		
+		// Show the footprint
+		if (curr_station_name==selected_station){
+			if (configuration['show_station_footprint']['value']=='1'){
+				tracker_canvas_context.fillStyle = "#"+configuration['station_footprint_color']['value'];
+				PLib.configureGroundStation(Number(temp_station['latitude']),Number(temp_station['longitude']));
+				selected_satellite_info = PLib.QuickFind(selected_satellite);
+				PLib.calcFootPrint(retroTrack.footprint, 360, Number(temp_station['latitude']), Number(temp_station['longitude']), selected_satellite_info.altitude, 0.0);
+				for (footprint_counter=0; footprint_counter<360; footprint_counter++){
+					x_pos = Math.round((retroTrack.footprint[footprint_counter].lon+180)/360*tracker_canvas_width);
+					y_pos = Math.round((180-(retroTrack.footprint[footprint_counter].lat+90))/180*tracker_canvas_height);
+					//alert(retroTrack.footprint[footprint_counter].lon);
+					tracker_canvas_context.fillRect(x_pos,y_pos,1,1);
+				}
+			}
+        }
     },
     
     plotSatellitePosition: function(curr_satellite_info, curr_satellite_name){

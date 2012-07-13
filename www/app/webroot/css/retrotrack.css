@@ -240,18 +240,20 @@ h3 {
 .menu_list li {
     display: inline;
     padding: 3px;
-    border: 1px solid #cccccc;
+    border: 1px solid #96A7CA;
     margin-right: 5px;
-    background-color: #DBD9D9;
+    background-color: #DBE2EE;
     cursor: pointer;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
 }
 
 .menu_list li:hover {
-    background-color: #C0BFBF;
+    background-color: #C4D1E4;
 }
 
 .menu_list li.ui-selected {
-    background-color: #C0BFBF;
+    background-color: #C4D1E4;
 }
 
 #satellite_parameters li {

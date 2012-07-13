@@ -84,11 +84,8 @@ $().ready(function(){
                 <li><a id="show_menu_options" rel="menu_options">Options</a></li>
             </ul>
         </div>
-        <div style="float: left;padding-left: 30px;">
-            <ol id="satellite_parameters"></ol>
-        </div>
         <div style="float: right;">
-            <div id="top_clock">-</div>
+			<ol id="satellite_parameters"></ol>
         </div>
         <div style="clear: both;"></div>
     </div>
@@ -108,6 +105,8 @@ $().ready(function(){
             <li id="show_satellite_names">Show Satellite Names</li>
             <li id="show_path">Show Satellite Path</li>
             <li id="show_satellite_footprint">Show Satellite Footprint</li>
+            <li id="show_station_footprint">Show Station Footprint</li>
+            <li id="show_station_names">Show Station Names</li>
         </ol>
     </div>
     <!-- END top menu bar -->
@@ -127,8 +126,11 @@ $().ready(function(){
                 <li><a id="show_menu_stations" rel="menu_stations">Ground Stations</a></li>
             </ul>
         </div>
+		<div style="float: left; margin-left: 20px;">
+			<ol id="station_parameters"></ol>
+		</div>
         <div style="float: right;">
-            <ol id="station_parameters">-</ol>
+			<div id="top_clock">-</div>
         </div>
         <div style="clear: both;"></div>
     </div>

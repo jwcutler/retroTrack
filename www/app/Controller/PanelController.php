@@ -37,7 +37,8 @@ class PanelController extends AppController {
         $this->set('satellite_label_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_label_color'))));
         $this->set('grid_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'grid_color'))));
         $this->set('sun_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'sun_color'))));
-        $this->set('ground_station_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'ground_station_color'))));
+        $this->set('station_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_color'))));
+        $this->set('station_selected_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_selected_color'))));
         $this->set('eclipse_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'eclipse_color'))));
         $this->set('satellite_size', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_size'))));
         $this->set('grid_alpha', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'grid_alpha'))));
@@ -45,7 +46,11 @@ class PanelController extends AppController {
         $this->set('show_path', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_path'))));
         $this->set('show_satellite_footprint', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_satellite_footprint'))));
         $this->set('show_satellite_names', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_satellite_names'))));
+        $this->set('show_station_footprint', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_station_footprint'))));
+        $this->set('show_station_names', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_station_names'))));
         $this->set('satellite_footprint_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_footprint_color'))));
+        $this->set('station_footprint_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_footprint_color'))));
+        $this->set('station_label_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_label_color'))));
         $this->set('path_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'path_color'))));
     }
     

@@ -70,9 +70,27 @@ $this->start('panel_content');
 		</div>
 	</div>
 	<div class="control-group">
-		<label class="control-label" for="config[<?php echo $ground_station_color['Configuration']['id']; ?>]">Ground Station Color</label>
+		<label class="control-label" for="config[<?php echo $station_color['Configuration']['id']; ?>]">Ground Station Color</label>
 		<div class="controls">
-			<input type="text" name="config[<?php echo $ground_station_color['Configuration']['id']; ?>]" value="<?php echo $ground_station_color['Configuration']['value']; ?>" />
+			<input type="text" name="config[<?php echo $station_color['Configuration']['id']; ?>]" value="<?php echo $station_color['Configuration']['value']; ?>" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config[<?php echo $station_selected_color['Configuration']['id']; ?>]">Selected Ground Station Color</label>
+		<div class="controls">
+			<input type="text" name="config[<?php echo $station_selected_color['Configuration']['id']; ?>]" value="<?php echo $station_selected_color['Configuration']['value']; ?>" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config[<?php echo $station_footprint_color['Configuration']['id']; ?>]">Ground Station Footprint Color</label>
+		<div class="controls">
+			<input type="text" name="config[<?php echo $station_footprint_color['Configuration']['id']; ?>]" value="<?php echo $station_footprint_color['Configuration']['value']; ?>" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config[<?php echo $station_label_color['Configuration']['id']; ?>]">Ground Station Label Color</label>
+		<div class="controls">
+			<input type="text" name="config[<?php echo $station_label_color['Configuration']['id']; ?>]" value="<?php echo $station_label_color['Configuration']['value']; ?>" />
 		</div>
 	</div>
 	<div class="control-group">
@@ -143,6 +161,20 @@ $this->start('panel_content');
 		<div class="controls">
 			<input type="checkbox" name="config_bool[<?php echo $show_satellite_footprint['Configuration']['id']; ?>]" value="<?php echo $show_satellite_footprint['Configuration']['value']; ?>" <?php if($show_satellite_footprint['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
 			<input type="hidden" name="config_bool_list[<?php echo $show_satellite_footprint['Configuration']['id']; ?>]" value="" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config_bool[<?php echo $show_station_footprint['Configuration']['id']; ?>]">Show Station Footprint</label>
+		<div class="controls">
+			<input type="checkbox" name="config_bool[<?php echo $show_station_footprint['Configuration']['id']; ?>]" value="<?php echo $show_station_footprint['Configuration']['value']; ?>" <?php if($show_station_footprint['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
+			<input type="hidden" name="config_bool_list[<?php echo $show_station_footprint['Configuration']['id']; ?>]" value="" />
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="config_bool[<?php echo $show_station_names['Configuration']['id']; ?>]">Show Station Names</label>
+		<div class="controls">
+			<input type="checkbox" name="config_bool[<?php echo $show_station_names['Configuration']['id']; ?>]" value="<?php echo $show_station_names['Configuration']['value']; ?>" <?php if($show_station_names['Configuration']['value']=='1'){echo 'checked="checked"';} ?> />
+			<input type="hidden" name="config_bool_list[<?php echo $show_station_names['Configuration']['id']; ?>]" value="" />
 		</div>
 	</div>
 	<button type="submit" class="btn btn-success">Update Configuration</button>

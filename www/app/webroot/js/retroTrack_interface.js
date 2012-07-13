@@ -206,10 +206,10 @@ $().ready(function(){
             // Add the station to active_stations
             active_stations[active_stations.length] = $(this).attr('rel');
         });
-        
+		
         // Set the active station to be the first one in the list
         selected_station = active_stations[0];
-        
+		
         // Update plot
         retroTrack.updatePlot();
     });
