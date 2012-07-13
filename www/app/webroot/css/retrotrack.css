@@ -233,7 +233,7 @@ h3 {
 }
 
 .menu_list {
-    padding-top: 10px;
+    padding-top: 5px;
     padding-bottom: 5px;
 }
 
@@ -241,11 +241,12 @@ h3 {
     display: inline;
     padding: 3px;
     border: 1px solid #96A7CA;
-    margin-right: 5px;
     background-color: #DBE2EE;
     cursor: pointer;
 	border-radius: 3px;
 	-moz-border-radius: 3px;
+	float:left;
+	margin: 3px 5px 0px 0px;
 }
 
 .menu_list li:hover {

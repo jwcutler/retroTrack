@@ -92,10 +92,12 @@ $().ready(function(){
     <div id="menu_satellites" class="menu_pane">
         <div class="menu_pane_header">Select the satellites you would like to display. Use CTRL to select multiple satellites.</div>
         <ol id="satellite_list" class="menu_list"></ol>
+		<div style="clear:both;"></div>
     </div>
     <div id="menu_groups" class="menu_pane">
         <div class="menu_pane_header">Select the groups you would like to display. Use CTRL to select multiple groups.</div>
         <ol id="group_list" class="menu_list"></ol>
+		<div style="clear:both;"></div>
     </div>
     <div id="menu_options" class="menu_pane">
         <div class="menu_pane_header">Click on any of the options below to toggle them.</div>
@@ -108,6 +110,7 @@ $().ready(function(){
             <li id="show_station_footprint">Show Station Footprint</li>
             <li id="show_station_names">Show Station Names</li>
         </ol>
+		<div style="clear:both;"></div>
     </div>
     <!-- END top menu bar -->
     
@@ -119,6 +122,7 @@ $().ready(function(){
     <div id="menu_stations" class="menu_pane">
         <div class="menu_pane_header">Select the ground stations you would like to display.</div>
         <ol id="station_list" class="menu_list"></ol>
+		<div style="clear:both;"></div>
     </div>
     <div id="bottom_menu">
         <div style="float: left;">
