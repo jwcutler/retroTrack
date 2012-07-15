@@ -69,7 +69,7 @@ You are now editing the '<?php echo $group['Group']['name']; ?>' satellite group
                 <p class="help-block">Use this to link directly to the group tracker page.</p>
             </div>
         </div>
-		<button type="submit" class="btn btn-success">Add Satellite Group</button>
+		<button type="submit" class="btn btn-success">Edit Satellite Group</button>
 		<a href="/admin/group/<?php echo $group['Group']['id']; ?>/delete" class="btn btn-danger">Delete Satellite Group</a>
 	</form>
 </div>

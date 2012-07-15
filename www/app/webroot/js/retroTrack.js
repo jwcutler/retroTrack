@@ -218,7 +218,7 @@ var retroTrack = {
 					first_y_pos = pos_y;
 					first_loop = false;
 				} else {
-					if (Math.abs(pos_x-last_x_pos)<=200){
+					if (Math.abs(pos_x-last_x_pos)<=(tracker_canvas_width/3)){
 						// Loop didn't have to jump to other side of map, so draw. 
 						tracker_canvas_context.lineTo(pos_x, pos_y);
 					}
@@ -391,7 +391,7 @@ var retroTrack = {
 						first_x_pos = x_pos;
 						first_y_pos = y_pos;
 					} else {
-						if (Math.abs(x_pos-last_x_pos)<=200){
+						if (Math.abs(x_pos-last_x_pos)<=(tracker_canvas_width/3)){
 							// Loop didn't have to jump to other side of map, so draw. 
 							tracker_canvas_context.lineTo(x_pos, y_pos);
 						}
@@ -400,7 +400,7 @@ var retroTrack = {
 					
 					last_x_pos = x_pos;
 				}
-				if (Math.abs(x_pos-first_x_pos)<=200){
+				if (Math.abs(x_pos-first_x_pos)<=(tracker_canvas_width/3)){
 					tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
 				}
 				
@@ -466,7 +466,7 @@ var retroTrack = {
 						first_x_pos = footprint_x_pos;
 						first_y_pos = footprint_y_pos;
 					} else {
-						if (Math.abs(footprint_x_pos-last_x_pos)<=200){
+						if (Math.abs(footprint_x_pos-last_x_pos)<=(tracker_canvas_width/3)){
 							// Loop didn't have to jump to other side of map, so draw. 
 							tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
 						}
@@ -475,7 +475,7 @@ var retroTrack = {
 					
 					last_x_pos = footprint_x_pos;
                 }
-				if (Math.abs(footprint_x_pos-first_x_pos)<=200){
+				if (Math.abs(footprint_x_pos-first_x_pos)<=(tracker_canvas_width/3)){
 					tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
 				}
 				

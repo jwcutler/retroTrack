@@ -140,32 +140,24 @@ class StationController extends AppController {
         // Load the station in question
         $station = $this->Station->find('first', array('conditions' => array('Station.id' => $this->params->id)));
         if($station){
-            // Make sure the station name isn't taken
-            $name_check = $this->Station->find('first', array('conditions' => array('Station.name' => $_POST['station_name'])));
-            if ($name_check){
-                // Name taken
-                $this->Session->setFlash('The ground station name \''.$station['Station']['name'].'\' is taken. Station names must be unique.', 'default', array('class' => 'alert alert-error'));
-                $this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
-            } else {
-                // Edit the station
-                $station_changes['Station']['name'] = $_POST['station_name'];
-                $station_changes['Station']['longitude'] = $_POST['station_longitude'];
-                $station_changes['Station']['latitude'] = $_POST['station_latitude'];
-                $station_changes['Station']['description'] = $_POST['station_description'];
-                $station_changes['Station']['updated_on'] = date('Y-m-d H:i:s', time());
-                $station_changes['Station']['id'] = $this->params->id;
-                
-                $edit_attempt = $this->Station->save($station_changes);
-                if ($edit_attempt){
-                    $this->Session->setFlash('Ground station \''.$station['Station']['name'].'\' successfully edited', 'default', array('class' => 'alert alert-success'));
-                    CakeLog::write('admin', '[success] Ground station \''.$station['Station']['name'].'\' edited.');
-                    $this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
-                } else {
-                    $this->Session->setFlash('There was an error editing the \''.$station['Station']['name'].'\' ground station.', 'default', array('class' => 'alert alert-error'));
-                    CakeLog::write('admin', '[error] Ground station \''.$station['Station']['name'].'\' could not be edited.');
-                    $this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
-                }
-            }
+			// Edit the station
+			$station_changes['Station']['name'] = $_POST['station_name'];
+			$station_changes['Station']['longitude'] = $_POST['station_longitude'];
+			$station_changes['Station']['latitude'] = $_POST['station_latitude'];
+			$station_changes['Station']['description'] = $_POST['station_description'];
+			$station_changes['Station']['updated_on'] = date('Y-m-d H:i:s', time());
+			$station_changes['Station']['id'] = $this->params->id;
+			
+			$edit_attempt = $this->Station->save($station_changes);
+			if ($edit_attempt){
+				$this->Session->setFlash('Ground station \''.$station['Station']['name'].'\' successfully edited', 'default', array('class' => 'alert alert-success'));
+				CakeLog::write('admin', '[success] Ground station \''.$station['Station']['name'].'\' edited.');
+				$this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
+			} else {
+				$this->Session->setFlash('There was an error editing the \''.$station['Station']['name'].'\' ground station.', 'default', array('class' => 'alert alert-error'));
+				CakeLog::write('admin', '[error] Ground station \''.$station['Station']['name'].'\' could not be edited.');
+				$this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));
+			}
         } else {
             $this->Session->setFlash('That ground station could not be found.', 'default', array('class' => 'alert alert-error'));
             $this->redirect(array('controller' => 'station', 'action' => 'index', 'admin' => true));

@@ -158,37 +158,29 @@ class GroupController extends AppController {
         // Load the group in question
         $group = $this->Group->find('first', array('conditions' => array('Group.id' => $this->params->id)));
         if($group){
-            // Make sure the group name isn't taken
-            $name_check = $this->Group->find('first', array('conditions' => array('Group.name' => $_POST['group_name'])));
-            if ($name_check){
-                // Name taken
-                $this->Session->setFlash('The group name \''.$group['Group']['name'].'\' is taken. Satellite group names must be unique.', 'default', array('class' => 'alert alert-error'));
-                $this->redirect(array('controller' => 'group', 'action' => 'index', 'admin' => true));
-            } else {
-                // Edit the group
-                $satellite_ids = array();
-                
-                // Loop through and add all of the satellite IDs
-                foreach($_POST['satellites'] as $satellite_id){
-                    array_push($satellite_ids, $satellite_id);
-                }
-                
-                // Assemble query
-                $group_changes['Group'] = array('id' => $group['Group']['id'],'name' => $_POST['group_name'], 'description' => $_POST['group_description'], 'updated_on' =>date ('Y-m-d H:i:s', time()));
-                $group_changes['Satellite'] = array('Satellite' => $satellite_ids);
-                
-                $edit_group = $this->Group->save($group_changes);
-                
-                if ($edit_group){
-                    $this->Session->setFlash('The group has been edited successfully.', 'default', array('class' => 'alert alert-success'));
-                    CakeLog::write('admin', '[success] The group \''.$_POST['group_name'].'\' has been edited.');
-                } else {
-                    $this->Session->setFlash('An error occured while editing that group. Please try again.', 'default', array('class' => 'alert alert-error'));
-                    CakeLog::write('admin', '[error] Error editing the group \''.$_POST['group_name'].'\'.');
-                }
-                
-                $this->redirect(array('controller' => 'group', 'action' => 'index'));
-            }
+			// Edit the group
+			$satellite_ids = array();
+			
+			// Loop through and add all of the satellite IDs
+			foreach($_POST['satellites'] as $satellite_id){
+				array_push($satellite_ids, $satellite_id);
+			}
+			
+			// Assemble query
+			$group_changes['Group'] = array('id' => $group['Group']['id'],'name' => $_POST['group_name'], 'description' => $_POST['group_description'], 'updated_on' =>date ('Y-m-d H:i:s', time()));
+			$group_changes['Satellite'] = array('Satellite' => $satellite_ids);
+			
+			$edit_group = $this->Group->save($group_changes);
+			
+			if ($edit_group){
+				$this->Session->setFlash('The group has been edited successfully.', 'default', array('class' => 'alert alert-success'));
+				CakeLog::write('admin', '[success] The group \''.$_POST['group_name'].'\' has been edited.');
+			} else {
+				$this->Session->setFlash('An error occured while editing that group. Please try again.', 'default', array('class' => 'alert alert-error'));
+				CakeLog::write('admin', '[error] Error editing the group \''.$_POST['group_name'].'\'.');
+			}
+			
+			$this->redirect(array('controller' => 'group', 'action' => 'index'));
         } else {
             $this->Session->setFlash('That group could not be found.', 'default', array('class' => 'alert alert-error'));
             $this->redirect(array('controller' => 'group', 'action' => 'index', 'admin' => true));
