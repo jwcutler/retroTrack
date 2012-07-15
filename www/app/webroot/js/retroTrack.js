@@ -188,8 +188,8 @@ var retroTrack = {
 			}
 			
 			// Calculate and display the path
-			tb = PLib.daynum - 0.05 * (1 / selected_satellite_plib.meanmo );
-			tf = PLib.daynum + 3 * (1 / selected_satellite_plib.meanmo );
+			tb = PLib.daynum - 0.05 * (1 / selected_satellite_plib.meanmo);
+			tf = PLib.daynum + 3 * (1 / selected_satellite_plib.meanmo);
 			PLib.daynum = tb;
 			tracker_canvas_context.beginPath();
 			last_x_pos = null;

@@ -28,6 +28,9 @@
             <li <?php if($this->params['controller']=='station'){echo "class=\"active\"";} ?>>
                 <a href="/admin/station">Ground Stations</a>
             </li>
+            <li <?php if($this->params['controller']=='export'){echo "class=\"active\"";} ?>>
+                <a href="/admin/export">Static Version Exporter</a>
+            </li>
             <li class="divider"></li>
             <li>
                 <a href="/admin/panel/logout">Logout</a>

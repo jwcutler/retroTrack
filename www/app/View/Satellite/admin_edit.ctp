@@ -20,6 +20,13 @@ Use the form below to edit the satellite.
                 <textarea name="satellite_description"><?php echo $satellite['Satellite']['description']; ?></textarea>
             </div>
         </div>
+        <div class="control-group">
+            <label class="control-label">Static Link</label>
+            <div class="controls">
+                <?php echo $this->Html->link('View Satellite', array('controller' => 'display', 'action' => 'satellite_display', $satellite['Satellite']['name'], 'admin' => false), array('class'=>'link', 'target'=>'_blank')); ?>
+                <p class="help-block">Use this to link directly to the tracker for this satellite.</p>
+            </div>
+        </div>
         <button type="submit" class="btn btn-success">Edit Satellite</button>
         <a href="/admin/satellite/<?php echo $satellite['Satellite']['id']; ?>/delete" class="btn btn-danger">Delete Satellite</a>
     </form>
