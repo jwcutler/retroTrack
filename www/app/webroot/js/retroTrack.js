@@ -165,8 +165,8 @@ var retroTrack = {
 			}
 			
 			// Calculate and display the path
-			tb = PLib.daynum - 0.05 * (1 / selected_satellite_plib.meanmo );
-			tf = PLib.daynum + 3 * (1 / selected_satellite_plib.meanmo );
+			tb = PLib.daynum - 0.05 * (1 / selected_satellite_plib.meanmo);
+			tf = PLib.daynum + 3 * (1 / selected_satellite_plib.meanmo);
 			PLib.daynum = tb;
 			while (PLib.daynum < tf){
 				// This works by running the simulation forwards to calculate the satellites position at various times

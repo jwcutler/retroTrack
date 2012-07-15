@@ -65,7 +65,7 @@ class DisplayController extends AppController {
                 $this->set('satellite_json', $this->Satellite->satellite_json($satellite_name));
                 
                 // Load the list of groups
-                $this->set('group_json', json_encode(array()));
+                $this->set('group_json', $this->Group->group_json());
                 
                 // Load the TLEs
                 $this->set('tle_json', $this->Tle->tle_json());

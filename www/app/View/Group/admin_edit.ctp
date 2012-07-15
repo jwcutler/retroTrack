@@ -62,6 +62,13 @@ You are now editing the '<?php echo $group['Group']['name']; ?>' satellite group
 				<p class="help-block">Select the satellites that you want in the group. Press CTRL to select multiple satellites.</p>
 			</div>
 		</div>
+		<div class="control-group">
+            <label class="control-label">Static Link</label>
+            <div class="controls">
+                <?php echo $this->Html->link('View Group', array('controller' => 'display', 'action' => 'group_display', $group['Group']['name'], 'admin' => false), array('class'=>'link', 'target'=>'_blank')); ?>
+                <p class="help-block">Use this to link directly to the group tracker page.</p>
+            </div>
+        </div>
 		<button type="submit" class="btn btn-success">Add Satellite Group</button>
 		<a href="/admin/group/<?php echo $group['Group']['id']; ?>/delete" class="btn btn-danger">Delete Satellite Group</a>
 	</form>

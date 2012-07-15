@@ -42,6 +42,7 @@ a.link:active {color: #666666; text-decoration: none;}
 .page_title {
     color: #224479;
     font-size: 18px;
+    margin-bottom: 20px;
 }
 
 h3 {
