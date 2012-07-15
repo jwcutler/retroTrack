@@ -138,11 +138,34 @@ var retroTrack = {
         
         // Calculate and draw the footprint
         PLib.calcFootPrint(retroTrack.footprint, 360, PLib.sun_lat, PLib.sun_lon, 149597892.0, 0.0);
+		tracker_canvas_context.beginPath();
+		last_x_pos = null;
+		first_x_pos = null;
+		first_y_pos = null;
         for (footprint_point = 0; footprint_point < 360; footprint_point++){
             footprint_x_pos = Math.round((retroTrack.footprint[footprint_point].lon + 180)/360*tracker_canvas_width);
             footprint_y_pos = Math.round((180-(retroTrack.footprint[footprint_point].lat+90))/180*tracker_canvas_height);
-            tracker_canvas_context.fillRect(footprint_x_pos,footprint_y_pos,1,1);
+			
+			if (footprint_point==0){
+				tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
+				first_x_pos = footprint_x_pos;
+				first_y_pos = footprint_y_pos;
+			} else {
+				if (footprint_x_pos>=last_x_pos){
+					tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
+				}
+				tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
+			}
+			
+			last_x_pos = footprint_x_pos;
         }
+		if (first_x_pos>=last_x_pos){
+			tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
+		}
+		
+		tracker_canvas_context.lineWidth = 1;
+		tracker_canvas_context.strokeStyle = "#"+configuration['sun_color']['value'];
+		tracker_canvas_context.stroke();
     },
     
     drawSatellitePath: function(){
@@ -168,6 +191,11 @@ var retroTrack = {
 			tb = PLib.daynum - 0.05 * (1 / selected_satellite_plib.meanmo );
 			tf = PLib.daynum + 3 * (1 / selected_satellite_plib.meanmo );
 			PLib.daynum = tb;
+			tracker_canvas_context.beginPath();
+			last_x_pos = null;
+			first_x_pos = null;
+			first_y_pos = null;
+			first_loop = true;
 			while (PLib.daynum < tf){
 				// This works by running the simulation forwards to calculate the satellites position at various times
 				PLib.Calc();
@@ -183,9 +211,25 @@ var retroTrack = {
 				
 				pos_x = Math.round((pos_lon + 180)/360 * tracker_canvas_width);
 				pos_y = Math.round((180 - (pos_lat + 90))/180 * tracker_canvas_height);
-				tracker_canvas_context.fillStyle = "#"+configuration['path_color']['value'];
-				tracker_canvas_context.fillRect(pos_x,pos_y,2,2); 
+				
+				if (first_loop){
+					tracker_canvas_context.moveTo(pos_x, pos_y);
+					first_x_pos = pos_x;
+					first_y_pos = pos_y;
+					first_loop = false;
+				} else {
+					if (Math.abs(pos_x-last_x_pos)<=200){
+						// Loop didn't have to jump to other side of map, so draw. 
+						tracker_canvas_context.lineTo(pos_x, pos_y);
+					}
+					tracker_canvas_context.moveTo(pos_x, pos_y);
+				}
+				
+				last_x_pos = pos_x;
 			}
+			tracker_canvas_context.lineWidth = 2;
+			tracker_canvas_context.strokeStyle = "#"+configuration['path_color']['value'];
+			tracker_canvas_context.stroke();
 		}
     },
     
@@ -333,12 +377,36 @@ var retroTrack = {
 				PLib.configureGroundStation(Number(temp_station['latitude']),Number(temp_station['longitude']));
 				selected_satellite_info = PLib.QuickFind(selected_satellite);
 				PLib.calcFootPrint(retroTrack.footprint, 360, Number(temp_station['latitude']), Number(temp_station['longitude']), selected_satellite_info.altitude, 0.0);
+				tracker_canvas_context.beginPath();
+				last_x_pos = null;
+				first_x_pos = null;
+				first_y_pos = null;
 				for (footprint_counter=0; footprint_counter<360; footprint_counter++){
 					x_pos = Math.round((retroTrack.footprint[footprint_counter].lon+180)/360*tracker_canvas_width);
 					y_pos = Math.round((180-(retroTrack.footprint[footprint_counter].lat+90))/180*tracker_canvas_height);
-					//alert(retroTrack.footprint[footprint_counter].lon);
-					tracker_canvas_context.fillRect(x_pos,y_pos,1,1);
+					//tracker_canvas_context.fillRect(x_pos,y_pos,1,1);
+					
+					if (footprint_counter==0){
+						tracker_canvas_context.moveTo(x_pos, y_pos);
+						first_x_pos = x_pos;
+						first_y_pos = y_pos;
+					} else {
+						if (Math.abs(x_pos-last_x_pos)<=200){
+							// Loop didn't have to jump to other side of map, so draw. 
+							tracker_canvas_context.lineTo(x_pos, y_pos);
+						}
+						tracker_canvas_context.moveTo(x_pos, y_pos);
+					}
+					
+					last_x_pos = x_pos;
 				}
+				if (Math.abs(x_pos-first_x_pos)<=200){
+					tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
+				}
+				
+				tracker_canvas_context.lineWidth = 1;
+				tracker_canvas_context.strokeStyle = "#"+configuration['station_footprint_color']['value'];
+				tracker_canvas_context.stroke();
 			}
         }
     },
@@ -384,13 +452,36 @@ var retroTrack = {
         // Plot the satellite footprint if needed
         if (curr_satellite_name==selected_satellite){
             if (configuration['show_satellite_footprint']['value']=='1'){
-                tracker_canvas_context.fillStyle = "#"+configuration['satellite_footprint_color']['value'];
                 PLib.calcFootPrint(retroTrack.footprint, 360, curr_satellite_info.latitude, curr_satellite_info.longitude, curr_satellite_info.altitude, 0.0 );
+				tracker_canvas_context.beginPath();
+				last_x_pos = null;
+				first_x_pos = null;
+				first_y_pos = null;
                 for (satellite_footprint_count=0; satellite_footprint_count<360; satellite_footprint_count++){
                     footprint_x_pos = Math.round((retroTrack.footprint[satellite_footprint_count].lon + 180) / 360 * tracker_canvas_width);
                     footprint_y_pos = Math.round((180 - (retroTrack.footprint[satellite_footprint_count].lat + 90))  / 180 * tracker_canvas_height);
-                    tracker_canvas_context.fillRect(footprint_x_pos,footprint_y_pos,1,1);
+					
+					if (satellite_footprint_count==0){
+						tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
+						first_x_pos = footprint_x_pos;
+						first_y_pos = footprint_y_pos;
+					} else {
+						if (Math.abs(footprint_x_pos-last_x_pos)<=200){
+							// Loop didn't have to jump to other side of map, so draw. 
+							tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
+						}
+						tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
+					}
+					
+					last_x_pos = footprint_x_pos;
                 }
+				if (Math.abs(footprint_x_pos-first_x_pos)<=200){
+					tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
+				}
+				
+				tracker_canvas_context.lineWidth = 1;
+				tracker_canvas_context.strokeStyle = "#"+configuration['satellite_footprint_color']['value'];
+				tracker_canvas_context.stroke();
             }
         }
     }
