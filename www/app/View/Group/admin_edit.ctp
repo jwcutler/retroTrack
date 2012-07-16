@@ -65,7 +65,7 @@ You are now editing the '<?php echo $group['Group']['name']; ?>' satellite group
 		<div class="control-group">
             <label class="control-label">Static Link</label>
             <div class="controls">
-                <?php echo $this->Html->link('View Group', array('controller' => 'display', 'action' => 'group_display', $group['Group']['name'], 'admin' => false), array('class'=>'link', 'target'=>'_blank')); ?>
+                <?php echo $this->Html->link('View Group', array('controller' => 'display', 'action' => 'group_display', urlencode($group['Group']['name']), 'admin' => false), array('class'=>'link', 'target'=>'_blank')); ?>
                 <p class="help-block">Use this to link directly to the group tracker page.</p>
             </div>
         </div>

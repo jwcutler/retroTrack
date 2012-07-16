@@ -21,11 +21,11 @@ class Satellite extends AppModel {
             )
     );
     
-    public function satellite_json($satellite_name = false, $group_name = false){
+    public function satellite_json($satellite_names = false, $group_name = false){
         /*
         Loads the specified satellite (or all of them if no argument passed) and formats it into JSON.
         
-        @param $satellite_name: Name of the satellite to load.
+        @param $satellite_names: Name of the satellite to load.
         @param $group_name: Name of the group to load satellites for.
         
         Returns:
@@ -34,15 +34,35 @@ class Satellite extends AppModel {
         
         // Load the specified satellites
         $satellites = NULL;
-        if ($satellite_name){
+        if (is_array($satellite_names)){
+            // Load each of the specified satellites
+            $satellites = array();
+            foreach ($satellite_names as $satellite_name){
+                $satellite_temp = $this->find('first', array(
+                    'conditions' => array('Satellite.name' => urldecode($satellite_name))
+                ));
+                
+                array_push($satellites, $satellite_temp);
+            }
+        } else if ($satellite_names){
             // Satellite specified, load it
             $satellite_temp = $this->find('first', array(
-                'conditions' => array('Satellite.name' => urldecode($satellite_name))
+                'conditions' => array('Satellite.name' => urldecode($satellite_names))
             ));
             $satellites = array($satellite_temp);
         } else if ($group_name){
             // Group specified, load its satellites
-            $satellites = Classregistry::init('Group')->Satellite->find('all');
+            $satellites = array();
+            $group_temp = $this->Group->find('first', array(
+                'conditions' => array('Group.name' => urldecode($group_name))
+            ));
+            foreach ($group_temp['Satellite'] as $temp_satellite){
+                // Find the satellite
+                $satellite_temp = $this->find('first', array(
+                    'conditions' => array('Satellite.name' => $temp_satellite['name'])
+                ));
+                array_push($satellites, $satellite_temp);
+            }
         } else {
             // No satellite specified, load all of them
             $satellites = $this->find('all');
@@ -51,6 +71,7 @@ class Satellite extends AppModel {
         // Create a JSON object for the satellites
         $satellite_array = array();
         foreach ($satellites as $satellite){
+            //var_dump($satellite);
             $temp_satellite = array(
                 'id' => $satellite['Satellite']['id'],
                 'name' => $satellite['Satellite']['name'],

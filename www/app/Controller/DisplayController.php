@@ -24,19 +24,19 @@ class DisplayController extends AppController {
         $this->set('title_for_layout', 'Viewing All Satellites');
         
         // Load the list of satellites
-        $this->set('satellite_json', $this->Satellite->satellite_json());
+        $this->set('satellite_json', str_replace("'", "\'", $this->Satellite->satellite_json()));
         
         // Load the list of groups
-        $this->set('group_json', $this->Group->group_json());
+        $this->set('group_json', str_replace("'", "\'", $this->Group->group_json()));
         
         // Load the TLEs
-        $this->set('tle_json', $this->Tle->tle_json());
+        $this->set('tle_json', str_replace("'", "\'", $this->Tle->tle_json()));
         
         // Load the ground stations
-        $this->set('station_json', $this->Station->station_json());
+        $this->set('station_json', str_replace("'", "\'", $this->Station->station_json()));
         
         // Load the configuration
-        $this->set('configuration_json', $this->Configuration->configuration_json());
+        $this->set('configuration_json', str_replace("'", "\'", $this->Configuration->configuration_json()));
         
         $this->set('page_title', '');
         
@@ -62,19 +62,23 @@ class DisplayController extends AppController {
                 $this->set('title_for_layout', 'Viewing Satellite \''.$satellite['Satellite']['name'].'\'');
         
                 // Load the list of satellites
-                $this->set('satellite_json', $this->Satellite->satellite_json($satellite_name));
+                $this->set('satellite_json', str_replace("'", "\'", $this->Satellite->satellite_json($satellite_name)));
                 
                 // Load the list of groups
-                $this->set('group_json', $this->Group->group_json());
+                $group_names = array();
+                foreach ($satellite['Group'] as $temp_group){
+                    array_push($group_names, $temp_group['name']);
+                }
+                $this->set('group_json', str_replace("'", "\'", $this->Group->group_json($group_names)));
                 
                 // Load the TLEs
-                $this->set('tle_json', $this->Tle->tle_json());
+                $this->set('tle_json', str_replace("'", "\'", $this->Tle->tle_json()));
         
                 // Load the ground stations
-                $this->set('station_json', $this->Station->station_json());
+                $this->set('station_json', str_replace("'", "\'", $this->Station->station_json()));
                 
                 // Load the configuration
-                $this->set('configuration_json', $this->Configuration->configuration_json());
+                $this->set('configuration_json', str_replace("'", "\'", $this->Configuration->configuration_json()));
                 
                 $this->set('page_title', 'Now viewing the \''.$satellite['Satellite']['name'].'\' satellite');
             } else {
@@ -110,19 +114,19 @@ class DisplayController extends AppController {
                 $this->set('title_for_layout', 'Viewing Group \''.$group['Group']['name'].'\'');
         
                 // Load the list of satellites
-                $this->set('satellite_json', $this->Satellite->satellite_json(false, $group_name));
+                $this->set('satellite_json', str_replace("'", "\'", $this->Satellite->satellite_json(false, $group_name)));
                 
                 // Load the list of groups
-                $this->set('group_json', $this->Group->group_json($group_name));
+                $this->set('group_json', str_replace("'", "\'", $this->Group->group_json($group_name)));
                 
                 // Load the TLEs
-                $this->set('tle_json', $this->Tle->tle_json());
+                $this->set('tle_json', str_replace("'", "\'", $this->Tle->tle_json()));
         
                 // Load the ground stations
-                $this->set('station_json', $this->Station->station_json());
+                $this->set('station_json', str_replace("'", "\'", $this->Station->station_json()));
                 
                 // Load the configuration
-                $this->set('configuration_json', $this->Configuration->configuration_json());
+                $this->set('configuration_json', str_replace("'", "\'", $this->Configuration->configuration_json()));
                 
                 $this->set('page_title', 'Now viewing the \''.$group['Group']['name'].'\' satellite group');
             } else {

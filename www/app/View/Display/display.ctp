@@ -18,6 +18,7 @@ var tles = null;
 var configuration = null;
 var selected_satellite = null;
 var selected_station = null;
+var background_image_path = null;
 
 $().ready(function(){
     /*
@@ -64,6 +65,7 @@ $().ready(function(){
     
     // Initialize retroTracker object
     $("#load_progress_message").html('Setting up retroTracker object.');
+    background_image_path = "<?php echo $this->webroot; ?>img/"+configuration['map_file']['value'];
     retroTrack.initialize('tracker_canvas');
     $("#load_progress_message").html('Complete.');
     $("#load_bar").css('width','100%');

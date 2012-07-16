@@ -16,16 +16,33 @@ class Station extends AppModel {
         )
     );
     
-    public function station_json(){
+    public function station_json($station_names = false){
         /*
         Generates a JSON representation of all of the ground stations.
+        
+        @param $station_names: An array of stations to load the JSON for.
         
         Returns:
             A JSON string representing each ground station.
         */
         
-        // Load all ground stations
-        $stations = $this->find('all');
+        // Setup
+        $stations = null;
+        
+        if (is_array($station_names)){
+            // Load all of the specified stations
+            $stations = array();
+            foreach ($station_names as $station_name){
+                $station_temp = $this->find('first', array(
+                    'conditions' => array('Station.name' => urldecode($station_name))
+                ));
+                
+                array_push($stations, $station_temp);
+            }
+        } else {
+            // Load all ground stations
+            $stations = $this->find('all');
+        }
         
         // Assemble an array containing the ground stations
         $station_array = array();

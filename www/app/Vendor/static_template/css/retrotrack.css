@@ -1,0 +1,191 @@
+/*
+retroTrack Primary Static CSS File
+*/
+
+@charset "UTF-8";
+
+/* Page Styles */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Arial",sans-serif;
+	font-size: 12px;
+}
+
+body:before {
+    /* Opera fix for CSS sticky footer */
+    content: "";
+    height: 100%;
+    float: left;
+    width: 0;
+    margin-top: -32767px;
+}
+
+/* Text Styles */
+a.link:link {color: #000000; text-decoration: underline;}
+a.link:visited {color: #000000; text-decoration: underline;}
+a.link:hover {color: #666666; text-decoration: none;}
+a.link:active {color: #666666; text-decoration: none;}
+
+/* Layout Styles */
+#wrap {
+    min-height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#content_container {
+    overflow: auto;
+    padding-bottom: 66px; /* Footer height + borders + vertical margins/padding + 10 px (margin between footer) */
+    width: 70%;
+    min-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+	position: relative;
+}
+
+#footer {
+    position: relative;
+    margin-top: -56px; /* Negation of footer height + borders + vertical margins/padding */
+    height: 50px;
+    clear: both;
+    width: 70%;
+    min-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px dotted #cccccc;
+    border-width: 2px 0px 0px 0px;
+    color: #666666;
+	font-size: 12px;
+    padding-top: 4px;
+}
+
+#footer_left {
+    width: 130px;
+    float: left;
+}
+
+#footer_middle {
+    width: 200px;
+    float: left;
+}
+
+#footer_right {
+    width: 250px;
+    float: right;
+}
+
+.browser_warning_box {
+	background-color: #f3f5f2;
+	width: 110px;
+	text-align: center;
+	color: #666666;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px dotted #cccccc;
+	font-size: 10px;
+	display: inline-block;
+	padding: 5px;
+	margin: 5px;
+}
+
+.browser_warning_box img {
+	border: 1px solid #cccccc;
+	border-width: 0px 0px 1px 0px;
+}
+
+/* retroTrack Display Styles */
+#tracker_container {
+    width: 862px;
+    margin: 0px auto 0px auto;
+}
+
+#top_menu {
+    background-color: #071831;
+    color: white;
+    padding: 5px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+#top_controls li, #bottom_menu li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 10px;
+}
+
+#top_menu a, #bottom_menu a {
+    cursor: pointer;
+}
+
+#top_menu a:hover, #bottom_menu a:hover {
+    color: #F6DC00;
+}
+
+#top_menu a:after, #bottom_menu a:after {
+    content: " ▼";
+}
+
+#top_menu a.active, #bottom_menu a.active {
+    color: #F6DC00;
+}
+
+#top_menu a.active:after, #bottom_menu a.active:after {
+    content: " ▲";
+}
+
+.menu_pane {
+    display: none;
+    background-color: #eeeeee;
+    padding: 5px;
+    border: 1px solid #071831;
+    border-width: 0px 1px 0px 1px;
+}
+
+.menu_pane_header {
+    font-size: 10px;
+}
+
+#bottom_menu {
+    background-color: #071831;
+    color: white;
+    padding: 5px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.menu_list {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.menu_list li {
+    display: inline;
+    padding: 3px;
+    border: 1px solid #96A7CA;
+    background-color: #DBE2EE;
+    cursor: pointer;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	float:left;
+	margin: 3px 5px 0px 0px;
+}
+
+.menu_list li:hover {
+    background-color: #C4D1E4;
+}
+
+.menu_list li.ui-selected {
+    background-color: #C4D1E4;
+}
+
+#satellite_parameters li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 10px;
+}
+

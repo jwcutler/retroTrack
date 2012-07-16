@@ -23,7 +23,7 @@ Use the form below to edit the satellite.
         <div class="control-group">
             <label class="control-label">Static Link</label>
             <div class="controls">
-                <?php echo $this->Html->link('View Satellite', array('controller' => 'display', 'action' => 'satellite_display', $satellite['Satellite']['name'], 'admin' => false), array('class'=>'link', 'target'=>'_blank')); ?>
+                <?php echo $this->Html->link('View Satellite', array('controller' => 'display', 'action' => 'satellite_display', urlencode($satellite['Satellite']['name']), 'admin' => false), array('class'=>'link', 'target'=>'_blank')); ?>
                 <p class="help-block">Use this to link directly to the tracker for this satellite.</p>
             </div>
         </div>

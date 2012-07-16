@@ -28,11 +28,11 @@ class Group extends AppModel {
         )
     );
     
-    public function group_json($group_name = false){
+    public function group_json($group_names = false){
         /*
         Loads the specified group (or all of them if no name passed) and formats it into JSON.
         
-        @param $group_name: Name of the group to load.
+        @param $group_names: Name(s) of the group to load.
         
         Returns:
             A JSON string representing the specified group(s).
@@ -40,10 +40,20 @@ class Group extends AppModel {
         
         // Load the specified groups
         $groups = NULL;
-        if ($group_name){
+        if (is_array($group_names)){
+            // Load each of the specified groups
+            $groups = array();
+            foreach ($group_names as $group_name){
+                $group_temp = $this->find('first', array(
+                    'conditions' => array('Group.name' => urldecode($group_name))
+                ));
+                
+                array_push($groups, $group_temp);
+            }
+        } else if ($group_names){
             // Load the specified group
             $group_temp = $this->find('first', array(
-                'conditions' => array('Group.name' => urldecode($group_name))
+                'conditions' => array('Group.name' => urldecode($group_names))
             ));
             $groups = array($group_temp);
         } else {
