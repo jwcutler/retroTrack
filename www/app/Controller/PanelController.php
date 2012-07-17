@@ -11,7 +11,7 @@ class PanelController extends AppController {
         parent::beforeFilter();
         
         // Let the user access the login page
-        $this->Auth->allow('admin_login', 'admin_add', 'admin_tleupdate', 'admin_makehash'); 
+        $this->Auth->allow('admin_login', 'admin_add', 'admin_tleupdate', 'admin_makehash', 'admin_generatehash'); 
     }
     
     public function admin_index() {
@@ -54,16 +54,28 @@ class PanelController extends AppController {
         $this->set('path_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'path_color'))));
     }
     
-    public function admin_makehash($password){
+    public function admin_generatehash(){
         /*
-        Generates a password hash for $password using the configured seed and salt.
-        
-        @param $password: The password to generate a hash for.
+        Generates a password hash for the posted password.
         */
         
-        // Generate the password hash
-        $password_hash = $this->Auth->password($password);
-        $this->set('password_hash', $password_hash);
+        $password = (isset($_POST['password']))?$_POST['password']:'';
+        $this->layout = 'ajax';
+        
+        if (isset($password)&&!empty($password)){
+            // Generate the password hash
+            $password_hash = $this->Auth->password($password);
+            $this->set('hash_response', $password_hash);
+        } else {
+            // No password specified
+            $this->set('hash_response', 'No password was specifed. Please try again.');
+        }
+    }
+    
+    public function admin_makehash(){
+        /*
+        Displays the form to generate a password hash.
+        */
     }
     
     public function admin_update_configuration(){
