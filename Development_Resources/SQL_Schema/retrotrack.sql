@@ -84,7 +84,7 @@ CREATE TABLE configurations (
 /*
 Load in initial data.
 */
-INSERT INTO `admins` (`id`, `username`, `password`) VALUES (1, 'admin', '194b948cb2a8834e39f540514cb7ce430efdba60');
+INSERT INTO `admins` (`id`, `username`, `password`) VALUES (1, 'admin', 'dummypassword');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('tle_last_update', '0');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('map_file', 'map_bg.jpg');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('clock_update_period', '1000');

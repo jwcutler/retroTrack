@@ -11,7 +11,7 @@ class PanelController extends AppController {
         parent::beforeFilter();
         
         // Let the user access the login page
-        $this->Auth->allow('admin_login', 'admin_add', 'admin_tleupdate'); 
+        $this->Auth->allow('admin_login', 'admin_add', 'admin_tleupdate', 'admin_makehash'); 
     }
     
     public function admin_index() {
@@ -52,6 +52,18 @@ class PanelController extends AppController {
         $this->set('station_footprint_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_footprint_color'))));
         $this->set('station_label_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_label_color'))));
         $this->set('path_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'path_color'))));
+    }
+    
+    public function admin_makehash($password){
+        /*
+        Generates a password hash for $password using the configured seed and salt.
+        
+        @param $password: The password to generate a hash for.
+        */
+        
+        // Generate the password hash
+        $password_hash = $this->Auth->password($password);
+        $this->set('password_hash', $password_hash);
     }
     
     public function admin_update_configuration(){
