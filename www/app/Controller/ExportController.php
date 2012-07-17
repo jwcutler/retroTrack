@@ -36,10 +36,10 @@ class ExportController extends AppController {
         
         $satellite_names = array();
         foreach ($_POST['satellites'] as $temp_satellite){
-            array_push($satellite_names, $temp_satellite);
+			array_push($satellite_names, $temp_satellite);
         }
-        $satellite_json = str_replace("'", "\'", $this->Satellite->satellite_json($satellite_names));
-        
+        $satellite_json = str_replace("'", "\'", $this->Satellite->satellite_json($satellite_names, false, false));
+		
         $station_names = array();
         foreach ($_POST['stations'] as $temp_station){
             array_push($station_names, $temp_station);

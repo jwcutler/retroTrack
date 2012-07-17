@@ -21,12 +21,13 @@ class Satellite extends AppModel {
             )
     );
     
-    public function satellite_json($satellite_names = false, $group_name = false){
+    public function satellite_json($satellite_names = false, $group_name = false, $use_decode = true){
         /*
         Loads the specified satellite (or all of them if no argument passed) and formats it into JSON.
         
         @param $satellite_names: Name of the satellite to load.
         @param $group_name: Name of the group to load satellites for.
+		@param $use_decode: Whether or not URL decode is needed.
         
         Returns:
             JSON string representing the satellite(s).
@@ -38,16 +39,21 @@ class Satellite extends AppModel {
             // Load each of the specified satellites
             $satellites = array();
             foreach ($satellite_names as $satellite_name){
+				//echo $satellite_name."-".urldecode($satellite_name)."-";
+				$satellite_name = ($use_decode)?urldecode($satellite_name):$satellite_name;
                 $satellite_temp = $this->find('first', array(
-                    'conditions' => array('Satellite.name' => urldecode($satellite_name))
+                    'conditions' => array('Satellite.name' => $satellite_name)
                 ));
+				//echo $satellite_temp."<br />";
                 
                 array_push($satellites, $satellite_temp);
             }
+			//exit;
         } else if ($satellite_names){
             // Satellite specified, load it
+			$satellite_name = ($use_decode)?urldecode($satellite_names):$satellite_names;
             $satellite_temp = $this->find('first', array(
-                'conditions' => array('Satellite.name' => urldecode($satellite_names))
+                'conditions' => array('Satellite.name' => $satellite_name)
             ));
             $satellites = array($satellite_temp);
         } else if ($group_name){
@@ -58,8 +64,9 @@ class Satellite extends AppModel {
             ));
             foreach ($group_temp['Satellite'] as $temp_satellite){
                 // Find the satellite
+				$satellite_name = ($use_decode)?urldecode($temp_satellite['name']):$temp_satellite['name'];
                 $satellite_temp = $this->find('first', array(
-                    'conditions' => array('Satellite.name' => $temp_satellite['name'])
+                    'conditions' => array('Satellite.name' => $satellite_name)
                 ));
                 array_push($satellites, $satellite_temp);
             }
