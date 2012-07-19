@@ -245,8 +245,8 @@ $(document).ready(function() {
 		<?php foreach ($tles as $tle): ?>
 			<a id="expand_tle_<?php echo $tle['Tle']['id']; ?>" title="<?php echo $tle['Tle']['id']; ?>" style="cursor: pointer; font-size: 8px;">[+]</a> <?php echo $tle['Tle']['name']; ?><br />
 			<div id="expanded_tle_<?php echo $tle['Tle']['id']; ?>" class="tle_expansion">
-				<?php echo $tle['Tle']['raw_l1']; ?><br />
-				<?php echo $tle['Tle']['raw_l2']; ?>
+				<pre><?php echo $tle['Tle']['raw_l1']; ?></pre>
+				<pre><?php echo $tle['Tle']['raw_l2']; ?></pre>
 			</div>
 		<?php endforeach; ?>
 	</div>
