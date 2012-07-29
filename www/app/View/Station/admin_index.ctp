@@ -8,7 +8,7 @@ $this->start('panel_content');
     No ground stations are currently configured. Try adding one.
 <?php else: ?>
     All currently configured ground stations are displayed below.
-    <table class="table" width="100%">
+    <table class="table table-condensed" width="100%">
 	<thead>
 	    <tr>
 		<th width="20%">Name</th>

@@ -64,7 +64,7 @@ $().ready(function(){
     $("#load_bar").css('width', '50%');
     
     // Initialize retroTracker object
-    $("#load_progress_message").html('Setting up retroTracker object.');
+    $("#load_progress_message").html('Setting up tracker object.');
     background_image_path = "<?php echo $this->webroot; ?>img/"+configuration['map_file']['value'];
     retroTrack.initialize('tracker_canvas');
     $("#load_progress_message").html('Complete.');
@@ -147,10 +147,10 @@ $().ready(function(){
 <!-- START Loading Modal -->
 <div class="modal hide" id="load_modal" style="width: 400px;margin-left: -200px;">
     <div class="modal-header">
-        <h3>Initializing retroTrack</h3>
+        <h3>Initializing <?php echo Configure::read('Website.name'); ?></h3>
     </div>
     <div class="modal-body">
-        retroTrack is currently being initialized. Please stand by.
+        <?php echo Configure::read('Website.name'); ?> is currently being initialized. Please stand by.
         <div style="padding: 10px 0px 10px 0px;">
             <span style="font-style: italic;">Progress: </span> <span id="load_progress_message"></span>
         </div>
@@ -167,7 +167,7 @@ $().ready(function(){
         <h3>Your browser does not support HTML5 canvas.</h3>
     </div>
     <div class="modal-body">
-		<p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render retroTracker. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
+		<p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render <?php echo Configure::read('Website.name'); ?>. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
 		<center>
 			<div class="browser_warning_box">
 				<a href="https://www.google.com/intl/en/chrome/browser/" style="color: #666666;">

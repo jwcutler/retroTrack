@@ -8,7 +8,7 @@ $this->start('panel_content');
 	No satellites are currently configured. Try adding some.
 <?php else: ?>
 	All currently configured satellites are displayed below.
-	<table class="table" width="100%">
+	<table class="table table-condensed" width="100%">
 		<thead>
 			<tr>
 				<th width="26%">Name</th>
