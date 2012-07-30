@@ -20,7 +20,7 @@ To install retroTrack, perform the following configurations:
 1. Modify app/Config/database.php.default to reflect your database and save it as 'database.php'
 2. Import Development_Resources/SQL_Schema/retrotrack.sql into your newly created database.
 3. Modify app/Config/core.php.default by changing the salt (line 187) and seed (line 192) to random values specific to your application and save it as 'core.php'.
-4. Change the permissions of the app/tmp directory to 755.
+4. Change the permissions of the app/tmp directory to 777.
 5. Generate an admin password hash by visiting retrotrackerlocation.com/admin/panel/makehash.
 6. Update the 'admin' user in the database by replacing 'dummypassword' with the hash you just created.
 
