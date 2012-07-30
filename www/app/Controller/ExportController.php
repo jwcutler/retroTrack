@@ -47,15 +47,22 @@ class ExportController extends AppController {
         $station_json = str_replace("'", "\'", $this->Station->station_json($station_names));
         
         $configuration_json = str_replace("'", "\'", $this->Configuration->configuration_json());
-        $tle_json = str_replace("'", "\'", $this->Tle->tle_json());
+        
+        // URL encode the satellite names for use
+        $encoded_satellites = Array();
+        foreach ($satellite_names as $satellite_name){
+            array_push($encoded_satellites, rawurlencode($satellite_name));
+        }
+        $encoded_satellites = join("_", $encoded_satellites);
         
         // Load the configuration into the template
         $static_template_contents = file_get_contents(APP."Vendor/static_template/index.html");
         $static_template_contents = str_replace('{satellite_json}', $satellite_json, $static_template_contents);
         $static_template_contents = str_replace('{group_json}', $group_json, $static_template_contents);
         $static_template_contents = str_replace('{station_json}', $station_json, $static_template_contents);
-        $static_template_contents = str_replace('{tle_json}', $tle_json, $static_template_contents);
+        $static_template_contents = str_replace('{encoded_satellites}', $encoded_satellites, $static_template_contents);
         $static_template_contents = str_replace('{configuration_json}', $configuration_json, $static_template_contents);
+        $static_template_contents = str_replace('{tle_base_path}', $_POST['tle_base_path'], $static_template_contents);
         $temp_file_name = "tmp/static_zips/temp_index_".time().".html";
         file_put_contents(APP.$temp_file_name, $static_template_contents);
         

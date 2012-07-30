@@ -59,9 +59,11 @@ class Tle extends AppModel {
         return json_encode($tles_array);
     }
     
-    public function updateTles(){
+    public function updateTles($tle_source){
         /*
         Loads & parses the specified TLE source and saves the entries into the database.
+        
+        @param $tle_source: TLE source file.
         
         Returns:
             TRUE on success.
@@ -69,7 +71,7 @@ class Tle extends AppModel {
         */
         
         // Load the file
-        $tle_file = file('http://www.celestrak.com/NORAD/elements/cubesat.txt');
+        $tle_file = file($tle_source);
         
         if ($tle_file){
             $tle_line_counter = 0;

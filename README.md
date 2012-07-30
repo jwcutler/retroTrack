@@ -49,6 +49,13 @@ After retroTrack has been installed, you can access the administration panel at 
 ### Modifying retroTrack
 If you wish to modify retroTrack tracker display page, remember to also update the static version template in app/Vendor/static_template/index.html.
 
+### CRON Updates
+retroTracks's TLE source can be updated by using a standard CRON tab. To make use of this feature, simply set up a CRON tab to call:
+
+```
+/path/to/retroTrack/app/Console/cake TleUpdate update
+```
+
 Credits
 -------
 The retroTrack satellite tracker relies heavily on [John A. Magliacane's javascript port](https://bitbucket.org/andrewtwest/orbtrak) of [Predict](http://www.qsl.net/kd2bd/predict.html).

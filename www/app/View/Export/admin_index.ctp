@@ -29,6 +29,13 @@ $(document).ready(function(){
     <div style="width: 70%; margin-top: 10px;">
 	<form action="/admin/export/generate" method="POST" class="form-horizontal">
 	    <div class="control-group">
+		<label class="control-label">TLE URL Base</label>
+		<div class="controls">
+		    <input type="text" name="tle_base_path" />
+		    <p class="help-block">The base URL to use when getting TLE's via Ajax.</p>
+		</div>
+	    </div>
+	    <div class="control-group">
 		<label class="control-label">Groups</label>
 		<div class="controls">
 		    <?php foreach ($groups as $group): ?>

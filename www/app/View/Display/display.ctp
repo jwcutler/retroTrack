@@ -25,24 +25,30 @@ $().ready(function(){
     Initialize retroTrack
     */
 	
-	// Make sure canvas is supported
-	$('#canvas_modal').modal({
+    /*
+    Make sure canvas is supported
+    */
+    $('#canvas_modal').modal({
         keyboard: false,
         backdrop: 'static',
         show: false
     });
-	if (!Modernizr.canvas){
-		$("#canvas_modal").modal('show');
-	}
+    if (!Modernizr.canvas){
+	$("#canvas_modal").modal('show');
+    }
 	
-    // Initialize the loading progress modal
+    /*
+    Initialize the loading progress modal
+    */
     $('#load_modal').modal({
         keyboard: false,
         backdrop: 'static',
         show: true
     });
     
-    // Tracker Configuration
+    /*
+    Tracker Configuration
+    */
     $("#load_progress_message").html('Loading configuration.');
     satellites = jQuery.parseJSON('<?php echo $satellite_json; ?>'); // All satellites this page can display
     active_satellites = new Array(); // Array of the IDs of all active satellites (the IDs are also the indexes in satellites)
@@ -53,7 +59,9 @@ $().ready(function(){
     configuration = jQuery.parseJSON('<?php echo $configuration_json; ?>');
     $("#load_bar").css('width','20%');
     
-    // Setup menus
+    /*
+    Setup menus
+    */
     $("#load_progress_message").html('Setting up application menus.');
     populateSatellitesMenu(satellites, active_satellites);
     populateGroupsMenu(groups);
@@ -63,14 +71,18 @@ $().ready(function(){
     initializeActiveStations();
     $("#load_bar").css('width', '50%');
     
-    // Initialize retroTracker object
+    /*
+    Initialize retroTracker object
+    */
     $("#load_progress_message").html('Setting up tracker object.');
     background_image_path = "<?php echo $this->webroot; ?>img/"+configuration['map_file']['value'];
     retroTrack.initialize('tracker_canvas');
     $("#load_progress_message").html('Complete.');
     $("#load_bar").css('width','100%');
     
-    // Hide the load progress modal
+    /*
+    Hide the load progress modal
+    */
     $('#load_modal').modal('hide')    
 });
 </script>

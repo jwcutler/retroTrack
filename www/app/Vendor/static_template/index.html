@@ -41,7 +41,9 @@
                 Initialize retroTrack
                 */
                 
-                // Make sure canvas is supported
+                /*
+                Make sure canvas is supported
+                */
                 $('#canvas_modal').modal({
                     keyboard: false,
                     backdrop: 'static',
@@ -51,25 +53,61 @@
                     $("#canvas_modal").modal('show');
                 }
                 
-                // Initialize the loading progress modal
+                /*
+                Initialize the loading progress modal
+                */
                 $('#load_modal').modal({
                     keyboard: false,
                     backdrop: 'static',
                     show: true
                 });
                 
-                // Tracker Configuration
+                /*
+                Tracker Configuration
+                */
                 $("#load_progress_message").html('Loading configuration.');
                 satellites = jQuery.parseJSON('{satellite_json}'); // All satellites this page can display
                 active_satellites = new Array(); // Array of the IDs of all active satellites (the IDs are also the indexes in satellites)
                 groups = jQuery.parseJSON('{group_json}'); // All groups this page can display
                 stations = jQuery.parseJSON('{station_json}'); // All ground stations this page can display
-                active_station = null;
-                tles = jQuery.parseJSON('{tle_json}');
                 configuration = jQuery.parseJSON('{configuration_json}');
+                active_station = null;
                 $("#load_bar").css('width','20%');
                 
-                // Setup menus
+                // Load the TLE json
+                $("#load_progress_message").html('Loading satellite TLEs.');
+                tles = new Array();
+                $.ajax({
+                    url: '{tle_base_path}{encoded_satellites}.json?callback=tlefetch',
+                    async: false,
+                    dataType: 'jsonp',
+                    success: function(data) {
+                        // TLE's loaded. Convert the array to an acceptable format
+                        for (satellite in data['satellites']){
+                            tles[satellite] = data['satellites'][satellite]['tle'];
+                        }
+                        
+                        continueSetup();
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        // Error loading TLE source
+                        $("#load_progress_message").html('Error loading satellite TLEs. Please try refreshing your browser.');
+                        $("#load_bar").parent().addClass("progress-danger");
+                        throw new Error();
+                    }
+                });
+            });
+            
+            function continueSetup(){
+                /*
+                Continues the retroTracker setup.
+                
+                jQuery doesn't not allow synchronous cross-site requests, so this function gets called after the TLEs get loaded.
+                */
+                
+                /*
+                Setup menus
+                */
                 $("#load_progress_message").html('Setting up application menus.');
                 populateSatellitesMenu(satellites, active_satellites);
                 populateGroupsMenu(groups);
@@ -79,16 +117,20 @@
                 initializeActiveStations();
                 $("#load_bar").css('width', '50%');
                 
-                // Initialize retroTracker object
+                /*
+                Initialize retroTracker object
+                */
                 $("#load_progress_message").html('Setting up tracker object.');
                 background_image_path = "img/"+configuration['map_file']['value'];
                 retroTrack.initialize('tracker_canvas');
                 $("#load_progress_message").html('Complete.');
                 $("#load_bar").css('width','100%');
                 
-                // Hide the load progress modal
-                $('#load_modal').modal('hide')    
-            });
+                /*
+                Hide the load progress modal
+                */
+                $('#load_modal').modal('hide');
+            }
             </script>
 
             <!-- START retroTrack Display -->

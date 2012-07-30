@@ -52,6 +52,7 @@ class PanelController extends AppController {
         $this->set('station_footprint_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_footprint_color'))));
         $this->set('station_label_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_label_color'))));
         $this->set('path_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'path_color'))));
+        $this->set('tle_source', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'tle_source'))));
     }
     
     public function admin_generatehash(){
@@ -146,8 +147,14 @@ class PanelController extends AppController {
         Accessed via Ajax. Outputs 'okay' on success and 'error' on error.
         */
         
+        // Load the source URL
+        $tle_source = $this->Configuration->find('first', array(
+            'conditions' => array('Configuration.name' => 'tle_source')
+        ));
+        $tle_source = $tle_source['Configuration']['value'];
+        
         // Attempt to update the TLE's
-        $update_status = $this->Tle->updateTles();
+        $update_status = $this->Tle->updateTles($tle_source);
         
         // Log the update
         if ($update_status){

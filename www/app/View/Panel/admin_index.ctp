@@ -28,6 +28,13 @@ $this->start('panel_content');
 		</div>
 	</div>
 	<div class="control-group">
+		<label class="control-label" for="config[<?php echo $tle_source['Configuration']['id']; ?>]">TLE Source</label>
+		<div class="controls">
+			<input type="text" name="config[<?php echo $tle_source['Configuration']['id']; ?>]" value="<?php echo $tle_source['Configuration']['value']; ?>" />
+			<p class="help-block">A raw TLE file containing all of the sources that need to be tracked.</p>
+		</div>
+	</div>
+	<div class="control-group">
 		<label class="control-label" for="config[<?php echo $default_ground_station['Configuration']['id']; ?>]">Default Ground Station</label>
 		<div class="controls">
 			<select name="config[<?php echo $default_ground_station['Configuration']['id']; ?>]">
