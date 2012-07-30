@@ -13,6 +13,8 @@ In addition, the retroTracker satellite tracker display requires that the user's
 * Javascript
 * HTML5 Canvas
 
+Finally, cURL must be installed and loaded into PHP.
+
 Installation
 ------------
 To install retroTrack, perform the following configurations:

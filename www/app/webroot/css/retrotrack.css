@@ -53,6 +53,23 @@ h3 {
     text-decoration: none;
 }
 
+.large_header_text {
+	color: #224479;
+	font-size: 36px;
+	font-weight: bold;
+	margin: 0px 0px 15px 0px;
+}
+
+.large_header_text_gray {
+	color: #666666;
+	font-size: 36px;
+	font-weight: normal;
+}
+
+.medium_text_block {
+	font-size: 16px;
+}
+
 /* Layout Styles */
 #wrap {
     min-height: 100%;
