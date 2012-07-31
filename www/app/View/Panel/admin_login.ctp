@@ -3,9 +3,9 @@
     
     <form action="/admin/panel/login" method="POST">
         <div class="login_form_label">Username</div>
-        <input type="text" name="username" maxlength="50" style="width: 100%;" />
+        <input type="text" name="Admin[username]" maxlength="50" style="width: 100%;" />
         <div class="login_form_label">Password</div>
-        <input type="password" name="password" style="width: 100%;" />
+        <input type="password" name="Admin[password]" style="width: 100%;" />
         
         <br /><br />
         <center>
