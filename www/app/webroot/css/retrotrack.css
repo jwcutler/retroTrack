@@ -205,6 +205,14 @@ h3 {
     border-radius: 5px 5px 0px 0px;
 }
 
+#top_controls {
+    width: 300px;
+}
+
+#bottom_controls {
+    width: 130px;
+}
+
 #top_controls li, #bottom_menu li {
     display: inline;
     list-style-type: none;

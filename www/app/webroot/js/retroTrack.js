@@ -28,7 +28,7 @@ var retroTrack = {
         
         // Initialize footprint array
         for (footprint_index=0; footprint_index < 360; footprint_index++){
-	    // Initialize satellite footprints
+	    // Initialize satellite footprint objects
 	    retroTrack.footprint[footprint_index] = new retroTrack.positionElement();
 	}
         
@@ -60,7 +60,20 @@ var retroTrack = {
         for (curr_satellite_index in active_satellites){
             // Load TLE data into PLib
             curr_satellite_name = active_satellites[curr_satellite_index];
-            PLib.tleData[PLib.tleData.length] = [curr_satellite_name, tles[curr_satellite_name]['raw_l1'], tles[curr_satellite_name]['raw_l2']];
+	    if (curr_satellite_name in tles){
+		PLib.tleData[PLib.tleData.length] = [curr_satellite_name, tles[curr_satellite_name]['raw_l1'], tles[curr_satellite_name]['raw_l2']];
+	    } else {
+		// No TLE data exists for satellite, write an error
+		$("#load_progress_message").html('No TLE information for: '+curr_satellite_name);
+		$("#load_bar").parent().addClass("progress-danger");
+		
+		//active_satellites.splice(curr_satellite_index, 1);
+		//$("[rel="+curr_satellite_name+"]").remove();
+		//alert(selected_satellite);
+		//selected_satellite = active_satellites[0];
+		//alert(selected_satellite);
+		//curr_satellite_index = curr_satellite_index - 1;
+	    }
         }
         
         // Initialize PLib
@@ -83,7 +96,7 @@ var retroTrack = {
         
         // Update the new clock
         var curr_time = new Date();
-        $("#top_clock").html(curr_time.toLocaleDateString()+" "+curr_time.getHours()+":"+curr_time.getMinutes()+":"+curr_time.getSeconds()+" (GMT - "+curr_time.getTimezoneOffset()/60+")");
+        $("#top_clock").html((curr_time.getMonth()+1)+"/"+curr_time.getDate()+"/"+curr_time.getFullYear()+" "+curr_time.getHours()+":"+curr_time.getMinutes()+":"+curr_time.getSeconds()+" (GMT - "+curr_time.getTimezoneOffset()/60+")");
     },
     
     positionElement: function(){
@@ -91,8 +104,8 @@ var retroTrack = {
         This is a simple position placeholder used to draw footprints.
         */
         
-	    this.lat = 0;
-	    this.lon = 0;
+	this.lat = 0;
+	this.lon = 0;
     },
     
     drawGrid: function(){

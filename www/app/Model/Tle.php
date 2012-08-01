@@ -55,6 +55,8 @@ class Tle extends AppModel {
             $tles_array[$tle['Tle']['name']] = $temp_tle;
         }
         
+        //unset($tles_array['DTUSAT']);
+        
         // Return the JSON
         return json_encode($tles_array);
     }
