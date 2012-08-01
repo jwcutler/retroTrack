@@ -44,7 +44,7 @@ $().ready(function() {
     </ul>
 </div>
 <div style="width: 70%; margin-top: 10px;">
-    <form action="/admin/station/<?php echo $station['Station']['id'] ?>/edit" method="POST" class="form-horizontal" id="edit_station_form">
+    <form action="<?php echo $this->webroot; ?>admin/station/<?php echo $station['Station']['id'] ?>/edit" method="POST" class="form-horizontal" id="edit_station_form">
         <div class="control-group">
             <label class="control-label" for="station_name">Ground Station Name*</label>
             <div class="controls">
@@ -70,7 +70,7 @@ $().ready(function() {
             </div>
         </div>
         <button type="submit" class="btn btn-success">Edit Ground Station</button>
-        <a href="/admin/station/<?php echo $station['Station']['id']; ?>/delete" class="btn btn-danger">Delete Ground Station</a>
+        <a href="<?php echo $this->webroot; ?>admin/station/<?php echo $station['Station']['id']; ?>/delete" class="btn btn-danger">Delete Ground Station</a>
     </form>
 </div>
 <?php

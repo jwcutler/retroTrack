@@ -9,7 +9,7 @@ $this->start('panel_content');
 <?php else: ?>
 	To create a new satellite, select the desired TLE entry from the list.
 	<div style="width: 70%; margin-top: 10px;">
-		<form action="/admin/satellite/add" method="POST" class="form-horizontal">
+		<form action="<?php echo $this->Html->url(array('controller' => 'satellite', 'action' => 'add', 'admin' => true)); ?>" method="POST" class="form-horizontal">
 			<div class="control-group">
 				<label class="control-label" for="satellite_name">Satellite Name</label>
 				<div class="controls">

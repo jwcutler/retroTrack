@@ -104,7 +104,7 @@ class ExportController extends AppController {
         unlink(APP.$temp_file_name);
         
         // Redirect the user to the download page
-        $this->Session->setFlash('Your static version of retroTrack was created. Download it <a target="_blank" href="/img/static_versions/'.$zip_file_name.'">here</a>.', 'default', array('class' => 'alert alert-success'));
+        $this->Session->setFlash('Your static version of retroTrack was created. Download it <a target="_blank" href="'.$this->webroot.'img/static_versions/'.$zip_file_name.'">here</a>.', 'default', array('class' => 'alert alert-success'));
         CakeLog::write('admin', '[success] A static version of the site was successfully created.');
         $this->redirect(array('controller' => 'panel', 'action' => 'index'));
     }

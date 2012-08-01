@@ -6,7 +6,7 @@ $this->start('panel_content');
 <h3>Editing the '<?php echo $satellite['Satellite']['name']; ?>' Satellite</h3>
 Use the form below to edit the satellite.
 <div style="width: 70%; margin-top: 10px;">
-    <form action="/admin/satellite/<?php echo $satellite['Satellite']['id']; ?>/edit" method="POST" class="form-horizontal">
+    <form action="<?php echo $this->webroot; ?>admin/satellite/<?php echo $satellite['Satellite']['id']; ?>/edit" method="POST" class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="satellite_name">Satellite Name</label>
             <div class="controls">
@@ -28,7 +28,7 @@ Use the form below to edit the satellite.
             </div>
         </div>
         <button type="submit" class="btn btn-success">Edit Satellite</button>
-        <a href="/admin/satellite/<?php echo $satellite['Satellite']['id']; ?>/delete" class="btn btn-danger">Delete Satellite</a>
+        <a href="<?php echo $this->webroot; ?>admin/satellite/<?php echo $satellite['Satellite']['id']; ?>/delete" class="btn btn-danger">Delete Satellite</a>
     </form>
 </div>
 <?php

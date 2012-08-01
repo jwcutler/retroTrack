@@ -5,7 +5,7 @@ $this->start('panel_content');
 ?>
 <h3>Tracker Configuration</h3>
 <div style="padding-bottom: 10px;">Use the form below to configure how the satellite tracker script behaves.</div>
-<form action="/admin/configuration" method="POST" class="form-horizontal">
+<form action="<?php echo $this->Html->url(array('controller' => 'panel', 'action' => 'update_configuration', 'admin' => true)); ?>" method="POST" class="form-horizontal">
 	<div class="control-group">
 		<label class="control-label" for="config[<?php echo $clock_update_period['Configuration']['id']; ?>]">Clock Update Period</label>
 		<div class="controls">
@@ -201,7 +201,7 @@ $(document).ready(function() {
 		$("#spinner_container").css('visibility', 'visible');
 		
 		// Attempt to update the TLE's
-		$.get('/admin/panel/tleupdate', function(data) {
+		$.get('<?php echo $this->webroot; ?>admin/panel/tleupdate', function(data) {
 			if (data.indexOf("okay") != -1){
 				// Success, re-enable the button and refresh the page
 				$("#update_tles").removeAttr('disabled');
@@ -242,7 +242,7 @@ $(document).ready(function() {
 <div style="padding: 10px 0px 10px 0px;">
 	<button name="update_tles" id="update_tles" class="btn btn-primary">Manually Update TLE's</button>
 	<div id="timestamp_container" style="font-style: italic;display: inline;">Last Updated: <?php echo $tle_last_update; ?></div>
-	<div id="spinner_container" style="display: inline; visibility: hidden;position: relative; top: 5px;"><img src='/img/ajax_spinner_small.gif' alt='Currently Loading TLE\'s' /></div>
+	<div id="spinner_container" style="display: inline; visibility: hidden;position: relative; top: 5px;"><?php echo $this->Html->image('ajax_spinner_small.gif'); ?></div>
 </div>
 <?php if (empty($tles)): ?>
 	No TLE's currently present in the database. Try updating.

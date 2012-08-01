@@ -17,23 +17,23 @@
                 <?php echo Configure::read('Website.name'); ?> Settings
             </li>
             <li <?php if($this->params['controller']=='panel'){echo "class=\"active\"";} ?>>
-                <a href="/admin">Main Configuration</a>
+                <a href="<?php echo $this->Html->url(array('controller' => 'panel', 'action' => 'index', 'admin' => true)); ?>">Main Configuration</a>
             </li>
             <li <?php if($this->params['controller']=='satellite'){echo "class=\"active\"";} ?>>
-                <a href="/admin/satellite">Satellites</a>
+                <a href="<?php echo $this->Html->url(array('controller' => 'satellite', 'action' => 'index', 'admin' => true)); ?>">Satellites</a>
             </li>
             <li <?php if($this->params['controller']=='group'){echo "class=\"active\"";} ?>>
-                <a href="/admin/group">Satellite Groups</a>
+                <a href="<?php echo $this->Html->url(array('controller' => 'group', 'action' => 'index', 'admin' => true)); ?>">Satellite Groups</a>
             </li>
             <li <?php if($this->params['controller']=='station'){echo "class=\"active\"";} ?>>
-                <a href="/admin/station">Ground Stations</a>
+                <a href="<?php echo $this->Html->url(array('controller' => 'station', 'action' => 'index', 'admin' => true)); ?>">Ground Stations</a>
             </li>
             <li <?php if($this->params['controller']=='export'){echo "class=\"active\"";} ?>>
-                <a href="/admin/export">Static Version Exporter</a>
+                <a href="<?php echo $this->Html->url(array('controller' => 'export', 'action' => 'index', 'admin' => true)); ?>">Static Version Exporter</a>
             </li>
             <li class="divider"></li>
             <li>
-                <a href="/admin/panel/logout">Logout</a>
+                <a href="<?php echo $this->Html->url(array('controller' => 'panel', 'action' => 'logout', 'admin' => true)); ?>">Logout</a>
             </li>
         </ul>
     </div>

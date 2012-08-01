@@ -41,7 +41,7 @@ $this->start('panel_content');
         </ul>
 	</div>
 	<div style="width: 70%; margin-top: 10px;">
-		<form action="/admin/group/add" method="POST" class="form-horizontal" id="new_group_form">
+		<form action="<?php echo $this->Html->url(array('controller' => 'group', 'action' => 'add', 'admin' => true)); ?>" method="POST" class="form-horizontal" id="new_group_form">
 			<div class="control-group">
 				<label class="control-label" for="group_name">Group Name*</label>
 				<div class="controls">

@@ -29,14 +29,14 @@ $this->start('panel_content');
                         <?php endforeach; ?>
                         <?php echo substr($group_string, 0, -2); ?>
                     </td>
-		    <td width="25%"><a href="/admin/group/<?php echo $group['Group']['id']; ?>/delete" class="btn btn-mini btn-primary">Delete</a> <a href="/admin/group/<?php echo $group['Group']['id']; ?>/edit" class="btn btn-mini btn-primary">Edit</a></td>
+		    <td width="25%"><a href="<?php echo $this->webroot; ?>admin/group/<?php echo $group['Group']['id']; ?>/delete" class="btn btn-mini btn-primary">Delete</a> <a href="<?php echo $this->webroot; ?>admin/group/<?php echo $group['Group']['id']; ?>/edit" class="btn btn-mini btn-primary">Edit</a></td>
 		</tr>
 	    <?php endforeach; ?>
 	</tbody>
     </table>
 <?php endif; ?>
 <div style="padding-top: 5px;">
-    <a href="/admin/group/add" class="btn btn-primary">Add New Group</a>
+    <a href="<?php echo $this->Html->url(array('controller' => 'group', 'action' => 'add', 'admin' => true)); ?>" class="btn btn-primary">Add New Group</a>
 </div>
 <?php
 $this->end();

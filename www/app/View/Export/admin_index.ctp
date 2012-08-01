@@ -27,7 +27,7 @@ $(document).ready(function(){
     To create a new static instance of retroTracker, select which groups and satellites you would like to include below.
 
     <div style="width: 70%; margin-top: 10px;">
-	<form action="/admin/export/generate" method="POST" class="form-horizontal">
+	<form action="<?php echo $this->Html->url(array('controller' => 'export', 'action' => 'generate', 'admin' => true)); ?>" method="POST" class="form-horizontal">
 	    <div class="control-group">
 		<label class="control-label">TLE URL Base</label>
 		<div class="controls">

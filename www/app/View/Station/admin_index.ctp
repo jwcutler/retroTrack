@@ -27,14 +27,14 @@ $this->start('panel_content');
 			Lat.: <?php echo $station['Station']['latitude']; ?><br />
 			<a href="https://maps.google.com/maps?q=<?php echo $station['Station']['latitude']; ?>,<?php echo $station['Station']['longitude']; ?>" target="_blank" class="link">View Map</a>
 		    </td>
-		    <td width="25%"><a href="/admin/station/<?php echo $station['Station']['id']; ?>/delete" class="btn btn-mini btn-primary">Delete</a> <a href="/admin/station/<?php echo $station['Station']['id']; ?>/edit" class="btn btn-mini btn-primary">Edit</a></td>
+		    <td width="25%"><a href="<?php echo $this->webroot; ?>admin/station/<?php echo $station['Station']['id']; ?>/delete" class="btn btn-mini btn-primary">Delete</a> <a href="<?php echo $this->webroot; ?>admin/station/<?php echo $station['Station']['id']; ?>/edit" class="btn btn-mini btn-primary">Edit</a></td>
 		</tr>
 	    <?php endforeach; ?>
 	</tbody>
     </table>
 <?php endif; ?>
 <div style="padding-top: 5px;">
-    <a href="/admin/station/add" class="btn btn-primary">Add New Ground Station</a>
+    <a href="<?php echo $this->Html->url(array('controller' => 'station', 'action' => 'add', 'admin' => true)); ?>" class="btn btn-primary">Add New Ground Station</a>
 </div>
 <?php
 $this->end();

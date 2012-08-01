@@ -38,7 +38,7 @@ You are now editing the '<?php echo $group['Group']['name']; ?>' satellite group
 	</ul>
 </div>
 <div style="width: 70%; margin-top: 10px;">
-	<form action="/admin/group/<?php echo $group['Group']['id']; ?>/edit" method="POST" class="form-horizontal" id="new_group_form">
+	<form action="<?php echo $this->webroot; ?>admin/group/<?php echo $group['Group']['id']; ?>/edit" method="POST" class="form-horizontal" id="new_group_form">
 		<div class="control-group">
 			<label class="control-label" for="group_name">Group Name*</label>
 			<div class="controls">
@@ -70,7 +70,7 @@ You are now editing the '<?php echo $group['Group']['name']; ?>' satellite group
             </div>
         </div>
 		<button type="submit" class="btn btn-success">Edit Satellite Group</button>
-		<a href="/admin/group/<?php echo $group['Group']['id']; ?>/delete" class="btn btn-danger">Delete Satellite Group</a>
+		<a href="<?php echo $this->webroot; ?>admin/group/<?php echo $group['Group']['id']; ?>/delete" class="btn btn-danger">Delete Satellite Group</a>
 	</form>
 </div>
 <?php
