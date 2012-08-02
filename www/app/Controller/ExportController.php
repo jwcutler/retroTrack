@@ -16,7 +16,7 @@ class ExportController extends AppController {
         
         // Load all groups
         $this->set('groups', $this->Group->find('all'));
-        $this->set('groups_json', $this->Group->group_json());
+        $this->set('groups_json', $this->Group->group_json('all'));
         
         // Load all ground stations
         $this->set('stations', $this->Station->find('all'));
@@ -81,7 +81,7 @@ class ExportController extends AppController {
             $zip_file->addFile(APP."Vendor/static_template/img/browser_chrome.gif", "img/browser_chrome.gif");
             $zip_file->addFile(APP."Vendor/static_template/img/browser_firefox.gif", "img/browser_firefox.gif");
             $zip_file->addFile(APP."Vendor/static_template/img/map_bg.jpg", "img/map_bg.jpg");
-            $zip_file->addFile(APP."Vendor/static_template/img/map_bg_simple.jpg", "img/map_bg_simple.jpg");
+            $zip_file->addFile(APP."Vendor/static_template/img/map_bg_simple.png", "img/map_bg_simple.png");
             $zip_file->addFile(APP."Vendor/static_template/img/mxl_logo.png", "img/mxl_logo.png");
             $zip_file->addFile(APP."Vendor/static_template/js/bootstrap.min.js", "js/bootstrap.min.js");
             $zip_file->addFile(APP."Vendor/static_template/js/jquery-1.7.2.min.js", "js/jquery-1.7.2.min.js");

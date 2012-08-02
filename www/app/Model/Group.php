@@ -50,6 +50,9 @@ class Group extends AppModel {
                 
                 array_push($groups, $group_temp);
             }
+		} else if ($group_names = 'all'){
+			// Load literally all groups
+			$groups = $this->find('all');
         } else if ($group_names){
             // Load the specified group
             $group_temp = $this->find('first', array(
