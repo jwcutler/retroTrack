@@ -57,24 +57,23 @@ var retroTrack = {
         PLib.sat = [];
         
         // Add everything in active_satellites
+	temp_satellites = new Array();
         for (curr_satellite_index in active_satellites){
             // Load TLE data into PLib
             curr_satellite_name = active_satellites[curr_satellite_index];
 	    if (curr_satellite_name in tles){
 		PLib.tleData[PLib.tleData.length] = [curr_satellite_name, tles[curr_satellite_name]['raw_l1'], tles[curr_satellite_name]['raw_l2']];
+		temp_satellites.push(active_satellites[curr_satellite_index]);
 	    } else {
-		// No TLE data exists for satellite, write an error
-		$("#load_progress_message").html('No TLE information for: '+curr_satellite_name);
-		$("#load_bar").parent().addClass("progress-danger");
-		
-		//active_satellites.splice(curr_satellite_index, 1);
-		//$("[rel="+curr_satellite_name+"]").remove();
-		//alert(selected_satellite);
-		//selected_satellite = active_satellites[0];
-		//alert(selected_satellite);
-		//curr_satellite_index = curr_satellite_index - 1;
+		// No TLE data exists for satellite, remove it from menus
+		//$("#load_progress_message").html('No TLE information for: '+curr_satellite_name);
+		//$("#load_bar").parent().addClass("progress-danger");
+		$("[rel="+curr_satellite_name+"]").remove();
 	    }
         }
+	
+	active_satellites = temp_satellites.slice(0);
+	selected_satellite = active_satellites[0];
         
         // Initialize PLib
         PLib.InitializeData();
