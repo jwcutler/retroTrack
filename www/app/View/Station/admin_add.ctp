@@ -44,7 +44,7 @@ $().ready(function() {
     </ul>
 </div>
 <div style="width: 70%; margin-top: 10px;">
-    <form action="/admin/station/add" method="POST" class="form-horizontal" id="new_station_form">
+    <form action="<?php echo $this->Html->url(array('controller' => 'station', 'action' => 'add', 'admin' => true)); ?>" method="POST" class="form-horizontal" id="new_station_form">
         <div class="control-group">
             <label class="control-label" for="station_name">Ground Station Name*</label>
             <div class="controls">

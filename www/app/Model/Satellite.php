@@ -44,11 +44,9 @@ class Satellite extends AppModel {
                 $satellite_temp = $this->find('first', array(
                     'conditions' => array('Satellite.name' => $satellite_name)
                 ));
-				//echo $satellite_temp."<br />";
                 
                 array_push($satellites, $satellite_temp);
             }
-			//exit;
         } else if ($satellite_names){
             // Satellite specified, load it
 			$satellite_name = ($use_decode)?urldecode($satellite_names):$satellite_names;
