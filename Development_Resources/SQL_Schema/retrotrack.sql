@@ -6,6 +6,7 @@ CREATE TABLE satellites (
     id int AUTO_INCREMENT,
     name varchar(255) NOT NULL,
     description text,
+    show_on_home tinyint NOT NULL DEFAULT '0',
     created_on datetime NOT NULL,
     updated_on datetime NOT NULL,
     PRIMARY KEY(`id`)
@@ -15,6 +16,7 @@ CREATE TABLE groups (
     id int AUTO_INCREMENT,
     name varchar(255) NOT NULL,
     description text,
+    show_on_home tinyint NOT NULL DEFAULT '0',
     created_on datetime NOT NULL,
     updated_on datetime NOT NULL,
     PRIMARY KEY(`id`)
@@ -86,7 +88,7 @@ Load in initial data.
 */
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES (1, 'admin', 'dummypassword');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('tle_last_update', '0');
-INSERT INTO `configurations` (`name`, `value`) VALUES ('map_file', 'map_bg.jpg');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('map_file', 'map_bg_simple.png');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('clock_update_period', '1000');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('map_update_period', '5000');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('default_ground_station', '0');

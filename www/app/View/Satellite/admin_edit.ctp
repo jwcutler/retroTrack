@@ -21,6 +21,13 @@ Use the form below to edit the satellite.
             </div>
         </div>
         <div class="control-group">
+            <label class="control-label" for="show_on_home">Show on Homepage</label>
+            <div class="controls">
+                <input type="checkbox" name="show_on_home" <?php if ($satellite['Satellite']['show_on_home']){echo "checked='checked'";} ?>/>
+                <p class="help-block">If this is checked, the satellite will be displayed on the main homepage tracker. Note the satellite will also be shown if any of its groups are on the homepage.</p>
+            </div>
+        </div>
+        <div class="control-group">
             <label class="control-label">Static Link</label>
             <div class="controls">
                 <?php echo $this->Html->link('View Satellite', array('controller' => 'display', 'action' => 'satellite_display', urlencode($satellite['Satellite']['name']), 'admin' => false), array('class'=>'link', 'target'=>'_blank')); ?>

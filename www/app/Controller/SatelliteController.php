@@ -49,6 +49,7 @@ class SatelliteController extends AppController {
                 // Satellite doesn't exist, try to create it
                 $new_satellite['Satellite']['name'] = $_POST['satellite_name'];
                 $new_satellite['Satellite']['description'] = $_POST['satellite_description'];
+                $new_satellite['Satellite']['show_on_home'] = (isset($_POST['show_on_home']))?'1':'0';
                 $new_satellite['Satellite']['created_on'] = date('Y-m-d H:i:s', time());
                 $new_satellite['Satellite']['updated_on'] = date('Y-m-d H:i:s', time());
                 
@@ -143,6 +144,7 @@ class SatelliteController extends AppController {
         if($satellite){
             // Edit the satellite
             $satellite_changes['Satellite']['description'] = $_POST['satellite_description'];
+            $satellite_changes['Satellite']['show_on_home'] = (isset($_POST['show_on_home']))?'1':'0';
             $satellite_changes['Satellite']['updated_on'] = date('Y-m-d H:i:s', time());
             $satellite_changes['Satellite']['id'] = $this->params->id;
             

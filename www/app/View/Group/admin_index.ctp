@@ -11,25 +11,32 @@ $this->start('panel_content');
     <table class="table table-condensed" width="100%">
 	<thead>
 	    <tr>
-		<th width="20%">Name</th>
-		<th width="30%">Description</th>
-		<th width="25%">Satellites</th>
-                <th width="25%">Actions</th>
+		<th width="17%">Name</th>
+		<th width="23%">Description</th>
+		<th width="20%">On Homepage</th>
+		<th width="20%">Satellites</th>
+                <th width="20%">Actions</th>
 	    </tr>
 	</thead>
 	<tbody>
 	    <?php foreach($groups as $group): ?>
 		<tr>
-		    <td width="20%"><?php echo $group['Group']['name']; ?></td>
-		    <td width="30%"><?php echo $group['Group']['description']; ?></td>
-                    <td width="25%">
+		    <td colspan='1'><?php echo $group['Group']['name']; ?></td>
+		    <td colspan='1'><?php echo $group['Group']['description']; ?></td>
+		    <td colspan='1'>
+			<?php if($group['Group']['show_on_home']=='1'): ?>
+			    Yes
+			<?php else: ?>
+			    No
+			<?php endif; ?>
+		    </td>
+                    <td colspan='1' style="font-size: 8px;line-height: 1.2;">
                         <?php $group_string = ""; ?>
                         <?php foreach($group['Satellite'] as $satellite): ?>
-                            <?php $group_string .= $satellite['name'].', '; ?>
+                            <?php echo $satellite['name'].'<br />'; ?>
                         <?php endforeach; ?>
-                        <?php echo substr($group_string, 0, -2); ?>
                     </td>
-		    <td width="25%"><a href="<?php echo $this->webroot; ?>admin/group/<?php echo $group['Group']['id']; ?>/delete" class="btn btn-mini btn-primary">Delete</a> <a href="<?php echo $this->webroot; ?>admin/group/<?php echo $group['Group']['id']; ?>/edit" class="btn btn-mini btn-primary">Edit</a></td>
+		    <td colspan='1'><a href="<?php echo $this->webroot; ?>admin/group/<?php echo $group['Group']['id']; ?>/delete" class="btn btn-mini btn-primary">Delete</a> <a href="<?php echo $this->webroot; ?>admin/group/<?php echo $group['Group']['id']; ?>/edit" class="btn btn-mini btn-primary">Edit</a></td>
 		</tr>
 	    <?php endforeach; ?>
 	</tbody>

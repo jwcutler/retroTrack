@@ -71,8 +71,30 @@ class Satellite extends AppModel {
                 array_push($satellites, $satellite_temp);
             }
         } else {
-            // No satellite specified, load all of them
+            // No satellite specified, find all satellites that are visible on the homepage
             $satellites = $this->find('all');
+            
+            // Loop through satellites and remove elements that aren't homepage visible
+            foreach ($satellites as $satellite_key => $temp_satellite){
+                $show_on_home = false;
+                if ($temp_satellite['Satellite']['show_on_home']=='1'){
+                    $show_on_home = true;
+                } else {
+                    // Check the groups
+                    foreach ($temp_satellite['Group'] as $temp_group){
+                        if ($temp_group['show_on_home']=='1'){
+                            $show_on_home = true;
+                        } else {
+                            $show_on_home = false;
+                        }
+                    }
+                    
+                    // Remove the satellite if needed
+                    if (!$show_on_home){
+                        unset($satellites[$satellite_key]);
+                    }
+                }
+            }
         }
         
         // Create a JSON object for the satellites

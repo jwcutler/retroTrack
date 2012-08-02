@@ -57,8 +57,10 @@ class Group extends AppModel {
             ));
             $groups = array($group_temp);
         } else {
-            // Load all groups
-            $groups = $this->find('all');
+            // Load all groups (that are homepage visible)
+            $groups = $this->find('all', array(
+                'conditions' => array('Group.show_on_home' => '1')
+            ));
         }
         
         // Package the groups into an array
