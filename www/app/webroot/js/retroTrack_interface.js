@@ -186,7 +186,7 @@ $().ready(function(){
             active_satellites[active_satellites.length] = $(this).attr('rel');
         });
         
-        // Set the active satellite to the first one in the list
+        // Set the selected satellite
         selected_satellite = active_satellites[0];
         
         // Reload the PLib Satellites

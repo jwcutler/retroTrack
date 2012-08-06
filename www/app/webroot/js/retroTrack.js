@@ -92,10 +92,15 @@ var retroTrack = {
         /*
         Updates the tracker clock at the specified frequency.
         */
+	
+	// Add time padding
+	var curr_time = new Date();
+	clock_hours = ((curr_time.getHours()+"").length==1)?'0'+curr_time.getHours():curr_time.getHours();
+	clock_minutes = ((curr_time.getMinutes()+"").length==1)?'0'+curr_time.getMinutes():curr_time.getMinutes();
+	clock_seconds = ((curr_time.getSeconds()+"").length==1)?'0'+curr_time.getSeconds():curr_time.getSeconds();
         
         // Update the new clock
-        var curr_time = new Date();
-        $("#top_clock").html((curr_time.getMonth()+1)+"/"+curr_time.getDate()+"/"+curr_time.getFullYear()+" "+curr_time.getHours()+":"+curr_time.getMinutes()+":"+curr_time.getSeconds()+" (GMT - "+curr_time.getTimezoneOffset()/60+")");
+        $("#top_clock").html((curr_time.getMonth()+1)+"/"+curr_time.getDate()+"/"+curr_time.getFullYear()+" "+clock_hours+":"+clock_minutes+":"+clock_seconds+" (GMT - "+curr_time.getTimezoneOffset()/60+")");
     },
     
     positionElement: function(){
@@ -150,33 +155,49 @@ var retroTrack = {
         
         // Calculate and draw the footprint
         PLib.calcFootPrint(retroTrack.footprint, 360, PLib.sun_lat, PLib.sun_lon, 149597892.0, 0.0);
-	tracker_canvas_context.beginPath();
 	last_x_pos = null;
+	last_y_pos = null;
 	first_x_pos = null;
 	first_y_pos = null;
+	tracker_canvas_context.beginPath();
         for (footprint_point = 0; footprint_point < 360; footprint_point++){
             footprint_x_pos = Math.round((retroTrack.footprint[footprint_point].lon + 180)/360*tracker_canvas_width);
             footprint_y_pos = Math.round((180-(retroTrack.footprint[footprint_point].lat+90))/180*tracker_canvas_height);
-			
-	    if (footprint_point==0){
-		tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
-		first_x_pos = footprint_x_pos;
-		first_y_pos = footprint_y_pos;
-	    } else {
-		if (footprint_x_pos>=last_x_pos){
-		    tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
-		}
-		tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
-	    }
 	    
-	    last_x_pos = footprint_x_pos;
+	    // Check if we looped to the other side of the map and need to box in the shadow
+	    /*if (footprint_x_pos<last_x_pos){
+		// Box in the region below the line
+		tracker_canvas_context.lineTo(tracker_canvas_width, last_y_pos);
+		tracker_canvas_context.moveTo(tracker_canvas_width, last_y_pos);
+		tracker_canvas_context.lineTo(tracker_canvas_width, tracker_canvas_height);
+		tracker_canvas_context.moveTo(tracker_canvas_width, tracker_canvas_height);
+		tracker_canvas_context.lineTo(0, tracker_canvas_height);
+		tracker_canvas_context.moveTo(0, tracker_canvas_height);
+		tracker_canvas_context.lineTo(0, footprint_y_pos);
+		tracker_canvas_context.moveTo(0, footprint_y_pos);
+		tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
+	    }*/
+	    
+	   // if (footprint_point==0){
+	//	tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
+	//	first_x_pos = footprint_x_pos;
+	//	first_y_pos = footprint_y_pos;
+	    //} else {
+		tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
+		tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
+	  //  }
+	    
+	   // last_x_pos = footprint_x_pos;
+	   // last_y_pos = footprint_y_pos;
         }
-	if (first_x_pos>=last_x_pos){
-	    tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
-	}
+	tracker_canvas_context.closePath();
 	
 	tracker_canvas_context.lineWidth = 1;
-	tracker_canvas_context.strokeStyle = "#"+configuration['sun_color']['value'];
+	//tracker_canvas_context.fillStyle = "#"+configuration['sun_color']['value'];
+	tracker_canvas_context.fillStyle = "red";
+	tracker_canvas_context.fill();
+	//tracker_canvas_context.strokeStyle = "#"+configuration['sun_color']['value'];
+	tracker_canvas_context.strokeStyle = "blue";
 	tracker_canvas_context.stroke();
     },
     
@@ -255,7 +276,7 @@ var retroTrack = {
         
         // Reload the map (clears the previous satellite positions, etc.)
         tracker_canvas_context.drawImage(map_image, 0, 0);
-        
+	
         // Clear the satellite info pane
         $("#satellite_parameters").html("");
 	$("#station_parameters").html("");
@@ -322,7 +343,7 @@ var retroTrack = {
         $("#satellite_parameters").append("<li>Orbit: #"+curr_satellite_orbit+"</li>");
     },
 	
-	updateStationBar: function(curr_station_name){
+    updateStationBar: function(curr_station_name){
         /*
         Updates the station information bar with the currently selected ground station's parameters.
         
@@ -330,13 +351,18 @@ var retroTrack = {
         */
         
 	// Display the status bar
-	$("#station_parameters").append("<li id='station_info_name'><span style='color: #"+configuration['station_selected_color']['value']+";'>"+curr_station_name+"</span></li>");
+	if (selected_satellite){
+	    selected_satellite_trimmed = (selected_satellite.length<=10)?selected_satellite:selected_satellite.substring(0,10)+"...";
+	    $("#station_parameters").append("<li id='station_info_name'><span style='color: #"+configuration['station_selected_color']['value']+";'>"+curr_station_name+"</span> - <span style='color: #"+configuration['satellite_selected_color']['value']+";'>"+selected_satellite_trimmed+"</span></li>");
+	} else {
+	     $("#station_parameters").append("<li id='station_info_name'><span style='color: #"+configuration['station_selected_color']['value']+";'>"+curr_station_name+"</span></li>");
+	}
 	$("#station_parameters").append("<li>Lat: "+Number(stations[curr_station_name]['latitude']).toFixed(3)+"</li>");
 	$("#station_parameters").append("<li>Lon: "+Number(stations[curr_station_name]['longitude']).toFixed(3)+"</li>");
 	if(selected_satellite){
 	    selected_satellite_info = PLib.QuickFind(selected_satellite);
-	    $("#station_parameters").append("<li>Az: "+selected_satellite_info.azimuth.toFixed(2)+"</li>");
-	    $("#station_parameters").append("<li>El: "+selected_satellite_info.elevation.toFixed(2)+"</li>");
+	    $("#station_parameters").append("<li>Az: "+selected_satellite_info.azimuth+"</li>");
+	    $("#station_parameters").append("<li>El: "+selected_satellite_info.elevation+"</li>");
 	    $("#station_parameters").append("<li>Range: "+selected_satellite_info.slantRange.toFixed(2)+" km</li>");
 	}
     },
