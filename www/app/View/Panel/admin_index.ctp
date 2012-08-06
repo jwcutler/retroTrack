@@ -58,6 +58,13 @@ $this->start('panel_content');
 			<p class="help-block">Alpha channel of grid. Must be [0-1].</p>
 		</div>
 	</div>
+    <div class="control-group">
+		<label class="control-label" for="config[<?php echo $shadow_alpha['Configuration']['id']; ?>]">Sun Shadow Alpha</label>
+		<div class="controls">
+			<input type="text" name="config[<?php echo $shadow_alpha['Configuration']['id']; ?>]" value="<?php echo $shadow_alpha['Configuration']['value']; ?>" />
+			<p class="help-block">Alpha channel of grid. Must be [0-1].</p>
+		</div>
+	</div>
 	<div class="control-group">
 		<label class="control-label" for="config[<?php echo $satellite_color['Configuration']['id']; ?>]">Satellite Color</label>
 		<div class="controls">
@@ -110,6 +117,12 @@ $this->start('panel_content');
 		<label class="control-label" for="config[<?php echo $grid_color['Configuration']['id']; ?>]">Grid Color</label>
 		<div class="controls">
 			<input type="text" name="config[<?php echo $grid_color['Configuration']['id']; ?>]" value="<?php echo $grid_color['Configuration']['value']; ?>" />
+		</div>
+	</div>
+    <div class="control-group">
+		<label class="control-label" for="config[<?php echo $shadow_color['Configuration']['id']; ?>]">Sun Shadow Color</label>
+		<div class="controls">
+			<input type="text" name="config[<?php echo $shadow_color['Configuration']['id']; ?>]" value="<?php echo $shadow_color['Configuration']['value']; ?>" />
 		</div>
 	</div>
 	<div class="control-group">

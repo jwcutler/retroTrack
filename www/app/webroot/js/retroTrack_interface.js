@@ -258,10 +258,16 @@ $().ready(function(){
             // Disable
             configuration[option_key]['value'] = '0';
             $(this).removeClass('ui-selected');
+            new_button_text = $(this).html().replace("Disable", "Enable");
+            new_button_text = new_button_text.replace("Hide", "Show");
+            $(this).html(new_button_text);
         } else {
             // Enable
             configuration[option_key]['value'] = '1';
             $(this).addClass('ui-selected');
+            new_button_text = $(this).html().replace("Enable", "Disable");
+            new_button_text = new_button_text.replace("Show", "Hide");
+            $(this).html(new_button_text);
         }
         
         // Update plot

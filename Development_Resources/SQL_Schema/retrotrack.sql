@@ -115,3 +115,5 @@ INSERT INTO `configurations` (`name`, `value`) VALUES ('show_station_names', '1'
 INSERT INTO `configurations` (`name`, `value`) VALUES ('station_label_color', 'D3D3FC');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('station_footprint_color', 'FFFFFF');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('tle_source', 'http://celestrak.com/NORAD/elements/cubesat.txt');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('shadow_alpha', '.4');
+INSERT INTO `configurations` (`name`, `value`) VALUES ('shadow_color', '666666');

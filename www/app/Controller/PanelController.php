@@ -58,6 +58,8 @@ class PanelController extends AppController {
         $this->set('station_label_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_label_color'))));
         $this->set('path_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'path_color'))));
         $this->set('tle_source', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'tle_source'))));
+        $this->set('shadow_alpha', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'shadow_alpha'))));
+        $this->set('shadow_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'shadow_color'))));
     }
     
     public function admin_generatehash(){
