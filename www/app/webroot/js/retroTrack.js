@@ -132,7 +132,7 @@ var retroTrack = {
     
     drawSun: function(){
         /*
-        Draws the sun and the day/night boundary.
+        Draws the sun and the day/night shadow
         */
         
         // Setup
@@ -151,7 +151,8 @@ var retroTrack = {
         
         // Set the sun indicator
         tracker_canvas_context.font = "18pt Arial";
-        tracker_canvas_context.fillText("\u2600", sun_x_pos-2, sun_y_pos+10);
+        text_width = tracker_canvas_context.measureText("\u2600").width;
+        tracker_canvas_context.fillText("\u2600", sun_x_pos-(text_width/2), sun_y_pos);
         
         // Calculate and draw the footprint
         PLib.calcFootPrint(retroTrack.footprint, 360, PLib.sun_lat, PLib.sun_lon, 149597892.0, 0.0);
@@ -159,32 +160,44 @@ var retroTrack = {
         last_y_pos = null;
         first_x_pos = null;
         first_y_pos = null;
-        tracker_canvas_context.beginPath();
         for (footprint_point = 0; footprint_point < 360; footprint_point++){
             footprint_x_pos = Math.round((retroTrack.footprint[footprint_point].lon + 180)/360*tracker_canvas_width);
             footprint_y_pos = Math.round((180-(retroTrack.footprint[footprint_point].lat+90))/180*tracker_canvas_height);
-        
+            
             // Check if we looped to the other side of the map and need to box in the shadow
-            if (footprint_x_pos<last_x_pos){
-                // Box in the region below the line
-                tracker_canvas_context.lineTo(tracker_canvas_width, last_y_pos);
-                tracker_canvas_context.lineTo(tracker_canvas_width, tracker_canvas_height);
-                tracker_canvas_context.lineTo(0, tracker_canvas_height);
-                tracker_canvas_context.lineTo(0, footprint_y_pos);
-                tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
-            } else {            
-                // Check if the sun is on the edge
-                if (footprint_point == 360-1){
+            if (sun_y_pos>(tracker_canvas_height/2)){
+                // Sun in southern hemisphere
+                if (footprint_x_pos>last_x_pos){
+                    // Box in region above the terminator
+                    tracker_canvas_context.lineTo(0, last_y_pos);
+                    tracker_canvas_context.lineTo(0, 0);
+                    tracker_canvas_context.lineTo(tracker_canvas_width, 0);
                     tracker_canvas_context.lineTo(tracker_canvas_width, footprint_y_pos);
+                }
+            } else {
+                // Sun in northern hemisphere
+                if (footprint_x_pos<last_x_pos){
+                    // Box in the region below the terminator
+                    tracker_canvas_context.lineTo(tracker_canvas_width, last_y_pos);
                     tracker_canvas_context.lineTo(tracker_canvas_width, tracker_canvas_height);
                     tracker_canvas_context.lineTo(0, tracker_canvas_height);
-                    tracker_canvas_context.lineTo(0, first_y_pos);
-                    tracker_canvas_context.lineTo(0, first_x_pos);
+                    tracker_canvas_context.lineTo(0, footprint_y_pos);
+                    tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
+                } else {            
+                    // Check if the sun is on the edge of the map
+                    if (footprint_point == 360-1){
+                        tracker_canvas_context.lineTo(tracker_canvas_width, footprint_y_pos);
+                        tracker_canvas_context.lineTo(tracker_canvas_width, tracker_canvas_height);
+                        tracker_canvas_context.lineTo(0, tracker_canvas_height);
+                        tracker_canvas_context.lineTo(0, first_y_pos);
+                        tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
+                    }
                 }
             }
         
             if (footprint_point==0){
                 tracker_canvas_context.moveTo(footprint_x_pos, footprint_y_pos);
+                tracker_canvas_context.beginPath();
                 first_x_pos = footprint_x_pos;
                 first_y_pos = footprint_y_pos;
             } else {
@@ -196,7 +209,7 @@ var retroTrack = {
         }
         tracker_canvas_context.closePath();
     
-        tracker_canvas_context.lineWidth = 1;
+        tracker_canvas_context.lineWidth = 2;
         tracker_canvas_context.globalAlpha = configuration['shadow_alpha']['value'];
         tracker_canvas_context.fillStyle = "#"+configuration['shadow_color']['value'];
         tracker_canvas_context.fill();

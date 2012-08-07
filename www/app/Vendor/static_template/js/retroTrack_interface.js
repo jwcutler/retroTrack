@@ -186,7 +186,7 @@ $().ready(function(){
             active_satellites[active_satellites.length] = $(this).attr('rel');
         });
         
-        // Set the active satellite to the first one in the list
+        // Set the selected satellite
         selected_satellite = active_satellites[0];
         
         // Reload the PLib Satellites
@@ -258,10 +258,16 @@ $().ready(function(){
             // Disable
             configuration[option_key]['value'] = '0';
             $(this).removeClass('ui-selected');
+            new_button_text = $(this).html().replace("Disable", "Enable");
+            new_button_text = new_button_text.replace("Hide", "Show");
+            $(this).html(new_button_text);
         } else {
             // Enable
             configuration[option_key]['value'] = '1';
             $(this).addClass('ui-selected');
+            new_button_text = $(this).html().replace("Enable", "Disable");
+            new_button_text = new_button_text.replace("Show", "Hide");
+            $(this).html(new_button_text);
         }
         
         // Update plot
