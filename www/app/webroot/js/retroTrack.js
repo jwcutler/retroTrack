@@ -172,6 +172,15 @@ var retroTrack = {
                 tracker_canvas_context.lineTo(0, tracker_canvas_height);
                 tracker_canvas_context.lineTo(0, footprint_y_pos);
                 tracker_canvas_context.lineTo(footprint_x_pos, footprint_y_pos);
+            } else {            
+                // Check if the sun is on the edge
+                if (footprint_point == 360-1){
+                    tracker_canvas_context.lineTo(tracker_canvas_width, footprint_y_pos);
+                    tracker_canvas_context.lineTo(tracker_canvas_width, tracker_canvas_height);
+                    tracker_canvas_context.lineTo(0, tracker_canvas_height);
+                    tracker_canvas_context.lineTo(0, first_y_pos);
+                    tracker_canvas_context.lineTo(0, first_x_pos);
+                }
             }
         
             if (footprint_point==0){
