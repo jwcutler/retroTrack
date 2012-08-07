@@ -34,6 +34,13 @@ $this->start('panel_content');
 		    <p class="help-block">If this is checked, the satellite will be displayed on the main homepage tracker. Note the satellite will also be shown if any of its groups are on the homepage.</p>
 		</div>
 	    </div>
+	    <div class="control-group">
+		<label class="control-label" for="default_on_home">Default on Homepage</label>
+		<div class="controls">
+		    <input type="checkbox" name="default_on_home" />
+		    <p class="help-block">If this is checked, the satellite will be active (i.e. selected by default) on the homepage. Note this only takes effect if the satellite is visible on the homepage (via the setting above or the satellite's groups).</p>
+		</div>
+	    </div>
 	    <button type="submit" class="btn btn-success">Add Satellite</button>
 	</form>
     </div>

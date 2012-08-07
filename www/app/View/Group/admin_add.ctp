@@ -62,6 +62,13 @@ $this->start('panel_content');
 				</div>
 			</div>
 			<div class="control-group">
+			<label class="control-label" for="default_on_home">Default on Homepage</label>
+			<div class="controls">
+				<input type="checkbox" name="default_on_home" />
+				<p class="help-block">If this is checked, the group and all of its satellites (regardless of their individual settings) will be automatically selected on the homepage.</p>
+			</div>
+	    </div>
+			<div class="control-group">
 				<label class="control-label" for="satellites">Satellites*</label>
 				<div class="controls">
 					<select name="satellites[]" multiple="multiple">

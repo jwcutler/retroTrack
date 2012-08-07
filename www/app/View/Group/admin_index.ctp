@@ -11,10 +11,10 @@ $this->start('panel_content');
     <table class="table table-condensed" width="100%">
 	<thead>
 	    <tr>
-		<th width="17%">Name</th>
-		<th width="23%">Description</th>
+		<th width="20%">Name</th>
 		<th width="20%">On Homepage</th>
-		<th width="20%">Satellites</th>
+		<th width="15%">Default</th>
+		<th width="25%">Satellites</th>
                 <th width="20%">Actions</th>
 	    </tr>
 	</thead>
@@ -22,9 +22,15 @@ $this->start('panel_content');
 	    <?php foreach($groups as $group): ?>
 		<tr>
 		    <td colspan='1'><?php echo $group['Group']['name']; ?></td>
-		    <td colspan='1'><?php echo $group['Group']['description']; ?></td>
 		    <td colspan='1'>
 			<?php if($group['Group']['show_on_home']=='1'): ?>
+			    Yes
+			<?php else: ?>
+			    No
+			<?php endif; ?>
+		    </td>
+		    <td colspan='1'>
+			<?php if($group['Group']['default_on_home']=='1'): ?>
 			    Yes
 			<?php else: ?>
 			    No

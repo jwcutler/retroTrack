@@ -7,6 +7,7 @@ CREATE TABLE satellites (
     name varchar(255) NOT NULL,
     description text,
     show_on_home tinyint NOT NULL DEFAULT '0',
+    default_on_home tinyint NOT NULL DEFAULT '0',
     created_on datetime NOT NULL,
     updated_on datetime NOT NULL,
     PRIMARY KEY(`id`)
@@ -17,6 +18,7 @@ CREATE TABLE groups (
     name varchar(255) NOT NULL,
     description text,
     show_on_home tinyint NOT NULL DEFAULT '0',
+    default_on_home tinyint NOT NULL DEFAULT '0',
     created_on datetime NOT NULL,
     updated_on datetime NOT NULL,
     PRIMARY KEY(`id`)
@@ -84,7 +86,7 @@ CREATE TABLE configurations (
 );
 
 /*
-Load in initial data.
+Load in initial data and default configurations.
 */
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES (1, 'admin', 'dummypassword');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('tle_last_update', '0');

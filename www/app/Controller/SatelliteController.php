@@ -50,6 +50,7 @@ class SatelliteController extends AppController {
                 $new_satellite['Satellite']['name'] = $_POST['satellite_name'];
                 $new_satellite['Satellite']['description'] = $_POST['satellite_description'];
                 $new_satellite['Satellite']['show_on_home'] = (isset($_POST['show_on_home']))?'1':'0';
+                $new_satellite['Satellite']['default_on_home'] = (isset($_POST['default_on_home']))?'1':'0';
                 $new_satellite['Satellite']['created_on'] = date('Y-m-d H:i:s', time());
                 $new_satellite['Satellite']['updated_on'] = date('Y-m-d H:i:s', time());
                 
@@ -145,6 +146,7 @@ class SatelliteController extends AppController {
             // Edit the satellite
             $satellite_changes['Satellite']['description'] = $_POST['satellite_description'];
             $satellite_changes['Satellite']['show_on_home'] = (isset($_POST['show_on_home']))?'1':'0';
+            $satellite_changes['Satellite']['default_on_home'] = (isset($_POST['default_on_home']))?'1':'0';
             $satellite_changes['Satellite']['updated_on'] = date('Y-m-d H:i:s', time());
             $satellite_changes['Satellite']['id'] = $this->params->id;
             

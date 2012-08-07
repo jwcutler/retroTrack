@@ -55,7 +55,14 @@ You are now editing the '<?php echo $group['Group']['name']; ?>' satellite group
 			<label class="control-label" for="show_on_home">Show on Homepage</label>
 			<div class="controls">
 				<input type="checkbox" name="show_on_home" <?php if($group['Group']['show_on_home']=='1'){echo "checked='checked'";} ?>/>
-				<p class="help-block">If this is checked, the group and all of its satellites will be shown on the homepage tracker (regardless of their individual settings).</p>
+				<p class="help-block">If this is checked, the group and all of its satellites (regardless of their individual settings) will be shown on the homepage tracker.</p>
+			</div>
+	    </div>
+	    <div class="control-group">
+			<label class="control-label" for="default_on_home">Default on Homepage</label>
+			<div class="controls">
+				<input type="checkbox" name="default_on_home" <?php if($group['Group']['default_on_home']=='1'){echo "checked='checked'";} ?>/>
+				<p class="help-block">If this is checked, the group and all of its satellites (regardless of their individual settings) will be automatically selected on the homepage.</p>
 			</div>
 	    </div>
 		<div class="control-group">

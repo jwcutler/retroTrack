@@ -28,6 +28,13 @@ Use the form below to edit the satellite.
             </div>
         </div>
         <div class="control-group">
+            <label class="control-label" for="default_on_home">Default on Homepage</label>
+            <div class="controls">
+                <input type="checkbox" name="default_on_home" <?php if ($satellite['Satellite']['default_on_home']){echo "checked='checked'";} ?>/>
+                <p class="help-block">If this is checked, the satellite will be active (i.e. selected by default) on the homepage. Note this only takes effect if the satellite is visible on the homepage (via the setting above or the satellite's groups).</p>
+            </div>
+        </div>
+        <div class="control-group">
             <label class="control-label">Static Link</label>
             <div class="controls">
                 <?php echo $this->Html->link('View Satellite', array('controller' => 'display', 'action' => 'satellite_display', urlencode($satellite['Satellite']['name']), 'admin' => false), array('class'=>'link', 'target'=>'_blank')); ?>

@@ -56,10 +56,12 @@ class GroupController extends AppController {
                 
                 // Assemble query
                 $show_on_home = (isset($_POST['show_on_home']))?'1':'0';
+                $default_on_home = (isset($_POST['default_on_home']))?'1':'0';
                 $new_group['Group'] = array(
                     'name' => $_POST['group_name'],
                     'description' => $_POST['group_description'],
                     'show_on_home' => $show_on_home,
+                    'default_on_home' => $default_on_home,
                     'created_on' => date('Y-m-d H:i:s', time()),
                     'updated_on' =>date ('Y-m-d H:i:s', time())
                 );
@@ -175,11 +177,13 @@ class GroupController extends AppController {
 			
 			// Assemble query
             $show_on_home = (isset($_POST['show_on_home']))?'1':'0';
+            $default_on_home = (isset($_POST['default_on_home']))?'1':'0';
 			$group_changes['Group'] = array(
                 'id' => $group['Group']['id'],
                 'name' => $_POST['group_name'],
                 'description' => $_POST['group_description'],
                 'show_on_home' => $show_on_home,
+                'default_on_home' => $default_on_home,
                 'updated_on' =>date ('Y-m-d H:i:s', time())
             );
 			$group_changes['Satellite'] = array('Satellite' => $satellite_ids);
