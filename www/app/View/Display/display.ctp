@@ -77,13 +77,6 @@ $().ready(function(){
     $("#load_progress_message").html('Setting up tracker object.');
     background_image_path = "<?php echo $this->webroot; ?>img/"+configuration['map_file']['value'];
     retroTrack.initialize('tracker_canvas');
-    $("#load_progress_message").html('Complete.');
-    $("#load_bar").css('width','100%');
-    
-    /*
-    Hide the load progress modal
-    */
-    $('#load_modal').modal('hide')    
 });
 </script>
 

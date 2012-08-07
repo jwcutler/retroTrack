@@ -34,6 +34,12 @@ var retroTrack = {
         
         // Load the map
         retroTrack.loadMap();
+    },
+    
+    continueInitialization: function(){
+        /*
+        Continue the initialization. A seperate function is needed to allow the script to pause while the image is loaded.
+        */
         
         // Initialize PLib
         retroTrack.setPlibSatellites();
@@ -46,6 +52,11 @@ var retroTrack = {
         retroTrack.updatePlot();
         retroTrack.updatePlot(); // For some reason this needs to be called twice initially for the sun to display correctly
         setInterval(retroTrack.updatePlot, configuration['map_update_period']['value']);
+        
+        // Hide the modal
+        $("#load_bar").css('width','100%');
+        $("#load_progress_message").html('Complete.');
+        $('#load_modal').modal('hide');
     },
     
     setPlibSatellites: function(){
@@ -83,8 +94,16 @@ var retroTrack = {
         Loads the map image into a variable for later use
         */
         
+        // Update progress bar
+        $("#load_bar").css('width','70%');
+        $("#load_progress_message").html('Loading map image.');
+        
         map_image = new Image();
         map_image.src = background_image_path;
+        map_image.onload = function(){
+            // Continue program execution once image has loaded
+            retroTrack.continueInitialization();
+        }
     },
     
     updateClock: function(){
