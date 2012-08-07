@@ -114,18 +114,30 @@ function initializeActiveSatellites(){
     Initializes active_satellites to be all available satellites.
     */
     
-    // Loop through all of the passed satellites
+    // Loop through all of the default satellites
     active_satellites = [];
-    for (curr_satellite_index in satellites){
+    for (curr_satellite_index in default_elements['satellites']){
         // Add to active_satellites
-        active_satellites[active_satellites.length] = satellites[curr_satellite_index]['name'];
+        if (default_elements['satellites'][curr_satellite_index]['id'] in satellites){
+            active_satellites[active_satellites.length] = default_elements['satellites'][curr_satellite_index]['name'];
+            $('#select_satellite_'+default_elements['satellites'][curr_satellite_index]['id']).addClass('ui-selected');
+        }
     }
     
     // Set the active satellite to the first one in the list
     selected_satellite = active_satellites[0];
+}
+
+function initializeActiveGroups(){
+    /*
+    Selects the default groups.
+    */
     
-    // Select all satellites in the menu
-    $("#satellite_list").children().addClass('ui-selected');
+    // Loop through all of the default groups
+    for (curr_group_index in default_elements['groups']){
+        // Select the group
+        $("#select_group_"+default_elements['groups'][curr_group_index]).addClass('ui-selected');
+    }
 }
 
 function initializeActiveStations(){

@@ -19,6 +19,7 @@ var configuration = null;
 var selected_satellite = null;
 var selected_station = null;
 var background_image_path = null;
+var default_elements = null;
 
 $().ready(function(){
     /*
@@ -54,6 +55,7 @@ $().ready(function(){
     active_satellites = new Array(); // Array of the IDs of all active satellites (the IDs are also the indexes in satellites)
     groups = jQuery.parseJSON('<?php echo $group_json; ?>'); // All groups this page can display
     stations = jQuery.parseJSON('<?php echo $station_json; ?>'); // All ground stations this page can display
+    default_elements = jQuery.parseJSON('<?php echo $default_elements; ?>'); // Default elements
     active_station = null;
     tles = jQuery.parseJSON('<?php echo $tle_json; ?>');
     configuration = jQuery.parseJSON('<?php echo $configuration_json; ?>');
@@ -68,6 +70,7 @@ $().ready(function(){
     populateStationsMenu(stations, active_station);
     populateOptionsMenu(configuration);
     initializeActiveSatellites();
+    initializeActiveGroups();
     initializeActiveStations();
     $("#load_bar").css('width', '50%');
     

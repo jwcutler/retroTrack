@@ -39,7 +39,7 @@ class DisplayController extends AppController {
         $this->set('configuration_json', str_replace("'", "\'", $this->Configuration->configuration_json()));
         
         // Load the active satellites
-        $this->set('active_elements', str_replace("'", "\'", $this->Satellite->satellite_json()));
+        $this->set('default_elements', str_replace("'", "\'", $this->Satellite->default_element_json()));
         
         // Render the main display view
         $this->render('display');
