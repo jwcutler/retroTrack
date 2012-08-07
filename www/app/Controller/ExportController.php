@@ -39,6 +39,8 @@ class ExportController extends AppController {
 			array_push($satellite_names, $temp_satellite);
         }
         $satellite_json = str_replace("'", "\'", $this->Satellite->satellite_json($satellite_names, false, false));
+        
+        $default_elements = str_replace("'", "\'", $this->Satellite->default_element_json());
 		
         $station_names = array();
         foreach ($_POST['stations'] as $temp_station){
@@ -60,6 +62,7 @@ class ExportController extends AppController {
         $static_template_contents = str_replace('{satellite_json}', $satellite_json, $static_template_contents);
         $static_template_contents = str_replace('{group_json}', $group_json, $static_template_contents);
         $static_template_contents = str_replace('{station_json}', $station_json, $static_template_contents);
+        $static_template_contents = str_replace('{default_elements}', $default_elements, $static_template_contents);
         $static_template_contents = str_replace('{encoded_satellites}', $encoded_satellites, $static_template_contents);
         $static_template_contents = str_replace('{configuration_json}', $configuration_json, $static_template_contents);
         $static_template_contents = str_replace('{tle_base_path}', $_POST['tle_base_path'], $static_template_contents);

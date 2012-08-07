@@ -60,7 +60,10 @@ class Satellite extends AppModel {
         ));
         foreach($default_satellites as $default_satellite){
             // Add the satellite to the default array
-            array_push($default_array['satellites'], $default_satellite['Satellite']['name']);
+            array_push($default_array['satellites'], array(
+                'name' => $default_satellite['Satellite']['name'],
+                'id' => $default_satellite['Satellite']['id']
+            ));
         }
         
         return json_encode($default_array);

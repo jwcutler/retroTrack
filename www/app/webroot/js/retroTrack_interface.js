@@ -116,11 +116,23 @@ function initializeActiveSatellites(){
     
     // Loop through all of the default satellites
     active_satellites = [];
-    for (curr_satellite_index in default_elements['satellites']){
-        // Add to active_satellites
-        if (default_elements['satellites'][curr_satellite_index]['id'] in satellites){
-            active_satellites[active_satellites.length] = default_elements['satellites'][curr_satellite_index]['name'];
-            $('#select_satellite_'+default_elements['satellites'][curr_satellite_index]['id']).addClass('ui-selected');
+    if (default_elements['satellites'].length!=0){
+        for (curr_satellite_index in default_elements['satellites']){
+            // Add to active_satellites
+            if (default_elements['satellites'][curr_satellite_index]['id'] in satellites){
+                active_satellites[active_satellites.length] = default_elements['satellites'][curr_satellite_index]['name'];
+                $('#select_satellite_'+default_elements['satellites'][curr_satellite_index]['id']).addClass('ui-selected');
+            }
+        }
+    } else {
+        // Select the first satellite
+        if (satellites.length!=0){
+            for (curr_satellite_index in satellites){
+                // Add to active_satellites
+                active_satellites[active_satellites.length] = satellites[curr_satellite_index]['name'];
+                $('#select_satellite_'+satellites[curr_satellite_index]['id']).addClass('ui-selected');
+                break;
+            }
         }
     }
     
