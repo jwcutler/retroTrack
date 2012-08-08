@@ -3,12 +3,17 @@ $this->extend('/Common/admin_panel');
 
 $this->start('panel_content');
 ?>
+<?php echo $this->Html->script('chosen.jquery.min.js'); ?>
+<?php echo $this->Html->css('chosen.css'); ?>
 <h3>Create New Satellite Group</h3>
 <?php if (empty($satellites)): ?>
 	You can not create a new group because no satellites are currently configured. Go to the <a href="/admin/satellite/add" class="link">satellite creation page</a> to add one.
 <?php else: ?>
 	<script type="text/javascript">
-	$().ready(function() {
+	$(document).ready(function() {
+		// Setup the select box
+		$("#satellites").chosen();
+		
 		// Form validation
 		var container = $("div.form_errors");
 		$("#new_group_form").validate({
@@ -49,6 +54,17 @@ $this->start('panel_content');
 				</div>
 			</div>
 			<div class="control-group">
+				<label class="control-label" for="satellites">Satellites*</label>
+				<div class="controls">
+					<select name="satellites[]" multiple="multiple" id="satellites" style="width: 350px;">
+						<?php foreach($satellites as $satellite): ?>
+							<option value="<?php echo $satellite['Satellite']['id']; ?>"><?php echo $satellite['Satellite']['name']; ?></option>
+						<?php endforeach; ?>
+					</select>
+					<p class="help-block">Select the satellites that you want in the group. Press CTRL to select multiple satellites.</p>
+				</div>
+			</div>
+			<div class="control-group">
 				<label class="control-label" for="group_description">Group Description</label>
 				<div class="controls">
 					<textarea name="group_description"></textarea>
@@ -62,21 +78,10 @@ $this->start('panel_content');
 				</div>
 			</div>
 			<div class="control-group">
-			<label class="control-label" for="default_on_home">Default on Homepage</label>
-			<div class="controls">
-				<input type="checkbox" name="default_on_home" />
-				<p class="help-block">If this is checked, the group and all of its satellites (regardless of their individual settings) will be automatically selected on the homepage.</p>
-			</div>
-	    </div>
-			<div class="control-group">
-				<label class="control-label" for="satellites">Satellites*</label>
+				<label class="control-label" for="default_on_home">Default on Homepage</label>
 				<div class="controls">
-					<select name="satellites[]" multiple="multiple">
-						<?php foreach($satellites as $satellite): ?>
-							<option value="<?php echo $satellite['Satellite']['id']; ?>"><?php echo $satellite['Satellite']['name']; ?></option>
-						<?php endforeach; ?>
-					</select>
-					<p class="help-block">Select the satellites that you want in the group. Press CTRL to select multiple satellites.</p>
+					<input type="checkbox" name="default_on_home" />
+					<p class="help-block">If this is checked, the group and all of its satellites (regardless of their individual settings) will be automatically selected on the homepage.</p>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-success">Add Satellite Group</button>

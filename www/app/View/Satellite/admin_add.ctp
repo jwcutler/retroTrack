@@ -3,6 +3,14 @@ $this->extend('/Common/admin_panel');
 
 $this->start('panel_content');
 ?>
+<?php echo $this->Html->script('chosen.jquery.min.js'); ?>
+<?php echo $this->Html->css('chosen.css'); ?>
+<script type="text/javascript">
+$(document).ready(function(){
+    // Update the satellite select box
+    $("#satellite_name").chosen();
+});
+</script>
 <h3>Create New Satellite</h3>
 <?php if (empty($tle_names)): ?>
     A new satellite can not be added because no TLE's are configured. <a href="/admin" class="link">Import TLE's Here</a>.
@@ -13,7 +21,7 @@ $this->start('panel_content');
 	    <div class="control-group">
 		<label class="control-label" for="satellite_name">Satellite Name</label>
 		<div class="controls">
-		    <select name="satellite_name">
+		    <select name="satellite_name" id="satellite_name">
 			<?php foreach ($tle_names as $tle_name): ?>
 			    <option value="<?php echo $tle_name['Tle']['name'] ?>"><?php echo $tle_name['Tle']['name'] ?></option>
 			<?php endforeach; ?>
