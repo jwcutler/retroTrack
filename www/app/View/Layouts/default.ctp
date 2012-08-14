@@ -25,11 +25,11 @@
     </div>
     <div id="footer">
 	<div id="footer_left">
-	    <?php echo $this->Html->image('mxl_logo.png'); ?>
+	    <a href="http://exploration.engin.umich.edu/" target="_blank" class="link"><?php echo $this->Html->image('mxl_logo.png'); ?></a>
 	</div>
 	<div id="footer_middle">
-	    Copyright &copy; 2012 James W. Cutler<br />
-	    Developed by <a href="http://exploration.engin.umich.edu/" target="_blank" class="link">MXL</a>
+	    Copyright &copy; Regents of the University of Michigan<br />
+	    Visit <a href="https://github.com/jwcutler/retroTrack" target="_blank" class="link"><?php echo Configure::read('Website.name'); ?> on github</a>
 	</div>
 	<div id="footer_right">
 	    <span style="color: red;">Note: This application is in a BETA state and may occasionally not behave as expected.</span>

@@ -312,7 +312,6 @@ var retroTrack = {
         tracker_canvas_context.drawImage(map_image, 0, 0);
     
         // Clear the satellite info pane
-        $("#satellite_parameters").html("");
         $("#station_parameters").html("");
         
         // Plot the grid (if configured)
@@ -367,6 +366,7 @@ var retroTrack = {
         curr_satellite_orbit = PLib.rv;
         
         // Display the satellite information.
+        $("#satellite_parameters").html("");
         $("#satellite_parameters").append("<li id='satellite_info_name'><span style='color: #"+configuration['satellite_selected_color']['value']+";'>"+curr_satellite_name+"</span></li>");
         $("#satellite_parameters").append("<li>Lat: "+curr_satellite_info.latitude.toFixed(1)+"</li>");
         $("#satellite_parameters").append("<li>Lon: "+curr_satellite_info.longitude.toFixed(1)+"</li>");
@@ -439,42 +439,44 @@ var retroTrack = {
             tracker_canvas_context.fillText(curr_station_name, text_x_pos, text_y_pos);
         }
         
-        // Show the footprint for every station
+        // Show the footprint for active station
         if (configuration['show_station_footprint']['value']=='1'){
-            tracker_canvas_context.fillStyle = "#"+configuration['station_footprint_color']['value'];
-            PLib.configureGroundStation(Number(temp_station['latitude']),Number(temp_station['longitude']));
-            selected_satellite_info = PLib.QuickFind(selected_satellite);
-            PLib.calcFootPrint(retroTrack.footprint, 360, Number(temp_station['latitude']), Number(temp_station['longitude']), selected_satellite_info.altitude, 0.0);
-            tracker_canvas_context.beginPath();
-            last_x_pos = null;
-            first_x_pos = null;
-            first_y_pos = null;
-            for (footprint_counter=0; footprint_counter<360; footprint_counter++){
-                x_pos = Math.round((retroTrack.footprint[footprint_counter].lon+180)/360*tracker_canvas_width);
-                y_pos = Math.round((180-(retroTrack.footprint[footprint_counter].lat+90))/180*tracker_canvas_height);
-                //tracker_canvas_context.fillRect(x_pos,y_pos,1,1);
-                
-                if (footprint_counter==0){
-                    tracker_canvas_context.moveTo(x_pos, y_pos);
-                    first_x_pos = x_pos;
-                    first_y_pos = y_pos;
-                } else {
-                    if (Math.abs(x_pos-last_x_pos)<=(tracker_canvas_width/3)){
-                    // Loop didn't have to jump to other side of map, so draw. 
-                    tracker_canvas_context.lineTo(x_pos, y_pos);
+            if (curr_station_name == selected_station){
+                tracker_canvas_context.fillStyle = "#"+configuration['station_footprint_color']['value'];
+                PLib.configureGroundStation(Number(temp_station['latitude']),Number(temp_station['longitude']));
+                selected_satellite_info = PLib.QuickFind(selected_satellite);
+                PLib.calcFootPrint(retroTrack.footprint, 360, Number(temp_station['latitude']), Number(temp_station['longitude']), selected_satellite_info.altitude, 0.0);
+                tracker_canvas_context.beginPath();
+                last_x_pos = null;
+                first_x_pos = null;
+                first_y_pos = null;
+                for (footprint_counter=0; footprint_counter<360; footprint_counter++){
+                    x_pos = Math.round((retroTrack.footprint[footprint_counter].lon+180)/360*tracker_canvas_width);
+                    y_pos = Math.round((180-(retroTrack.footprint[footprint_counter].lat+90))/180*tracker_canvas_height);
+                    //tracker_canvas_context.fillRect(x_pos,y_pos,1,1);
+                    
+                    if (footprint_counter==0){
+                        tracker_canvas_context.moveTo(x_pos, y_pos);
+                        first_x_pos = x_pos;
+                        first_y_pos = y_pos;
+                    } else {
+                        if (Math.abs(x_pos-last_x_pos)<=(tracker_canvas_width/3)){
+                        // Loop didn't have to jump to other side of map, so draw. 
+                        tracker_canvas_context.lineTo(x_pos, y_pos);
+                        }
+                        tracker_canvas_context.moveTo(x_pos, y_pos);
                     }
-                    tracker_canvas_context.moveTo(x_pos, y_pos);
+                    
+                    last_x_pos = x_pos;
+                }
+                if (Math.abs(x_pos-first_x_pos)<=(tracker_canvas_width/3)){
+                    tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
                 }
                 
-                last_x_pos = x_pos;
+                tracker_canvas_context.lineWidth = 1;
+                tracker_canvas_context.strokeStyle = "#"+configuration['station_footprint_color']['value'];
+                tracker_canvas_context.stroke();
             }
-            if (Math.abs(x_pos-first_x_pos)<=(tracker_canvas_width/3)){
-                tracker_canvas_context.lineTo(first_x_pos, first_y_pos);
-            }
-            
-            tracker_canvas_context.lineWidth = 1;
-            tracker_canvas_context.strokeStyle = "#"+configuration['station_footprint_color']['value'];
-            tracker_canvas_context.stroke();
         }
     },
     
