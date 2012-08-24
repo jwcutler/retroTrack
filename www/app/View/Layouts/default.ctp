@@ -28,7 +28,7 @@
 	    <a href="http://exploration.engin.umich.edu/" target="_blank" class="link"><?php echo $this->Html->image('mxl_logo.png'); ?></a>
 	</div>
 	<div id="footer_middle">
-	    Copyright &copy; Regents of the University of Michigan<br />
+	    Copyright &copy; The University of Michigan<br />
 	    Visit <a href="https://github.com/jwcutler/retroTrack" target="_blank" class="link"><?php echo Configure::read('Website.name'); ?> on github</a>
 	</div>
 	<div id="footer_right">
