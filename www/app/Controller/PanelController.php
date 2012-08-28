@@ -31,35 +31,11 @@ class PanelController extends AppController {
         // Load in the ground stations
         $this->set('stations', $this->Station->find('all'));
         
-        // Fetch the configuration options
-        $this->set('clock_update_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'clock_update_period'))));
-        $this->set('map_update_period', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'map_update_period'))));
-        $this->set('default_ground_station', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'default_ground_station'))));
-        $this->set('show_grid', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_grid'))));
-        $this->set('show_sun', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_sun'))));
-        $this->set('satellite_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_color'))));
-        $this->set('satellite_selected_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_selected_color'))));
-        $this->set('satellite_label_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_label_color'))));
-        $this->set('grid_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'grid_color'))));
-        $this->set('sun_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'sun_color'))));
-        $this->set('station_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_color'))));
-        $this->set('station_selected_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_selected_color'))));
-        $this->set('eclipse_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'eclipse_color'))));
-        $this->set('satellite_size', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_size'))));
-        $this->set('grid_alpha', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'grid_alpha'))));
-        $this->set('map_file', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'map_file'))));
-        $this->set('show_path', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_path'))));
-        $this->set('show_satellite_footprint', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_satellite_footprint'))));
-        $this->set('show_satellite_names', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_satellite_names'))));
-        $this->set('show_station_footprint', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_station_footprint'))));
-        $this->set('show_station_names', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'show_station_names'))));
-        $this->set('satellite_footprint_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'satellite_footprint_color'))));
-        $this->set('station_footprint_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_footprint_color'))));
-        $this->set('station_label_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'station_label_color'))));
-        $this->set('path_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'path_color'))));
-        $this->set('tle_source', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'tle_source'))));
-        $this->set('shadow_alpha', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'shadow_alpha'))));
-        $this->set('shadow_color', $this->Configuration->find('first', array('conditions' => array('Configuration.name' => 'shadow_color'))));
+        // Load the configuration options
+        $configurations = $this->Configuration->find('all');
+        foreach($configurations as $configuration){
+            $this->set($configuration['Configuration']['name'], $configuration);
+        }
     }
     
     public function admin_generatehash(){
