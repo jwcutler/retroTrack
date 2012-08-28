@@ -31,17 +31,6 @@ CREATE TABLE groups_satellites (
     PRIMARY KEY(`id`)
 );
 
-CREATE TABLE stations (
-    id int AUTO_INCREMENT,
-    longitude text NOT NULL,
-    latitude text NOT NULL,
-    name varchar(50) NOT NULL,
-    description text,
-    created_on datetime NOT NULL,
-    updated_on datetime NOT NULL,
-    PRIMARY KEY(`id`)
-);
-
 CREATE TABLE tles (
     id int AUTO_INCREMENT,
     name varchar(50) NOT NULL,
@@ -83,6 +72,17 @@ CREATE TABLE configurations (
     name varchar(50) NOT NULL,
     value text,
     PRIMARY KEY (`id`)
+);
+
+CREATE TABLE stations (
+    id int AUTO_INCREMENT,
+    longitude text NOT NULL,
+    latitude text NOT NULL,
+    name varchar(50) NOT NULL,
+    description text,
+    created_on datetime NOT NULL,
+    updated_on datetime NOT NULL,
+    PRIMARY KEY(`id`)
 );
 
 /*
