@@ -13,6 +13,9 @@ $(document).ready(function() {
 
     // Form validation
     var container = $("div.form_errors");
+    jQuery.validator.setDefaults({ 
+        ignore: ".hidden"
+    });
     $("#new_group_form").validate({
 	errorContainer: container,
 	errorLabelContainer: $("ul", container),
