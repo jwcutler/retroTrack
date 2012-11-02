@@ -434,7 +434,7 @@ var retroTrack = {
             text_width = tracker_canvas_context.measureText(curr_station_name).width;
             if ((text_x_pos+text_width)>tracker_canvas_width){
                 // Label off the page, flip it to the other side of the indicator
-                text_x_pos = x_pos - configuration['satellite_size']['value']/2 - text_width - 3;
+                text_x_pos = station_x_pos - configuration['satellite_size']['value']/2 - text_width - 3;
             }
             tracker_canvas_context.fillText(curr_station_name, text_x_pos, text_y_pos);
         }

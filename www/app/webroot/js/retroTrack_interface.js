@@ -154,15 +154,16 @@ function initializeActiveGroups(){
 
 function initializeActiveStations(){
     /*
-    Initializes active_stations to be all available stations.
+    Initializes active_stations to be just the default ground station.
     */
     
     // Loop through all of the available stations
     active_stations = [];
-    for (curr_station_index in stations){
+    /*for (curr_station_index in stations){
         // Add to active_stations
         active_stations[active_stations.length] = stations[curr_station_index]['name'];
-    }
+    }*/
+    active_stations[active_stations.length] = configuration['default_ground_station']['value'];
     
     // Set the active station
     if (configuration['default_ground_station']['value'] in stations){

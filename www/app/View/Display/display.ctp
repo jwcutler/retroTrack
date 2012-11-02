@@ -35,7 +35,7 @@ $().ready(function(){
         show: false
     });
     if (!Modernizr.canvas){
-	$("#canvas_modal").modal('show');
+        $("#canvas_modal").modal('show');
     }
 	
     /*
