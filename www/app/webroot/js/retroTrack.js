@@ -78,12 +78,12 @@ var retroTrack = {
                 temp_satellites.push(active_satellites[curr_satellite_index]);
             } else {
                 // No TLE data exists for satellite, remove it from menus
-                $("[rel="+curr_satellite_name+"]").remove();
+                $("#satellite_list option[rel="+curr_satellite_name+"]").remove();
             }
         }
     
         active_satellites = temp_satellites.slice(0);
-        selected_satellite = active_satellites[0];
+        selected_satellite = getLastSatellite();
         
         // Initialize PLib
         PLib.InitializeData();
@@ -342,6 +342,11 @@ var retroTrack = {
             }
         }
         
+        // Update the bar if no satellite is selected
+        if (!selected_satellite){
+          retroTrack.updateSatelliteBar(null, null); 
+        }
+        
         // Plot the ground stations
         for (curr_station_index in active_stations){
             // Plot the station
@@ -361,17 +366,24 @@ var retroTrack = {
         @param curr_satellite_name: Name of the specified satellite.
         */
         
-        // Calculate orbit number
-        curr_satellite_orbit = parseInt(PLib.tle.revnum, 10) + curr_satellite_info.orbitNumber;
-        curr_satellite_orbit = PLib.rv;
-        
         // Display the satellite information.
         $("#satellite_parameters").html("");
-        $("#satellite_parameters").append("<li id='satellite_info_name'><span style='color: #"+configuration['satellite_selected_color']['value']+";'>"+curr_satellite_name+"</span></li>");
-        $("#satellite_parameters").append("<li>Lat: "+curr_satellite_info.latitude.toFixed(1)+"</li>");
-        $("#satellite_parameters").append("<li>Lon: "+curr_satellite_info.longitude.toFixed(1)+"</li>");
-        $("#satellite_parameters").append("<li>Alt: "+curr_satellite_info.altitude.toFixed(1)+" km</li>");
-        $("#satellite_parameters").append("<li>Orbit: #"+curr_satellite_orbit+"</li>");
+        
+        if (!selected_satellite){
+          // No satellite selected
+          $("#satellite_parameters").append("<li></li>");
+        } else {
+          // Calculate orbit number
+          curr_satellite_orbit = parseInt(PLib.tle.revnum, 10) + curr_satellite_info.orbitNumber;
+          curr_satellite_orbit = PLib.rv;
+          
+          // Load the satellite parameters
+          $("#satellite_parameters").append("<li id='satellite_info_name'><span style='color: #"+configuration['satellite_selected_color']['value']+";'>"+curr_satellite_name+"</span></li>");
+          $("#satellite_parameters").append("<li>Lat: "+curr_satellite_info.latitude.toFixed(1)+"</li>");
+          $("#satellite_parameters").append("<li>Lon: "+curr_satellite_info.longitude.toFixed(1)+"</li>");
+          $("#satellite_parameters").append("<li>Alt: "+curr_satellite_info.altitude.toFixed(1)+" km</li>");
+          $("#satellite_parameters").append("<li>Orbit: #"+curr_satellite_orbit+"</li>");
+        }
     },
     
     updateStationBar: function(curr_station_name){

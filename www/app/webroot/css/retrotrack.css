@@ -249,6 +249,7 @@ h3 {
 
 .menu_pane_header {
     font-size: 10px;
+    margin-bottom: 10px;
 }
 
 #bottom_menu {
@@ -259,28 +260,30 @@ h3 {
 }
 
 .menu_list {
-    padding-top: 5px;
     padding-bottom: 5px;
 }
 
 .menu_list li {
     display: inline;
-    padding: 3px;
-    border: 1px solid #96A7CA;
-    background-color: #DBE2EE;
+    padding: 3px 6px 3px 6px;
+    /*border: 1px solid #96A7CA;*/
+    /*background-color: #DBE2EE;*/
+    background-color: #EEEEEE;
     cursor: pointer;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
-	float:left;
-	margin: 3px 5px 0px 0px;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    float:left;
+    margin: 3px 5px 0px 0px;
 }
 
 .menu_list li:hover {
-    background-color: #C4D1E4;
+    background-color: #DBDBDB !important;
+    /*background-color: #C4D1E4;*/
 }
 
 .menu_list li.ui-selected {
-    background-color: #C4D1E4;
+    /*background-color: #C4D1E4;*/
+    background-color: #D1D1D1;
 }
 
 #satellite_parameters li {

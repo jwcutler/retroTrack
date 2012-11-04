@@ -32,14 +32,48 @@ function populateSatellitesMenu(satellites, active_satellites){
     } else {
         // Loop through all of the satellites and add them to the list
         for (curr_satellite_id in satellites){
-            // Append the satellite to the menu
-            $("#satellite_list").append('<li id="select_satellite_'+curr_satellite_id+'" rel="'+satellites[curr_satellite_id]['name']+'" title="'+satellites[curr_satellite_id]['description']+'">'+satellites[curr_satellite_id]['name']+'</li>');
+            // Append the satellite to the selection
+            $('#satellite_list').append($("<option></option>").attr("value",curr_satellite_id).attr("rel",satellites[curr_satellite_id]['name']).attr("title",satellites[curr_satellite_id]['description']).text(satellites[curr_satellite_id]['name'])); 
         }
         
-        // Enable selectable
-        $("#satellite_list").selectable({
-        });
+        // Enable jQuery Chosen
+        $("#satellite_list").chosen();
     }
+}
+
+function getLastSatellite(){
+  /*
+  Returns the name of the last satellite currently in the selection.
+  
+  @return The name of the last satellite.
+  */
+  
+  temp_selected_satellite = false;
+  selected_satellites_form = $("#satellite_list").val();
+  if (selected_satellites_form && selected_satellites_form.length > 0){
+    // Use the satellite ID to get the name
+    selected_satellite_temp_id = selected_satellites_form[selected_satellites_form.length-1];
+    selected_satellite_temp_name = $("#satellite_list option[value='"+selected_satellite_temp_id+"']").attr("rel");
+    temp_selected_satellite = selected_satellite_temp_name;
+  }
+  
+  return temp_selected_satellite;
+}
+
+function getLastStation(){
+  /*
+  Returns the name of the last station currently in the selection.
+  
+  @return The name of the last station.
+  */
+  
+  temp_selected_station = false;
+  selected_stations_form = $("#station_list").val();
+  if (selected_stations_form && selected_stations_form.length > 0){
+    // Set the station name
+    temp_selected_station = selected_stations_form[selected_stations_form.length-1];
+  }
+  return temp_selected_station;
 }
 
 function populateStationsMenu(stations, active_station){
@@ -55,13 +89,12 @@ function populateStationsMenu(stations, active_station){
     } else {
         // Loop through all of the stations and add them to the list
         for (curr_station_id in stations){
-            // Append the satellite to the menu
-            $("#station_list").append('<li id="select_station_'+curr_station_id+'" rel="'+stations[curr_station_id]['name']+'" title="'+stations[curr_station_id]['description']+'">'+stations[curr_station_id]['name']+'</li>');
+            // Append the station to the selection
+            $("#station_list").append($("<option></option>").attr("value",curr_station_id).attr("rel",stations[curr_station_id]['name']).attr("title",stations[curr_station_id]['description']).text(stations[curr_station_id]['name']));
         }
         
-        // Enable selectable
-        $("#station_list").selectable({
-        });
+        // Enable jQuery Chosen
+        $("#station_list").chosen();
     }
 }
 
@@ -77,13 +110,12 @@ function populateGroupsMenu(groups){
     } else {
         // Loop through all of the groups and add them to the list
         for (curr_group_id in groups){
-            // Append the group to the menu
-            $("#group_list").append('<li id="select_group_'+curr_group_id+'" rel="'+curr_group_id+'" title="'+groups[curr_group_id]['description']+'">'+groups[curr_group_id]['name']+'</li>');
+            // Append the group to the selection
+            $("#group_list").append($("<option></option>").attr("value",curr_group_id).attr("rel",curr_group_id).attr("title",groups[curr_group_id]['description']).text(groups[curr_group_id]['name']));
         }
 
         // Enable selectable
-        $("#group_list").selectable({
-        });
+        $("#group_list").chosen();
     }
 }
 
@@ -121,23 +153,34 @@ function initializeActiveSatellites(){
             // Add to active_satellites
             if (default_elements['satellites'][curr_satellite_index]['id'] in satellites){
                 active_satellites[active_satellites.length] = default_elements['satellites'][curr_satellite_index]['name'];
-                $('#select_satellite_'+default_elements['satellites'][curr_satellite_index]['id']).addClass('ui-selected');
+                
+                // Add the item to the selection
+                $("#satellite_list option[value='"+default_elements['satellites'][curr_satellite_index]['id']+"']").attr("selected", "selected");
             }
         }
+        
+        // Rebuild the menu
+        $("#satellite_list").trigger("liszt:updated");
     } else {
         // Select the first satellite
         if (satellites.length!=0){
             for (curr_satellite_index in satellites){
                 // Add to active_satellites
                 active_satellites[active_satellites.length] = satellites[curr_satellite_index]['name'];
-                $('#select_satellite_'+satellites[curr_satellite_index]['id']).addClass('ui-selected');
+                
+                // Add the item to the selection
+                $("#satellite_list option[value='"+satellites[curr_satellite_index]['id']+"']").attr("selected", "selected");
+                
+                // Rebuild the menu
+                $("#satellite_list").trigger("liszt:updated");
+                
                 break;
             }
         }
     }
     
-    // Set the active satellite to the first one in the list
-    selected_satellite = active_satellites[0];
+    // Grab the last satellite in the selection
+    selected_satellite = getLastSatellite();
 }
 
 function initializeActiveGroups(){
@@ -147,9 +190,12 @@ function initializeActiveGroups(){
     
     // Loop through all of the default groups
     for (curr_group_index in default_elements['groups']){
-        // Select the group
-        $("#select_group_"+default_elements['groups'][curr_group_index]).addClass('ui-selected');
+        // Add the group to the selection
+        $("#group_list option[value='"+default_elements['groups'][curr_group_index]+"']").attr("selected", "selected");
     }
+    
+    // Rebuild the menu
+    $("#group_list").trigger("liszt:updated");
 }
 
 function initializeActiveStations(){
@@ -170,12 +216,15 @@ function initializeActiveStations(){
         // Default present, use it
         selected_station = configuration['default_ground_station']['value'];
     } else {
-        // Default not present, use first
-        selected_station = active_stations[0];
+        // Default not present, use last in list
+        selected_station = getLastStation();
     }
     
-    // Select all satellites in the menu
-    $("#station_list").children().addClass('ui-selected');
+    // Select every ground station
+    $("#station_list option").attr("selected", "selected");
+                
+    // Rebuild the menu
+    $("#station_list").trigger("liszt:updated");
 }
 
 /*
@@ -198,21 +247,24 @@ $().ready(function(){
     });
     
     // Handle satellite selection menu changes
-    $("#satellite_list").bind("selectablestop", function(event, ui) {
+    $("#satellite_list").change(function(event, ui) {
         // Clear active_satellites
         active_satellites = [];
         
         // Unselect all groups
-        $("#group_list").children().removeClass('ui-selected');
+        $("#group_list").children().removeAttr("selected");
+        
+        // Rebuild the menu
+        $("#group_list").trigger("liszt:updated");
         
         // Loop through the selected children and add the rel value to 'active_satellites'
-        $(this).children('.ui-selected').each(function(){
+        $(this).children('option:selected').each(function(){
             // Add the satellite ID to active_satellites
             active_satellites[active_satellites.length] = $(this).attr('rel');
         });
         
-        // Set the selected satellite
-        selected_satellite = active_satellites[0];
+        // Grab the last satellite in the selection
+        selected_satellite = getLastSatellite();
         
         // Reload the PLib Satellites
         retroTrack.setPlibSatellites();
@@ -222,34 +274,37 @@ $().ready(function(){
     });
     
     // Handle station selection menu changes
-    $("#station_list").bind("selectablestop", function(event, ui) {
+    $("#station_list").change(function(event, ui) {
         // Clear active_stations
         active_stations = [];
         
         // Loop through the selected children and add the rel value to 'active_stations'
-        $(this).children('.ui-selected').each(function(){
+        $(this).children('option:selected').each(function(){
             // Add the station to active_stations
             active_stations[active_stations.length] = $(this).attr('rel');
         });
 		
-        // Set the active station to be the first one in the list
-        selected_station = active_stations[0];
+        // Set the active station to be the last one in the list
+        selected_station = getLastStation();
 		
         // Update plot
         retroTrack.updatePlot();
     });
     
     // Handle group selection menu changes
-    $("#group_list").bind("selectablestop", function(event, ui) {
+    $("#group_list").change(function(event, ui) {
         // Clear active_satellites
         active_satellites = [];
         selected_satellite = null;
         
         // Unselect all currently selected satellites
-        $("#satellite_list").children().removeClass('ui-selected');
+        $("#satellite_list").children().removeAttr("selected");
+        
+        // Rebuild the menu
+        $("#satellite_list").trigger("liszt:updated");
         
         // Loop through the selected groups and load their satellites
-        $(this).children('.ui-selected').each(function(){
+        $(this).children('option:selected').each(function(){
             // Loop through the active group's satellites
             group_id = $(this).attr('rel');
             for (satellite_index in groups[group_id]['satellites']){
@@ -259,12 +314,15 @@ $().ready(function(){
                     active_satellites[active_satellites.length] = groups[group_id]['satellites'][satellite_index]['name'];
                     
                     // Select the satellite in the menu
-                    $("#select_satellite_"+groups[group_id]['satellites'][satellite_index]['id']).addClass('ui-selected');
+                    $("#satellite_list option[value='"+groups[group_id]['satellites'][satellite_index]['id']+"']").attr("selected", "selected");
                 }
             }
             
+            // Rebuild the menu
+            $("#satellite_list").trigger("liszt:updated");
+            
             // Set the active satellite to the first one in the list
-            selected_satellite = active_satellites[0];
+            selected_satellite = getLastSatellite();
         });
         
         // Reload the PLib Satellites

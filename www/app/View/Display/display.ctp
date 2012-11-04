@@ -5,7 +5,9 @@
 <?php echo $this->Html->script('retroTrack_interface.js'); ?>
 <?php echo $this->Html->script('predictlib.js'); ?>
 <?php echo $this->Html->script('jquery-ui-1.8.21.custom.min.js'); ?>
+<?php echo $this->Html->script('chosen.jquery.min.js'); ?>
 <?php echo $this->Html->script('modernizr.custom.js'); ?>
+<?php echo $this->Html->css('chosen.css'); ?>
 <script type="text/javascript">
 // Global Variables
 var satellites = null;
@@ -100,13 +102,13 @@ $().ready(function(){
         <div style="clear: both;"></div>
     </div>
     <div id="menu_satellites" class="menu_pane">
-        <div class="menu_pane_header">Select the satellites you would like to display. Use CTRL to select multiple satellites.</div>
-        <ol id="satellite_list" class="menu_list"></ol>
+        <div class="menu_pane_header">Select the satellites you would like to display.</div>
+        <select name="satellite_list" multiple="multiple" id="satellite_list" data-placeholder="Select some satellites" style="width: 835px;"></select>
 		<div style="clear:both;"></div>
     </div>
     <div id="menu_groups" class="menu_pane">
         <div class="menu_pane_header">Select the groups you would like to display. Use CTRL to select multiple groups.</div>
-        <ol id="group_list" class="menu_list"></ol>
+        <select name="group_list" multiple="multiple" id="group_list" data-placeholder="Select some satellite groups" style="width: 835px;"></select>
 		<div style="clear:both;"></div>
     </div>
     <div id="menu_options" class="menu_pane">
@@ -131,7 +133,7 @@ $().ready(function(){
     <!-- START bottom menu bar -->
     <div id="menu_stations" class="menu_pane">
         <div class="menu_pane_header">Select the ground stations you would like to display.</div>
-        <ol id="station_list" class="menu_list"></ol>
+        <select name="station_list" multiple="multiple" id="station_list" data-placeholder="Select some ground stations" style="width: 835px;"></select>
 		<div style="clear:both;"></div>
     </div>
     <div id="bottom_menu">

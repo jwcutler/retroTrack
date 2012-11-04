@@ -42,6 +42,7 @@ $this->start('panel_content');
 					<option value="<?php echo $station['Station']['name']; ?>" <?php if($default_ground_station['Configuration']['value']==$station['Station']['id']){echo "selected='selected'";} ?>><?php echo $station['Station']['name']; ?></option>
 				<?php endforeach;?>
 			</select>
+      <p class="help-block">When retroTrack is first loaded, this will be the only ground station visible until the user selects another.</p>
 		</div>
 	</div>
 	<div class="control-group">
@@ -254,7 +255,7 @@ $(document).ready(function() {
 </script>
 <div style="padding: 10px 0px 10px 0px;">
 	<button name="update_tles" id="update_tles" class="btn btn-primary">Manually Update TLE's</button>
-	<div id="timestamp_container" style="font-style: italic;display: inline;">Last Updated: <?php echo $tle_last_update; ?></div>
+	<div id="timestamp_container" style="font-style: italic;display: inline;">Last Updated: <?php echo date("F j, Y \a\\t G:i:s T", $tle_last_update['Configuration']['value']); ?></div>
 	<div id="spinner_container" style="display: inline; visibility: hidden;position: relative; top: 5px;"><?php echo $this->Html->image('ajax_spinner_small.gif'); ?></div>
 </div>
 <?php if (empty($tles)): ?>
