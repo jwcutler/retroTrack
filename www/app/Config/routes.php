@@ -25,6 +25,7 @@
 Router::connect('/', array('controller' => 'display', 'action' => 'index'));
 
 // Public routes
+Router::connect('/embed.js', array('controller' => 'display', 'action' => 'embed_script'));
 Router::connect('/group/*', array('controller' => 'display', 'action' => 'group_display'));
 Router::connect('/satellite/*', array('controller' => 'display', 'action' => 'satellite_display'));
 

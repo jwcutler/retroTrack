@@ -15,6 +15,12 @@ class DisplayController extends AppController {
         $this->Auth->allow('*');
     }
     
+    // Setup Caching
+    /*public $helpers = array('Cache');
+    public $cacheAction = array(
+        'embed_script' => 1800 // Cache the embed script for 30 minutes
+    );*/
+    
     public function index() {
         /*
         Displays the primary tracking map containing all satellites & groups.
@@ -50,7 +56,7 @@ class DisplayController extends AppController {
         /*
         Displays the tracker for the specified satellite.
         
-        @param $satellite_name: Name of the satellite to display
+        @param $satellite_name: Name of the satellite to display from route handler.
         */
         
         if (!empty($satellite_name)){
@@ -102,7 +108,7 @@ class DisplayController extends AppController {
         /*
         Displays the tracker for the specified group
         
-        @param $group_name: Name of the group to display
+        @param $group_name: Name of the group to display from route handler. 
         */
         
         if (!empty($group_name)){
@@ -144,6 +150,39 @@ class DisplayController extends AppController {
         
         // Render the main display view
         $this->render('display');
+    }
+    
+    public function embed_script(){
+      /*
+      Generates the javascript required to generate and run a retroTrack instance.
+      
+      @note
+      Takes 'satellites' and 'groups' as underscore (_) deliminted $_GET parameters. Both are optional.
+      If both are set, every satellite in each of the groups and every individual satellite specified will be included.
+      */
+      
+      // Parse the parameters
+      $group_list = (isset($_GET['groups']))?explode("_", $_GET['groups']):false;
+      $satellite_list = (isset($_GET['satellites']))?explode("_", $_GET['satellites']):false;
+      
+      $test_satellites = $this->Satellite->satellite_json($satellite_list, $group_list);
+      
+      /*
+      // Load the required json
+      $this->set('satellite_json', str_replace("'", "\'", $this->Satellite->satellite_json($satellite_list, $group_list)));
+      $this->set('group_json', str_replace("'", "\'", $this->Group->group_json($group_list)));
+      $this->set('tle_json', str_replace("'", "\'", $this->Tle->tle_json()));
+      $this->set('station_json', str_replace("'", "\'", $this->Station->station_json()));
+      $this->set('configuration_json', str_replace("'", "\'", $this->Configuration->configuration_json()));
+      
+      
+      if (($group_list != false && !empty($group_list))){
+        // Load the specified groups
+      }
+      */
+      
+      // Render the javascript template view
+      $this->layout = 'ajax';
     }
 }
 ?>
