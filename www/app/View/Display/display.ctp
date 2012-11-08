@@ -97,19 +97,19 @@ $().ready(function(){
             </ul>
         </div>
         <div style="float: right;">
-			<ol id="satellite_parameters"></ol>
+          <ol id="satellite_parameters"></ol>
         </div>
         <div style="clear: both;"></div>
     </div>
     <div id="menu_satellites" class="menu_pane">
         <div class="menu_pane_header">Select the satellites you would like to display.</div>
         <select name="satellite_list" multiple="multiple" id="satellite_list" data-placeholder="Select some satellites" style="width: 835px;"></select>
-		<div style="clear:both;"></div>
+        <div style="clear:both;"></div>
     </div>
     <div id="menu_groups" class="menu_pane">
         <div class="menu_pane_header">Select the groups you would like to display. Use CTRL to select multiple groups.</div>
         <select name="group_list" multiple="multiple" id="group_list" data-placeholder="Select some satellite groups" style="width: 835px;"></select>
-		<div style="clear:both;"></div>
+        <div style="clear:both;"></div>
     </div>
     <div id="menu_options" class="menu_pane">
         <div class="menu_pane_header">Click on any of the options below to toggle them.</div>
@@ -122,7 +122,7 @@ $().ready(function(){
             <li id="show_station_footprint">Hide Station Footprint</li>
             <li id="show_station_names">Hide Station Names</li>
         </ol>
-		<div style="clear:both;"></div>
+        <div style="clear:both;"></div>
     </div>
     <!-- END top menu bar -->
     
@@ -134,7 +134,7 @@ $().ready(function(){
     <div id="menu_stations" class="menu_pane">
         <div class="menu_pane_header">Select the ground stations you would like to display.</div>
         <select name="station_list" multiple="multiple" id="station_list" data-placeholder="Select some ground stations" style="width: 835px;"></select>
-		<div style="clear:both;"></div>
+        <div style="clear:both;"></div>
     </div>
     <div id="bottom_menu">
         <div style="float: left;">
@@ -142,11 +142,11 @@ $().ready(function(){
                 <li><a id="show_menu_stations" rel="menu_stations">Ground Stations</a></li>
             </ul>
         </div>
-		<div style="float: left; margin-left: 20px;">
-			<ol id="station_parameters"></ol>
-		</div>
+        <div style="float: left; margin-left: 20px;">
+            <ol id="station_parameters"></ol>
+        </div>
         <div style="float: right;">
-			<div id="top_clock">-</div>
+          <div id="top_clock">-</div>
         </div>
         <div style="clear: both;"></div>
     </div>

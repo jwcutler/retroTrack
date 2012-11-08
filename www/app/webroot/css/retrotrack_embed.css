@@ -1,0 +1,129 @@
+/*
+This file contains the styles for the retroTrack display.
+*/
+
+.rt_menu_pane {
+  display: none;
+  background-color: #eeeeee;
+  padding: 5px;
+  border: 1px solid #071831;
+  border-width: 0px 1px 0px 1px;
+}
+
+.rt_menu_pane_header {
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.rt_browser_warning_box {
+	background-color: #f3f5f2;
+	width: 110px;
+	text-align: center;
+	color: #666666;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 1px dotted #cccccc;
+	font-size: 10px;
+	display: inline-block;
+	padding: 5px;
+	margin: 5px;
+}
+
+.rt_browser_warning_box img {
+	border: 1px solid #cccccc;
+	border-width: 0px 0px 1px 0px;
+}
+
+#rt_tracker_container {
+  width: 862px;
+  margin: 0px auto 0px auto;
+  font-family: "Arial",sans-serif;
+  font-size: 12px;
+}
+
+#rt_top_menu {
+  background-color: #071831;
+  color: white;
+  padding: 5px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+#rt_bottom_menu {
+  background-color: #071831;
+  color: white;
+  padding: 5px;
+  border-radius: 0px 0px 5px 5px;
+}
+
+#rt_top_controls {
+  width: 300px;
+  padding: 0px;
+  margin: 0px;
+}
+
+#rt_bottom_controls {
+  width: 130px;
+  padding: 0px;
+  margin: 0px;
+}
+
+#rt_top_controls li, #rt_bottom_menu li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 10px;
+}
+
+#rt_top_menu a, #rt_bottom_menu a {
+  cursor: pointer;
+}
+
+#rt_top_menu a:hover, #rt_bottom_menu a:hover {
+  color: #F6DC00;
+}
+
+#rt_top_menu a:after, #rt_bottom_menu a:after {
+  content: " \25BC";
+}
+
+#rt_top_menu a.active, #rt_bottom_menu a.active {
+  color: #F6DC00;
+}
+
+#rt_top_menu a.active:after, #rt_bottom_menu a.active:after {
+  content: " \25B2";
+}
+
+#rt_satellite_parameters li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 10px;
+}
+
+.rt_menu_list {
+  padding-bottom: 5px;
+}
+
+.rt_menu_list li {
+  display: inline;
+  padding: 3px 6px 3px 6px;
+  /*border: 1px solid #96A7CA;*/
+  /*background-color: #DBE2EE;*/
+  background-color: #EEEEEE;
+  cursor: pointer;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  float:left;
+  margin: 3px 5px 0px 0px;
+}
+
+.rt_menu_list li:hover {
+  background-color: #DBDBDB !important;
+  /*background-color: #C4D1E4;*/
+}
+
+.rt_menu_list li.ui-selected {
+  /*background-color: #C4D1E4;*/
+  background-color: #D1D1D1;
+}
+
