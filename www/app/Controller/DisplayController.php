@@ -165,21 +165,12 @@ class DisplayController extends AppController {
       $group_list = (isset($_GET['groups']))?explode("_", $_GET['groups']):false;
       $satellite_list = (isset($_GET['satellites']))?explode("_", $_GET['satellites']):false;
       
-      $test_satellites = $this->Satellite->satellite_json($satellite_list, $group_list);
-      
-      /*
       // Load the required json
       $this->set('satellite_json', str_replace("'", "\'", $this->Satellite->satellite_json($satellite_list, $group_list)));
       $this->set('group_json', str_replace("'", "\'", $this->Group->group_json($group_list)));
       $this->set('tle_json', str_replace("'", "\'", $this->Tle->tle_json()));
       $this->set('station_json', str_replace("'", "\'", $this->Station->station_json()));
       $this->set('configuration_json', str_replace("'", "\'", $this->Configuration->configuration_json()));
-      
-      
-      if (($group_list != false && !empty($group_list))){
-        // Load the specified groups
-      }
-      */
       
       // Render the javascript template view
       $this->layout = 'ajax';

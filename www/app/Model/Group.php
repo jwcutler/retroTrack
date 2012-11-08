@@ -42,17 +42,14 @@ class Group extends AppModel {
         $groups = NULL;
         if (is_array($group_names)){
             // Load each of the specified groups
-            $groups = array();
-            foreach ($group_names as $group_name){
-                $group_temp = $this->find('first', array(
-                    'conditions' => array('Group.name' => urldecode($group_name))
-                ));
-                
-                array_push($groups, $group_temp);
-            }
-		} else if ($group_names == 'all'){
-			// Load literally all groups
-			$groups = $this->find('all');
+            $groups = $this->find('all', array(
+              'conditions' => array(
+                'Group.name' => $group_names
+              )
+            ));
+        } else if ($group_names == 'all'){
+            // Load all groups
+            $groups = $this->find('all');
         } else if ($group_names){
             // Load the specified group
             $group_temp = $this->find('first', array(

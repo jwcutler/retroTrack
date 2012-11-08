@@ -69,13 +69,12 @@ class Satellite extends AppModel {
         return json_encode($default_array);
     }
     
-    public function satellite_json($satellite_names = false, $group_names = false, $use_decode = true){
+    public function satellite_json($satellite_names = false, $group_names = false){
       /*
       Loads the specified satellite (or all of them if no argument passed) and formats it into JSON.
       
       @param $satellite_names: Names of the satellites to load.
       @param $group_names: Names of the groups to load.
-      @param $use_decode: Whether or not URL decode is needed.
       
       Returns:
           JSON string representing the satellite(s).
@@ -133,28 +132,45 @@ class Satellite extends AppModel {
           }
         }
       } else {
-        // No satellites or groups specified, load the homepage satellites.
-        $satellites = $this->find('all');
-          
-        // Loop through satellites and remove ones that aren't homepage visible
-        foreach ($satellites as $satellite_key => $temp_satellite){
-          $show_on_home = false;
-          if ($temp_satellite['Satellite']['show_on_home']=='1'){
-            $show_on_home = true;
-          } else {
-            // Check the groups
-            foreach ($temp_satellite['Group'] as $temp_group){
-              if ($temp_group['show_on_home']=='1'){
-                $show_on_home = true;
-              } else {
-                $show_on_home = false;
-              }
-            }
+        // Load all of the homepage groups and their satellites
+        $homepage_groups = $this->Group->find('all', array(
+          'conditions' => array(
+            'Group.show_on_home' => 1
+          )
+        ));
+        
+        // Loop through the groups and add their satellites to the array
+        foreach ($homepage_groups as $homepage_group){
+          foreach ($homepage_group['Satellite'] as $homepage_satellite){
+            // Make sure the satellite hasn't all ready been added
+            if (!array_key_exists($homepage_satellite['id'], $satellites)){
+              $temp_satellite = array(
+                'Satellite' => $homepage_satellite,
+                'Group' => array($homepage_group['Group'])
+              );
             
-            // Remove the satellite if needed
-            if (!$show_on_home){
-              unset($satellites[$satellite_key]);
+              // Add the satellite to the list
+              $satellites[$homepage_satellite['id']] = $temp_satellite;
+            } else {
+              // Add the new group to the existing satellite entry
+              array_push($satellites[$homepage_satellite['id']]['Group'], $homepage_group['Group']);
             }
+          }
+        }
+        
+        // Load all of the homepage satellites
+        $homepage_satellites = $this->find('all', array(
+          'conditions' => array(
+            'Satellite.show_on_home' => 1
+          )
+        ));
+        
+        // Loop through the satellites and add them to the array
+        foreach ($homepage_satellites as $homepage_satellite){
+          // Make sure the satellite hasn't been added all ready
+          if (!array_key_exists($homepage_satellite['Satellite']['id'], $satellites)){
+            // Add the satellite to the list
+            $satellites[$homepage_satellite['Satellite']['id']] = $homepage_satellite;
           }
         }
       }
@@ -181,8 +197,6 @@ class Satellite extends AppModel {
           
         $satellite_array[$satellite['Satellite']['id']] = $temp_satellite;
       }
-      
-      var_dump(json_encode($satellite_array));
       
       // Return the JSON representation
       return json_encode($satellite_array);
