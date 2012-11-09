@@ -16,23 +16,23 @@ This file contains the styles for the retroTrack display.
 }
 
 .rt_browser_warning_box {
-	background-color: #f3f5f2;
-	width: 110px;
-	text-align: center;
-	color: #666666;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border: 1px dotted #cccccc;
-	font-size: 10px;
-	display: inline-block;
-	padding: 5px;
-	margin: 5px;
+  background-color: #f3f5f2;
+  width: 110px;
+  text-align: center;
+  color: #666666;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border: 1px dotted #cccccc;
+  font-size: 10px;
+  display: inline-block;
+  padding: 5px;
+  margin: 5px;
 }
 
 .rt_browser_warning_box img {
-	border: 1px solid #cccccc;
-	border-width: 0px 0px 1px 0px;
+  border: 1px solid #cccccc;
+  border-width: 0px 0px 1px 0px;
 }
 
 #rt_tracker_container {
@@ -126,4 +126,9 @@ This file contains the styles for the retroTrack display.
   /*background-color: #C4D1E4;*/
   background-color: #D1D1D1;
 }
+
+/*
+CSS for jQuery Chosen
+*/
+
 

@@ -43,7 +43,7 @@ instance with the attributes provided by DisplayController.
   } else {
     // jQuery all ready loaded on page will suffice
     jQuery = window.jQuery;
-    start_retroTrack();
+    load_libraries();
   }
 
   // Gets called when jQuery is loaded
@@ -51,8 +51,22 @@ instance with the attributes provided by DisplayController.
     // Restore the page's $ and window.jQuery and save our instance of jQuery
     $ = window.jQuery.noConflict(true);
     
-    // jQuery loaded, setup retroTrack
+    // jQuery loaded, load the required external libraries
+    load_libraries();
+  }
+  
+  // Loads required external libraries
+  function load_libraries(){
     start_retroTrack();
+    
+    /*$.when(
+      $.getScript("<?php echo Router::url('/', true); ?>js/modernizr.custom.js")
+      //$.getScript("<?php echo Router::url('/', true); ?>js/jquery-ui-1.8.21.custom.min.js")
+      //$.getScript("<?php echo Router::url('/', true); ?>js/chosen.jquery.min.js")
+    ).done(function(){
+      // External scripts loaded, setup retroTrack
+      start_retroTrack();
+    });*/
   }
   
   // Starts retroTrack
@@ -84,8 +98,9 @@ instance with the attributes provided by DisplayController.
       rt_css.appendTo('head');
       
       // Create the main retroTrack container
+      var retroTrack_embed = $("#retroTrack_embed");
       var rt_tracker_container = $("<div id='rt_tracker_container'></div>");
-      $("#retroTrack_embed").append(rt_tracker_container);
+      retroTrack_embed.append(rt_tracker_container);
       
       // Build the top menu bar
       var rt_top_menu = $("<div id='rt_top_menu'></div>");
@@ -168,6 +183,49 @@ instance with the attributes provided by DisplayController.
       /*
       Setup the modals
       */
+      // Build the loading modal
+      var rt_load_modal = $("<div class='modal hide' id='rt_load_modal' style='width:400px;margin-left:-200px;'></div>");
+      
+      var rt_load_modal_header = $("<div class='modal-header'></div>");
+      rt_load_modal_header.append("<h3>Initializing <?php echo Configure::read('Website.name'); ?></h3>");
+      rt_load_modal.append(rt_load_modal_header);
+      
+      var rt_load_modal_body = $("<div class='modal-body'></div>");
+      rt_load_modal_body.append("<?php echo Configure::read('Website.name'); ?> is currently being initialized. Please stand by.");
+      rt_load_modal_message = $("<div style='padding:10px 0px 10px 0px;'></div>");
+      rt_load_modal_message.append("<span style='font-style:italic;'>Progress: </span> <span id='rt_load_progress_message'></span>");
+      rt_load_modal_body.append(rt_load_modal_message);
+      rt_load_modal_bar = $("<div class='progress progress-striped active'></div>");
+      rt_load_modal_bar.append("<div class='bar' id='rt_load_bar' style='width:0%;'></div>");
+      rt_load_modal_body.append(rt_load_modal_bar);
+      rt_load_modal.append(rt_load_modal_body);
+      
+      retroTrack_embed.append(rt_load_modal);      
+      
+      // Build the compatibility check modal
+      var rt_canvas_modal = $("<div class='modal hide' id='rt_canvas_modal' style='width:400px;margin-left:-200px;display:none;'></div>");
+      
+      var rt_canvas_modal_header = $("<div class='modal-header'></div>");
+      rt_canvas_modal_header.append("<h3>Your browser does not support HTML5 canvas.</h3>");
+      rt_canvas_modal.append(rt_canvas_modal_header);
+      
+      var rt_canvas_modal_body = $("<div class='modal-body'></div>");
+      rt_canvas_modal_body.append("<p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render <?php echo Configure::read('Website.name'); ?>. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>");
+      var rt_canvas_modal_body_center = $("<center></center>");
+      var rt_canvas_modal_body_chrome = $("<div class='rt_browser_warning_box'></div>");
+      rt_canvas_modal_body_chrome.append("<a href='https://www.google.com/intl/en/chrome/browser/' style='color: #666666;'><img src='<?php echo Router::url('/', true); ?>img/browser_chrome.gif' /><br />Google Chrome 4.0+</a>");
+      rt_canvas_modal_body_center.append(rt_canvas_modal_body_chrome);
+      var rt_canvas_modal_body_firefox = $("<div class='rt_browser_warning_box'></div>");
+      rt_canvas_modal_body_firefox.append("<a href='http://www.mozilla.org/en-US/firefox/new/' style='color: #666666;'><img src='<?php echo Router::url('/', true); ?>img/browser_firefox.gif' /><br />Mozilla Firefox 2.0+</a>");
+      rt_canvas_modal_body_center.append(rt_canvas_modal_body_firefox);
+      rt_canvas_modal_body.append(rt_canvas_modal_body_center);
+      rt_canvas_modal.append(rt_canvas_modal_body);
+      
+      var rt_canvas_modal_footer = $("<div class='modal-footer'></div>");
+      rt_canvas_modal_footer.append("<a href='#' class='btn' data-dismiss='modal'>Continue Anyway</a>");
+      rt_canvas_modal.append(rt_canvas_modal_footer);
+      
+      retroTrack_embed.append(rt_canvas_modal);
     }
   }
 })();

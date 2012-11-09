@@ -177,23 +177,23 @@ $().ready(function(){
         <h3>Your browser does not support HTML5 canvas.</h3>
     </div>
     <div class="modal-body">
-		<p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render <?php echo Configure::read('Website.name'); ?>. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
-		<center>
-			<div class="browser_warning_box">
-				<a href="https://www.google.com/intl/en/chrome/browser/" style="color: #666666;">
-					<?php echo $this->Html->image('browser_chrome.gif'); ?><br />Google Chrome 4.0+
-				</a>
-			</div>
-			<div class="browser_warning_box">
-				<a href="http://www.mozilla.org/en-US/firefox/new/" style="color: #666666;">
-					<?php echo $this->Html->image('browser_firefox.gif'); ?><br />Mozilla Firefox 2.0+
-				</a>
-			</div>
-		</center>
+        <p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render <?php echo Configure::read('Website.name'); ?>. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
+        <center>
+            <div class="browser_warning_box">
+                <a href="https://www.google.com/intl/en/chrome/browser/" style="color: #666666;">
+                    <?php echo $this->Html->image('browser_chrome.gif'); ?><br />Google Chrome 4.0+
+                </a>
+            </div>
+            <div class="browser_warning_box">
+                <a href="http://www.mozilla.org/en-US/firefox/new/" style="color: #666666;">
+                    <?php echo $this->Html->image('browser_firefox.gif'); ?><br />Mozilla Firefox 2.0+
+                </a>
+            </div>
+        </center>
     </div>
-	<div class="modal-footer">
-	<a href="#" class="btn" data-dismiss="modal">Continue Anyway</a>
-</div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">Continue Anyway</a>
+    </div>
 </div>
 <!-- END Canvas Support Modal -->
 
