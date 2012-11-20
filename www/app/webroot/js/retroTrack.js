@@ -54,9 +54,9 @@ var retroTrack = {
         setInterval(retroTrack.updatePlot, configuration['map_update_period']['value']);
         
         // Hide the modal
-        $("#load_bar").css('width','100%');
+        $("#load_bar").progressbar("value", 100);
         $("#load_progress_message").html('Complete.');
-        $('#load_modal').modal('hide');
+        $('#load_modal').dialog("close");
     },
     
     setPlibSatellites: function(){

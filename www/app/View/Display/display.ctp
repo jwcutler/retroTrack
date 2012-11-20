@@ -4,7 +4,7 @@
 <?php echo $this->Html->script('retroTrack.js'); ?>
 <?php echo $this->Html->script('retroTrack_interface.js'); ?>
 <?php echo $this->Html->script('predictlib.js'); ?>
-<?php echo $this->Html->script('jquery-ui-1.8.21.custom.min.js'); ?>
+<?php echo $this->Html->script('jquery-ui-1.9.1.custom.min.js'); ?>
 <?php echo $this->Html->script('chosen.jquery.min.js'); ?>
 <?php echo $this->Html->script('modernizr.custom.js'); ?>
 <?php echo $this->Html->css('chosen.css'); ?>
@@ -31,22 +31,32 @@ $().ready(function(){
     /*
     Make sure canvas is supported
     */
-    $('#canvas_modal').modal({
-        keyboard: false,
-        backdrop: 'static',
-        show: false
+    $('#canvas_modal').dialog({
+        modal: true,
+        resizable: false,
+        autoOpen: false,
+        width: 500,
+        buttons: {
+          "Continue Anyway": function() {
+            $( this ).dialog("close");
+          }
+        }
     });
     if (!Modernizr.canvas){
-        $("#canvas_modal").modal('show');
+        $("#canvas_modal").dialog("open");
     }
 	
     /*
     Initialize the loading progress modal
     */
-    $('#load_modal').modal({
-        keyboard: false,
-        backdrop: 'static',
-        show: true
+    $("#load_modal").dialog({
+      autoOpen: true,
+      resizable: false,
+      modal: true,
+      width: 400
+    });
+    $("#load_bar").progressbar({
+      value: 0
     });
     
     /*
@@ -61,7 +71,7 @@ $().ready(function(){
     active_station = null;
     tles = jQuery.parseJSON('<?php echo $tle_json; ?>');
     configuration = jQuery.parseJSON('<?php echo $configuration_json; ?>');
-    $("#load_bar").css('width','20%');
+    $("#load_bar").progressbar("value", 20);
     
     /*
     Setup menus
@@ -74,7 +84,7 @@ $().ready(function(){
     initializeActiveSatellites();
     initializeActiveGroups();
     initializeActiveStations();
-    $("#load_bar").css('width', '50%');
+    $("#load_bar").progressbar("value", 50);
     
     /*
     Initialize retroTracker object
@@ -155,45 +165,32 @@ $().ready(function(){
 <!-- END retroTrack Display -->
 
 <!-- START Loading Modal -->
-<div class="modal hide" id="load_modal" style="width: 400px;margin-left: -200px;">
-    <div class="modal-header">
-        <h3>Initializing <?php echo Configure::read('Website.name'); ?></h3>
-    </div>
-    <div class="modal-body">
-        <?php echo Configure::read('Website.name'); ?> is currently being initialized. Please stand by.
-        <div style="padding: 10px 0px 10px 0px;">
-            <span style="font-style: italic;">Progress: </span> <span id="load_progress_message"></span>
-        </div>
-        <div class="progress progress-striped active">
-            <div class="bar" id="load_bar" style="width: 0%;"></div>
-        </div>
-    </div>
+<div id="load_modal" title="Initializing <?php echo Configure::read('Website.name'); ?>">
+    <p>
+      <?php echo Configure::read('Website.name'); ?> is currently being initialized. Please stand by.
+      <div style="padding: 10px 0px 10px 0px;">
+        <span style="font-style: italic;">Progress: </span> <span id="load_progress_message"></span>
+      </div>
+      <div id="load_bar"></div>
+    </p>
 </div>
 <!-- END Loading Modal -->
 
 <!-- START Canvas Support Modal -->
-<div class="modal hide" id="canvas_modal" style="width: 400px;margin-left: -200px;display: none;">
-    <div class="modal-header">
-        <h3>Your browser does not support HTML5 canvas.</h3>
-    </div>
-    <div class="modal-body">
-        <p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render <?php echo Configure::read('Website.name'); ?>. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
-        <center>
-            <div class="browser_warning_box">
-                <a href="https://www.google.com/intl/en/chrome/browser/" style="color: #666666;">
-                    <?php echo $this->Html->image('browser_chrome.gif'); ?><br />Google Chrome 4.0+
-                </a>
-            </div>
-            <div class="browser_warning_box">
-                <a href="http://www.mozilla.org/en-US/firefox/new/" style="color: #666666;">
-                    <?php echo $this->Html->image('browser_firefox.gif'); ?><br />Mozilla Firefox 2.0+
-                </a>
-            </div>
-        </center>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Continue Anyway</a>
-    </div>
+<div id="canvas_modal" title="Your browser does not support HTML5 canvas.">
+    <p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render <?php echo Configure::read('Website.name'); ?>. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
+    <center>
+        <div class="browser_warning_box">
+            <a href="https://www.google.com/intl/en/chrome/browser/" style="color: #666666;">
+                <?php echo $this->Html->image('browser_chrome.gif'); ?><br />Google Chrome 4.0+
+            </a>
+        </div>
+        <div class="browser_warning_box">
+            <a href="http://www.mozilla.org/en-US/firefox/new/" style="color: #666666;">
+                <?php echo $this->Html->image('browser_firefox.gif'); ?><br />Mozilla Firefox 2.0+
+            </a>
+        </div>
+    </center>
 </div>
 <!-- END Canvas Support Modal -->
 

@@ -28,6 +28,8 @@ This file contains the styles for the retroTrack display.
   display: inline-block;
   padding: 5px;
   margin: 5px;
+  vertical-align: top;
+  min-height: 140px;
 }
 
 .rt_browser_warning_box img {
@@ -94,6 +96,14 @@ This file contains the styles for the retroTrack display.
   content: " \25B2";
 }
 
+#rt_satellite_parameters {
+  margin: 0px;
+}
+
+#rt_station_parameters {
+  margin: 0px;
+}
+
 #rt_satellite_parameters li {
   display: inline;
   list-style-type: none;
@@ -126,9 +136,3 @@ This file contains the styles for the retroTrack display.
   /*background-color: #C4D1E4;*/
   background-color: #D1D1D1;
 }
-
-/*
-CSS for jQuery Chosen
-*/
-
-
