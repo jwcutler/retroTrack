@@ -72,7 +72,7 @@ class DisplayController extends AppController {
                 // Load the list of satellites
                 $this->set('satellite_json', str_replace("'", "\'", $this->Satellite->satellite_json($satellite_name)));
                 
-                // Load the list of groups
+                // Load the list of groups that the satellite belongs to
                 $group_names = array();
                 foreach ($satellite['Group'] as $temp_group){
                     array_push($group_names, $temp_group['name']);
@@ -135,6 +135,19 @@ class DisplayController extends AppController {
                 
                 // Load the configuration
                 $this->set('configuration_json', str_replace("'", "\'", $this->Configuration->configuration_json()));
+                
+                // Set the default group and satellites
+                $default_array['groups'] = Array();
+                $default_array['satellites'] = Array();
+                array_push($default_array['groups'], $group['Group']['id']);
+                foreach($group['Satellite'] as $default_group_satellite){
+                    array_push($default_array['satellites'], array(
+                        'name' => $default_group_satellite['name'],
+                        'id' => $default_group_satellite['id']
+                    ));
+                }
+                $default_elements = json_encode($default_array);
+                $this->set('default_elements', str_replace("'", "\'", $default_elements));
                 
                 $this->set('page_title', 'Now viewing the \''.$group['Group']['name'].'\' satellite group');
             } else {

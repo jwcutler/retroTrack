@@ -74,7 +74,7 @@ instance with the attributes provided by DisplayController.
   interface (menus, clocks, etc.)
   */
   <?php 
-  $default_elements = (isset($default_elemeents))?$default_elements:'';
+  $default_elements = (isset($default_elements))?$default_elements:'';
   
   echo $this->element('retrotrack_javascript', array(
     "satellite_json" => $satellite_json,
@@ -208,7 +208,7 @@ instance with the attributes provided by DisplayController.
     var rt_load_modal = $("<div id='rt_load_modal' title='Initializing <?php echo Configure::read('Website.name'); ?>'></div>");
     
     var rt_load_modal_body = $("<p></p>");
-    rt_load_modal_body.append("<?php echo Configure::read('Website.name'); ?> is currently being initialized. Please stand by.");
+    rt_load_modal_body.append("<?php echo Configure::read('Website.name'); ?> is currently being initialized. Please stand by.<br /><br />");
     rt_load_modal_message = $("<div style='padding:10px 0px 10px 0px;'></div>");
     rt_load_modal_message.append("<span style='font-style:italic;'>Progress: </span> <span id='rt_load_progress_message'></span>");
     rt_load_modal_body.append(rt_load_modal_message);

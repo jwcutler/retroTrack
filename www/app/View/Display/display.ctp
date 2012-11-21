@@ -1,162 +1,97 @@
 <?php if(!empty($page_title)): ?>
     <div class="page_title"><?php echo $page_title; ?></div>
 <?php endif; ?>
-<?php echo $this->Html->script('retroTrack.js'); ?>
-<?php echo $this->Html->script('retroTrack_interface.js'); ?>
-<?php echo $this->Html->script('predictlib.js'); ?>
 <?php echo $this->Html->script('jquery-ui-1.9.1.custom.min.js'); ?>
 <?php echo $this->Html->script('chosen.jquery.min.js'); ?>
 <?php echo $this->Html->script('modernizr.custom.js'); ?>
 <?php echo $this->Html->css('chosen.css'); ?>
+<?php echo $this->Html->css('jquery-ui-1.9.1.custom.min.css'); ?>
+<?php echo $this->Html->css('retrotrack_embed.css'); ?>
 <script type="text/javascript">
-// Global Variables
-var satellites = null;
-var active_satellites = new Array();
-var groups = null;
-var stations = null;
-var active_stations = new Array();
-var active_station = null;
-var tles = null;
-var configuration = null;
-var selected_satellite = null;
-var selected_station = null;
-var background_image_path = null;
-var default_elements = null;
+<?php 
+$default_elements = (isset($default_elements))?$default_elements:'';
+
+echo $this->element('retrotrack_javascript', array(
+  "satellite_json" => $satellite_json,
+  "group_json" => $group_json,
+  "station_json" => $station_json,
+  "default_elements" => $default_elements,
+  "tle_json" => $tle_json,
+  "configuration_json" => $configuration_json
+));
+?>
 
 $().ready(function(){
-    /*
-    Initialize retroTrack
-    */
-	
-    /*
-    Make sure canvas is supported
-    */
-    $('#canvas_modal').dialog({
-        modal: true,
-        resizable: false,
-        autoOpen: false,
-        width: 500,
-        buttons: {
-          "Continue Anyway": function() {
-            $( this ).dialog("close");
-          }
-        }
-    });
-    if (!Modernizr.canvas){
-        $("#canvas_modal").dialog("open");
-    }
-	
-    /*
-    Initialize the loading progress modal
-    */
-    $("#load_modal").dialog({
-      autoOpen: true,
-      resizable: false,
-      modal: true,
-      width: 400
-    });
-    $("#load_bar").progressbar({
-      value: 0
-    });
-    
-    /*
-    Tracker Configuration
-    */
-    $("#load_progress_message").html('Loading configuration.');
-    satellites = jQuery.parseJSON('<?php echo $satellite_json; ?>'); // All satellites this page can display
-    active_satellites = new Array(); // Array of the IDs of all active satellites (the IDs are also the indexes in satellites)
-    groups = jQuery.parseJSON('<?php echo $group_json; ?>'); // All groups this page can display
-    stations = jQuery.parseJSON('<?php echo $station_json; ?>'); // All ground stations this page can display
-    default_elements = jQuery.parseJSON('<?php echo $default_elements; ?>'); // Default elements
-    active_station = null;
-    tles = jQuery.parseJSON('<?php echo $tle_json; ?>');
-    configuration = jQuery.parseJSON('<?php echo $configuration_json; ?>');
-    $("#load_bar").progressbar("value", 20);
-    
-    /*
-    Setup menus
-    */
-    $("#load_progress_message").html('Setting up application menus.');
-    populateSatellitesMenu(satellites, active_satellites);
-    populateGroupsMenu(groups);
-    populateStationsMenu(stations, active_station);
-    populateOptionsMenu(configuration);
-    initializeActiveSatellites();
-    initializeActiveGroups();
-    initializeActiveStations();
-    $("#load_bar").progressbar("value", 50);
-    
-    /*
-    Initialize retroTracker object
-    */
-    $("#load_progress_message").html('Setting up tracker object.');
-    background_image_path = "<?php echo $this->webroot; ?>img/"+configuration['map_file']['value'];
-    retroTrack.initialize('tracker_canvas');
+  // Register the menu listeners
+  retroTrack_interface.registerListeners();
+  
+  // Configure retroTrack
+  retroTrack_interface.setupConfiguration();
 });
 </script>
 
 <!-- START retroTrack Display -->
-<div id="tracker_container">
+<div id="rt_tracker_container">
     <!-- START top menu bar -->
-    <div id="top_menu">
+    <div id="rt_top_menu">
         <div style="float: left;">
-            <ul id="top_controls">
-                <li><a id="show_menu_satellites" rel="menu_satellites">Satellites</a></li>
-                <li><a id="show_menu_groups" rel="menu_groups">Satellite Groups</a></li>
-                <li><a id="show_menu_options" rel="menu_options">Options</a></li>
+            <ul id="rt_top_controls">
+                <li><a id="rt_show_menu_satellites" rel="rt_menu_satellites">Satellites</a></li>
+                <li><a id="rt_show_menu_groups" rel="rt_menu_groups">Satellite Groups</a></li>
+                <li><a id="rt_show_menu_options" rel="rt_menu_options">Options</a></li>
             </ul>
         </div>
         <div style="float: right;">
-          <ol id="satellite_parameters"></ol>
+          <ol id="rt_satellite_parameters"></ol>
         </div>
         <div style="clear: both;"></div>
     </div>
-    <div id="menu_satellites" class="menu_pane">
-        <div class="menu_pane_header">Select the satellites you would like to display.</div>
-        <select name="satellite_list" multiple="multiple" id="satellite_list" data-placeholder="Select some satellites" style="width: 835px;"></select>
+    <div id="rt_menu_satellites" class="rt_menu_pane">
+        <div class="rt_menu_pane_header">Select the satellites you would like to display.</div>
+        <select name="rt_satellite_list" multiple="multiple" id="rt_satellite_list" data-placeholder="Select some satellites" style="width: 835px;"></select>
         <div style="clear:both;"></div>
     </div>
-    <div id="menu_groups" class="menu_pane">
-        <div class="menu_pane_header">Select the groups you would like to display. Use CTRL to select multiple groups.</div>
-        <select name="group_list" multiple="multiple" id="group_list" data-placeholder="Select some satellite groups" style="width: 835px;"></select>
+    <div id="rt_menu_groups" class="rt_menu_pane">
+        <div class="rt_menu_pane_header">Select the groups you would like to display.</div>
+        <select name="rt_group_list" multiple="multiple" id="rt_group_list" data-placeholder="Select some satellite groups" style="width: 835px;"></select>
         <div style="clear:both;"></div>
     </div>
-    <div id="menu_options" class="menu_pane">
-        <div class="menu_pane_header">Click on any of the options below to toggle them.</div>
-        <ol id="option_list" class="menu_list">
-            <li id="show_sun">Disable Sun</li>
-            <li id="show_grid">Disable Grid</li>
-            <li id="show_satellite_names">Hide Satellite Names</li>
-            <li id="show_path">Hide Satellite Path</li>
-            <li id="show_satellite_footprint">Hide Satellite Footprint</li>
-            <li id="show_station_footprint">Hide Station Footprint</li>
-            <li id="show_station_names">Hide Station Names</li>
+    <div id="rt_menu_options" class="rt_menu_pane">
+        <div class="rt_menu_pane_header">Click on any of the options below to toggle them.</div>
+        <ol id="rt_option_list" class="rt_menu_list">
+            <li id="rt_show_sun">Disable Sun</li>
+            <li id="rt_show_grid">Disable Grid</li>
+            <li id="rt_show_satellite_names">Hide Satellite Names</li>
+            <li id="rt_show_path">Hide Satellite Path</li>
+            <li id="rt_show_satellite_footprint">Hide Satellite Footprint</li>
+            <li id="rt_show_station_footprint">Hide Station Footprint</li>
+            <li id="rt_show_station_names">Hide Station Names</li>
         </ol>
         <div style="clear:both;"></div>
     </div>
     <!-- END top menu bar -->
     
     <!-- START primary display canvas -->
-    <canvas id="tracker_canvas" width="860px" height="430px" style="border: 1px solid #071831;border-width: 0px 1px 0px 1px;display: block;"></canvas>
+    <canvas id="rt_tracker_canvas" width="860px" height="430px" style="border: 1px solid #071831;border-width: 0px 1px 0px 1px;display: block;"></canvas>
     <!-- END primary display canvas -->
     
     <!-- START bottom menu bar -->
-    <div id="menu_stations" class="menu_pane">
-        <div class="menu_pane_header">Select the ground stations you would like to display.</div>
-        <select name="station_list" multiple="multiple" id="station_list" data-placeholder="Select some ground stations" style="width: 835px;"></select>
+    <div id="rt_menu_stations" class="rt_menu_pane">
+        <div class="rt_menu_pane_header">Select the ground stations you would like to display.</div>
+        <select name="rt_station_list" multiple="multiple" id="rt_station_list" data-placeholder="Select some ground stations" style="width: 835px;"></select>
         <div style="clear:both;"></div>
     </div>
-    <div id="bottom_menu">
+    <div id="rt_bottom_menu">
         <div style="float: left;">
-            <ul id="bottom_controls">
-                <li><a id="show_menu_stations" rel="menu_stations">Ground Stations</a></li>
+            <ul id="rt_bottom_controls">
+                <li><a id="rt_show_menu_stations" rel="rt_menu_stations">Ground Stations</a></li>
             </ul>
         </div>
         <div style="float: left; margin-left: 20px;">
-            <ol id="station_parameters"></ol>
+            <ol id="rt_station_parameters"></ol>
         </div>
         <div style="float: right;">
-          <div id="top_clock">-</div>
+          <div id="rt_top_clock">-</div>
         </div>
         <div style="clear: both;"></div>
     </div>
@@ -165,27 +100,27 @@ $().ready(function(){
 <!-- END retroTrack Display -->
 
 <!-- START Loading Modal -->
-<div id="load_modal" title="Initializing <?php echo Configure::read('Website.name'); ?>">
+<div id="rt_load_modal" title="Initializing <?php echo Configure::read('Website.name'); ?>">
     <p>
-      <?php echo Configure::read('Website.name'); ?> is currently being initialized. Please stand by.
+      <?php echo Configure::read('Website.name'); ?> is currently being initialized. Please stand by.<br /><br />
       <div style="padding: 10px 0px 10px 0px;">
-        <span style="font-style: italic;">Progress: </span> <span id="load_progress_message"></span>
+        <span style="font-style: italic;">Progress: </span> <span id="rt_load_progress_message"></span>
       </div>
-      <div id="load_bar"></div>
+      <div id="rt_load_bar"></div>
     </p>
 </div>
 <!-- END Loading Modal -->
 
 <!-- START Canvas Support Modal -->
-<div id="canvas_modal" title="Your browser does not support HTML5 canvas.">
+<div id="rt_canvas_modal" title="Your browser does not support HTML5 canvas.">
     <p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render <?php echo Configure::read('Website.name'); ?>. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
     <center>
-        <div class="browser_warning_box">
+        <div class="rt_browser_warning_box">
             <a href="https://www.google.com/intl/en/chrome/browser/" style="color: #666666;">
                 <?php echo $this->Html->image('browser_chrome.gif'); ?><br />Google Chrome 4.0+
             </a>
         </div>
-        <div class="browser_warning_box">
+        <div class="rt_browser_warning_box">
             <a href="http://www.mozilla.org/en-US/firefox/new/" style="color: #666666;">
                 <?php echo $this->Html->image('browser_firefox.gif'); ?><br />Mozilla Firefox 2.0+
             </a>
