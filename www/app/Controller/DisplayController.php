@@ -73,11 +73,12 @@ class DisplayController extends AppController {
                 $this->set('satellite_json', str_replace("'", "\'", $this->Satellite->satellite_json($satellite_name)));
                 
                 // Load the list of groups that the satellite belongs to
-                $group_names = array();
+                /*$group_names = array();
                 foreach ($satellite['Group'] as $temp_group){
                     array_push($group_names, $temp_group['name']);
                 }
-                $this->set('group_json', str_replace("'", "\'", $this->Group->group_json($group_names)));
+                $this->set('group_json', str_replace("'", "\'", $this->Group->group_json($group_names)));*/
+                $this->set('group_json', '[]');
                 
                 // Load the TLEs
                 $this->set('tle_json', str_replace("'", "\'", $this->Tle->tle_json()));

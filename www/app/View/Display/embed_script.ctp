@@ -92,7 +92,7 @@ instance with the attributes provided by DisplayController.
     var rt_css = $("<link>", { 
       rel: "stylesheet", 
       type: "text/css", 
-      href: "<?php echo Router::url('/', true); ?>css/retrotrack_embed.css" 
+      href: "<?php echo Router::url('/', true); ?>css/retrotrack_display.css" 
     });
     rt_css.appendTo('head');
     

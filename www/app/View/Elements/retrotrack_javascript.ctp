@@ -364,6 +364,7 @@ var retroTrack_interface = {
     $("#rt_load_modal").dialog({
       autoOpen: true,
       resizable: false,
+      closeOnEscape: false,
       modal: true,
       width: 400
     });
