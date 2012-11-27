@@ -106,7 +106,7 @@ $().ready(function(){
   <!-- END retroTrack Display -->
   
   <!-- Display the embed link -->
-  <div style="margin-top: 10px;">
+  <div style="margin-top: 6px;">
     <a id="embed_link" class="embed_link">[Embed This <?php echo Configure::read('Website.name'); ?> Display]</a>
     <div id="embed_form" class="embed_form">
       <?php
@@ -126,7 +126,7 @@ $().ready(function(){
       $group_string = join('_', $group_names);
       ?>
       To embed this retroTrack display on your website, copy the HTML below and paste it where you want the tracker to appear.
-      <textarea style="width: 100%; margin-top: 10px;">&lt;script src="<?php echo Router::url('/', true); ?>embed.js?satellites=<?php echo $satellite_string; ?>&groups=<?php echo $group_string; ?>" type="text/javascript"&gt;&lt;/script&gt;&lt;div id="retroTrack_embed"&gt;&lt;/div&gt;</textarea>
+      <textarea rows="3">&lt;script src="<?php echo Router::url('/', true); ?>embed.js?satellites=<?php echo $satellite_string; ?>&groups=<?php echo $group_string; ?>" type="text/javascript"&gt;&lt;/script&gt;&lt;div id="retroTrack_embed"&gt;&lt;/div&gt;</textarea>
     </div>
   </div>
 </div>

@@ -21,6 +21,110 @@ class Satellite extends AppModel {
             )
     );
     
+    public function default_json($satellite_list=false, $group_list=false){
+      /*
+      Generates the default element JSON for specified groups and satellites.
+      
+      @param $satellite_list: The list of satellites to load.
+      @param $group_list: The list of groups to load.
+      Returns:
+          A JSON string for the provided default satellites and groups.
+      */
+      
+      // Setup
+      $default_array['groups'] = Array();
+      $default_array['satellites'] = Array();
+      
+      // Load the satellites
+      if ($satellite_list!=false){
+        // Load all of the specified satellites
+        $satellites = $this->find('all', array(
+          'conditions' => array(
+            'Satellite.name' => $satellite_list
+          )
+        ));
+        
+        // Loop through the satellites and add them
+        foreach ($satellites as $temp_satellite){
+          array_push($default_array['satellites'], array(
+            'name' => $temp_satellite['Satellite']['name'],
+            'id' => $temp_satellite['Satellite']['id']
+          ));
+        }
+      }
+      
+      // Load the groups
+      if ($group_list!=false){
+        // Load all of the specified satellites
+        $groups = $this->Group->find('all', array(
+          'conditions' => array(
+            'Group.name' => $group_list
+          )
+        ));
+        
+        // Loop through the groups and add them and their satellites
+        foreach ($groups as $temp_group){
+          // Add the group
+          array_push($default_array['groups'], $temp_group['Group']['id']);
+          
+          // Add the group's satellites
+          foreach ($temp_group['Satellite'] as $temp_satellite){
+            $temp_satellite_array = array(
+              'name' => $temp_satellite['name'],
+              'id' => $temp_satellite['id']
+            );
+            
+            // Make sure the satellite hasn't been added all ready
+            if (!in_array($temp_satellite_array, $default_array['satellites'])){
+              array_push($default_array['satellites'], $temp_satellite_array);
+            }
+          }
+        }
+      }
+      
+      // Load the default homepage elements
+      if (!$satellite_list && !$group_list){
+        // Load all default satellites and groups
+        $default_groups = $this->Group->find('all', array(
+          'conditions' => array(
+            'Group.default_on_home' => 1
+          )
+        ));
+        foreach($default_groups as $default_group){
+          // Add the group ID to the default array
+          array_push($default_array['groups'], $default_group['Group']['id']);
+          
+          // Add each of the group's satellites to the default array
+          foreach($default_group['Satellite'] as $default_group_satellite){
+            array_push($default_array['satellites'], array(
+              'name' => $default_group_satellite['name'],
+              'id' => $default_group_satellite['id']
+            ));
+          }
+        }
+        
+        // Load all default satellites
+        $default_satellites = $this->find('all', array(
+          'conditions' => array(
+            'Satellite.default_on_home' => 1
+          )
+        ));
+        foreach($default_satellites as $default_satellite){
+          $temp_satellite_array = array(
+            'name' => $default_satellite['Satellite']['name'],
+            'id' => $default_satellite['Satellite']['id']
+          );
+          
+          // Make sure the satellite hasn't been added all ready 
+          if (!in_array($temp_satellite_array, $default_array['satellites'])){
+            array_push($default_array['satellites'], $temp_satellite_array);
+          }
+        }
+      }
+      
+      return json_encode($default_array);
+    }
+    
     public function default_element_json(){
         /*
         Loads all default groups and satellites into JSON for use on the homepage.

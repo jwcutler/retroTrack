@@ -25,14 +25,14 @@
     </div>
     <div id="footer">
 	<div id="footer_left">
-	    <a href="http://exploration.engin.umich.edu/" target="_blank" class="link"><?php echo $this->Html->image('mxl_logo.png'); ?></a>
+	    <a href="http://exploration.engin.umich.edu/" target="_blank" ><?php echo $this->Html->image('mxl_logo.png'); ?></a>
 	</div>
 	<div id="footer_middle">
 	    Copyright &copy; The University of Michigan<br />
-	    Visit <a href="https://github.com/jwcutler/retroTrack" target="_blank" class="link"><?php echo Configure::read('Website.name'); ?> on github</a>
+	    Visit <a href="https://github.com/jwcutler/retroTrack" target="_blank" ><?php echo Configure::read('Website.name'); ?> on github</a>
 	</div>
 	<div id="footer_right">
-	    <span style="color: red;">Note: This application is in a BETA state and may occasionally not behave as expected.</span>
+	    <span style="font-size: 10px;">Note: This application is being actively developed and occasionally may not behave as expected. If you encounter a bug, please report it on <a href="https://github.com/jwcutler/retroTrack/issues?state=open" target="blank" >Github</a>.</span>
 	</div>
     </div>
 </body>

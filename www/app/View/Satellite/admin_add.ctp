@@ -13,7 +13,7 @@ $(document).ready(function(){
 </script>
 <h3>Create New Satellite</h3>
 <?php if (empty($tle_names)): ?>
-    A new satellite can not be added because no TLE's are configured. <a href="/admin" class="link">Import TLE's Here</a>.
+    A new satellite can not be added because no TLE's are configured. <a href="/admin" >Import TLE's Here</a>.
 <?php else: ?>
     To create a new satellite, select the desired TLE entry from the list.
     <div style="width: 70%; margin-top: 10px;">

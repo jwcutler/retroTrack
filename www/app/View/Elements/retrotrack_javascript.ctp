@@ -47,7 +47,7 @@ var retroTrack_interface = {
     } else {
       // Loop through all of the satellites and add them to the list
       for (curr_satellite_id in satellites){
-        $('#rt_satellite_list').append($("<option></option>").attr("value",curr_satellite_id).attr("rel",satellites[curr_satellite_id]['name']).attr("title",satellites[curr_satellite_id]['description']).text(satellites[curr_satellite_id]['name'])); 
+        $('#rt_satellite_list').append($("<option></option>").attr("value",satellites[curr_satellite_id]['name']).attr("rel",curr_satellite_id).attr("title",satellites[curr_satellite_id]['description']).text(satellites[curr_satellite_id]['name'])); 
       }
       
       // Enable jQuery Chosen
@@ -129,7 +129,7 @@ var retroTrack_interface = {
           active_satellites[active_satellites.length] = default_elements['satellites'][curr_satellite_index]['name'];
           
           // Add the item to the selection
-          $("#rt_satellite_list option[value='"+default_elements['satellites'][curr_satellite_index]['id']+"']").attr("selected", "selected");
+          $("#rt_satellite_list option[value='"+default_elements['satellites'][curr_satellite_index]['name']+"']").attr("selected", "selected");
         }
       }
         
@@ -143,7 +143,7 @@ var retroTrack_interface = {
           active_satellites[active_satellites.length] = satellites[curr_satellite_index]['name'];
           
           // Add the item to the selection
-          $("#rt_satellite_list option[value='"+satellites[curr_satellite_index]['id']+"']").attr("selected", "selected");
+          $("#rt_satellite_list option[value='"+satellites[curr_satellite_index]['name']+"']").attr("selected", "selected");
           
           // Rebuild the menu
           $("#rt_satellite_list").trigger("liszt:updated");
@@ -154,7 +154,7 @@ var retroTrack_interface = {
     }
     
     // Grab the last satellite in the selection
-    selected_satellite = retroTrack_interface.getLastSatellite();
+    selected_satellite = retroTrack_interface.getLastElement();
   },
   
   /*
@@ -175,6 +175,8 @@ var retroTrack_interface = {
   
   /*
   Initializes the ground station selection state.
+  
+  @note To show every satellite instead of just the default, uncomment the blocks of code below.
   */
   initializeActiveStations: function(){
     // Loop through all of the available stations
@@ -191,12 +193,13 @@ var retroTrack_interface = {
       selected_station = configuration['default_ground_station']['value'];
     } else {
       // Default not present, use last in list
-      selected_station = retroTrack_interface.getLastStation();
+      selected_station = retroTrack_interface.getLastElement(true);
     }
     
     // Select every ground station
-    $("#rt_station_list option").attr("selected", "selected");
-                
+    //$("#rt_station_list option").attr("selected", "selected");
+    $("#rt_station_list option[value=\""+selected_station+"\"]").attr("selected", "selected");
+    
     // Rebuild the menu
     $("#rt_station_list").trigger("liszt:updated");
   },
@@ -234,12 +237,12 @@ var retroTrack_interface = {
       
       // Loop through the selected children and add the rel value to 'active_satellites'
       $(this).children('option:selected').each(function(){
-        // Add the satellite ID to active_satellites
-        active_satellites[active_satellites.length] = $(this).attr('rel');
+        // Add the satellite name to active_satellites
+        active_satellites[active_satellites.length] = $(this).attr('value');
       });
       
       // Grab the last satellite in the selection
-      selected_satellite = retroTrack_interface.getLastSatellite();
+      selected_satellite = retroTrack_interface.getLastElement();
       
       // Reload the PLib Satellites
       retroTrack.setPlibSatellites();
@@ -260,7 +263,7 @@ var retroTrack_interface = {
       });
   
       // Set the active station to be the last one in the list
-      selected_station = retroTrack_interface.getLastStation();
+      selected_station = retroTrack_interface.getLastElement(true);
   
       // Update plot
       retroTrack.updatePlot();
@@ -289,7 +292,7 @@ var retroTrack_interface = {
             active_satellites[active_satellites.length] = groups[group_id]['satellites'][satellite_index]['name'];
             
             // Select the satellite in the menu
-            $("#rt_satellite_list option[value='"+groups[group_id]['satellites'][satellite_index]['id']+"']").attr("selected", "selected");
+            $("#rt_satellite_list option[value='"+groups[group_id]['satellites'][satellite_index]['name']+"']").attr("selected", "selected");
           }
         }
         
@@ -297,7 +300,7 @@ var retroTrack_interface = {
         $("#rt_satellite_list").trigger("liszt:updated");
         
         // Set the active satellite to the first one in the list
-        selected_satellite = retroTrack_interface.getLastSatellite();
+        selected_satellite = retroTrack_interface.getLastElement();
       });
       
       // Reload the PLib Satellites
@@ -402,40 +405,82 @@ var retroTrack_interface = {
   },
   
   /*
-  Returns the name of the last satellite currently in the selection.
+  Returns the name of the last station or satellite selected.
   
-  @return The name of the last satellite.
+  @note Because jQuery Chosen triggers a change before it redraws the value when deleting values, we need to compare against the actual select field value to figure out what to select.
+  
+  @param find_station If set to true, the last station will be found. Otherwise the last satellite will be found.
+  @return The name of the last station or satellite.
   */
-  getLastSatellite: function(){
-    // Select the last satellite selected in the menu
-    temp_selected_satellite = false;
-    selected_satellites_form = $("#rt_satellite_list").val();
-    if (selected_satellites_form && selected_satellites_form.length > 0){
-      // Use the satellite ID to get the name
-      selected_satellite_temp_id = selected_satellites_form[selected_satellites_form.length-1];
-      selected_satellite_temp_name = $("#rt_satellite_list option[value='"+selected_satellite_temp_id+"']").attr("rel");
-      temp_selected_satellite = selected_satellite_temp_name;
+  getLastElement: function(find_station){
+    // Setup local variables
+    find_station = (find_station)?true:false;
+    temp_selected_element = false;
+    select_names = false;
+    select_list = null;
+    chosen_list_elements = null;
+    
+    if (find_station){
+      // Find the last station
+      select_names = $("#rt_station_list").val();
+      select_list = $("#rt_station_list");
+      chosen_list_elements = $("#rt_station_list_chzn .chzn-choices .search-choice");
+    } else {
+      // Find the last satellite
+      select_names = $("#rt_satellite_list").val();
+      select_list = $("#rt_satellite_list");
+      chosen_list_elements = $("#rt_satellite_list_chzn .chzn-choices .search-choice");
     }
     
-    return temp_selected_satellite;
+    if (select_names!=null){
+      // Compare the number of elements in the select field with the number in the Chosen interface field
+      select_count = select_list.val().length;
+      chosen_count = chosen_list_elements.length;
+      
+      // Get an array of elements currently in the Chosen field
+      chosen_names = chosen_list_elements.map(function() {
+        return $(this).children('span').last().text();
+      }).get();
+      
+      // Decide which element to take
+      if (select_count==chosen_count){
+        // No difference so either just initialized or item was added to the list; use the true last chosen element
+        temp_selected_element = chosen_names[chosen_names.length-1];
+      } else if (select_count<chosen_count){
+        // Element removed from the list; use the last chosen element that isn't the one that was deleted
+        removed_element = false;
+      
+        // Element removed from the list; loop through Chosen elements and find what was removed
+        for (temp_chosen_name in chosen_names){
+          // Check if the element is in the select field
+          if (jQuery.inArray(chosen_names[temp_chosen_name], select_names) == -1){
+            removed_element = chosen_names[temp_chosen_name];
+          }
+        }
+        
+        // Select the last item that's not the removed element
+        search_last_element = chosen_list_elements.last();
+        while(true){
+          search_last_name = search_last_element.children('span').last().text();
+          if (search_last_name != removed_element){
+            // Found the last element (that wasn't just deleted)
+            temp_selected_element = search_last_name;
+            break;
+          } else {
+            // Satellite was just deleted, look at the one before it
+            search_last_element = chosen_list_elements.last().prev();
+          }
+        }
+      }
+    }
+    
+    // Check for a null value
+    if (temp_selected_element==null){
+      temp_selected_element = false;
+    }
+    
+    return temp_selected_element;
   },
-  
-  /*
-  Returns the name of the last station currently in the selection.
-  
-  @return The name of the last station.
-  */
-  getLastStation: function(){
-    // Select the last ground station selected in the menu
-    temp_selected_station = false;
-    selected_stations_form = $("#rt_station_list").val();
-    if (selected_stations_form && selected_stations_form.length > 0){
-      // Set the station name
-      temp_selected_station = selected_stations_form[selected_stations_form.length-1];
-    }
-    
-    return temp_selected_station;
-  }
 }
 
 /*
@@ -514,13 +559,14 @@ var retroTrack = {
         temp_satellites.push(active_satellites[curr_satellite_index]);
       } else {
         // No TLE data exists for satellite, remove it from menus
-        $("#rt_satellite_list option[rel="+curr_satellite_name+"]").remove();
+        $("#rt_satellite_list option[value="+curr_satellite_name+"]").remove();
       }
     }
 
     active_satellites = temp_satellites.slice(0);
-    selected_satellite = retroTrack_interface.getLastSatellite();
     
+    selected_satellite = retroTrack_interface.getLastElement();
+      
     // Initialize PLib
     PLib.InitializeData();
   },

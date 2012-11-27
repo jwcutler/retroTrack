@@ -25,7 +25,7 @@ $this->start('panel_content');
 		    <td width="25%">
 			Long.: <?php echo $station['Station']['longitude']; ?><br />
 			Lat.: <?php echo $station['Station']['latitude']; ?><br />
-			<a href="https://maps.google.com/maps?q=<?php echo $station['Station']['latitude']; ?>,<?php echo $station['Station']['longitude']; ?>" target="_blank" class="link">View Map</a>
+			<a href="https://maps.google.com/maps?q=<?php echo $station['Station']['latitude']; ?>,<?php echo $station['Station']['longitude']; ?>" target="_blank" >View Map</a>
 		    </td>
 		    <td width="25%"><a href="<?php echo $this->webroot; ?>admin/station/<?php echo $station['Station']['id']; ?>/delete" class="btn btn-mini btn-primary">Delete</a> <a href="<?php echo $this->webroot; ?>admin/station/<?php echo $station['Station']['id']; ?>/edit" class="btn btn-mini btn-primary">Edit</a></td>
 		</tr>

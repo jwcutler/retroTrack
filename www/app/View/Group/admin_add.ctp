@@ -7,7 +7,7 @@ $this->start('panel_content');
 <?php echo $this->Html->css('chosen.css'); ?>
 <h3>Create New Satellite Group</h3>
 <?php if (empty($satellites)): ?>
-	You can not create a new group because no satellites are currently configured. Go to the <a href="/admin/satellite/add" class="link">satellite creation page</a> to add one.
+	You can not create a new group because no satellites are currently configured. Go to the <a href="/admin/satellite/add" >satellite creation page</a> to add one.
 <?php else: ?>
 	<script type="text/javascript">
 	$(document).ready(function() {

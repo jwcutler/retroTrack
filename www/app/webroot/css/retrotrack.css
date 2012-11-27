@@ -26,10 +26,10 @@ body:before {
 }
 
 /* Text Styles */
-a.link:link {color: #000000; text-decoration: underline;}
-a.link:visited {color: #000000; text-decoration: underline;}
-a.link:hover {color: #666666; text-decoration: none;}
-a.link:active {color: #666666; text-decoration: none;}
+a:link {color: #000000; text-decoration: underline;}
+a:visited {color: #000000; text-decoration: underline;}
+a:hover {color: #666666; text-decoration: none;}
+a:active {color: #666666; text-decoration: none;}
 
 a.embed_link {cursor: pointer; font-size: 10px; color: #000000;}
 a.embed_link:visited {font-size: 10px; color: #000000;}
@@ -77,6 +77,15 @@ h3 {
     font-size: 16px;
 }
 
+/* Twitter Bootstrap Tweaks */
+.btn-primary, .btn-primary:hover, .btn-warning, .btn-warning:hover, .btn-danger, .btn-danger:hover, .btn-success, .btn-success:hover, .btn-info, .btn-info:hover, .btn-inverse, .btn-inverse:hover {
+  color: #FFFFFF !important;
+}
+
+.btn {
+  text-decoration: none !important;
+}
+
 /* Layout Styles */
 #wrap {
     min-height: 100%;
@@ -122,7 +131,7 @@ h3 {
 }
 
 #footer_right {
-    width: 250px;
+    width: 320px;
     float: right;
 }
 
@@ -163,9 +172,15 @@ h3 {
 
 .embed_form {
   margin-top: 10px;
-  width: 400px;
+  width: 500px;
   display: none;
   font-size: 11px;
+}
+
+.embed_form textarea {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 10px;
 }
 
 .form_error {
