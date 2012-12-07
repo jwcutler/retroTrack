@@ -123,7 +123,7 @@ var retroTrack_interface = {
     // Loop through all of the default satellites
     active_satellites = [];
     if (default_elements!=null && default_elements['satellites'].length!=0){
-      for (var curr_satellite_index = 0; curr_satellite_index < default_elements['satellites'].length; curr_satellite_index++){
+      for (curr_satellite_index in default_elements['satellites']){
         // Add to active_satellites
         if (default_elements['satellites'][curr_satellite_index]['id'] in satellites){
           active_satellites[active_satellites.length] = default_elements['satellites'][curr_satellite_index]['name'];
@@ -138,7 +138,7 @@ var retroTrack_interface = {
     } else {
       // Select the first satellite
       if (satellites.length!=0){
-        for (var curr_satellite_index = 0; curr_satellite_index < satellites.length; curr_satellite_index++){
+        for (curr_satellite_index in satellites){
           // Add to active_satellites
           active_satellites[active_satellites.length] = satellites[curr_satellite_index]['name'];
           
@@ -163,7 +163,7 @@ var retroTrack_interface = {
   initializeActiveGroups: function(){
     // Loop through all of the default groups
     if (default_elements!=null){
-      for (var curr_group_index = 0; curr_group_index < default_elements['groups'].length; curr_group_index++){
+      for (curr_group_index in default_elements['groups']){
         // Add the group to the selection
         $("#rt_group_list option[value='"+default_elements['groups'][curr_group_index]+"']").attr("selected", "selected");
       }
