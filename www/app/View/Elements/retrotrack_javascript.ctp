@@ -123,7 +123,7 @@ var retroTrack_interface = {
     // Loop through all of the default satellites
     active_satellites = [];
     if (default_elements!=null && default_elements['satellites'].length!=0){
-      for (curr_satellite_index in default_elements['satellites']){
+      for (var curr_satellite_index = 0; curr_satellite_index < default_elements['satellites'].length; curr_satellite_index++){
         // Add to active_satellites
         if (default_elements['satellites'][curr_satellite_index]['id'] in satellites){
           active_satellites[active_satellites.length] = default_elements['satellites'][curr_satellite_index]['name'];
@@ -138,7 +138,7 @@ var retroTrack_interface = {
     } else {
       // Select the first satellite
       if (satellites.length!=0){
-        for (curr_satellite_index in satellites){
+        for (var curr_satellite_index = 0; curr_satellite_index < satellites.length; curr_satellite_index++){
           // Add to active_satellites
           active_satellites[active_satellites.length] = satellites[curr_satellite_index]['name'];
           
@@ -163,7 +163,7 @@ var retroTrack_interface = {
   initializeActiveGroups: function(){
     // Loop through all of the default groups
     if (default_elements!=null){
-      for (curr_group_index in default_elements['groups']){
+      for (var curr_group_index = 0; curr_group_index < default_elements['groups'].length; curr_group_index++){
         // Add the group to the selection
         $("#rt_group_list option[value='"+default_elements['groups'][curr_group_index]+"']").attr("selected", "selected");
       }
@@ -285,7 +285,7 @@ var retroTrack_interface = {
       $(this).children('option:selected').each(function(){
         // Loop through the active group's satellites
         group_id = $(this).attr('rel');
-        for (satellite_index in groups[group_id]['satellites']){
+        for (var satellite_index = 0; satellite_index < groups[group_id]['satellites'].length; satellite_index++){
           // Make sure the satellite is available
           if (groups[group_id]['satellites'][satellite_index]['id'] in satellites){
             // Add the satellite to active_satellites
@@ -451,7 +451,7 @@ var retroTrack_interface = {
         removed_element = false;
       
         // Element removed from the list; loop through Chosen elements and find what was removed
-        for (temp_chosen_name in chosen_names){
+        for (var temp_chosen_name = 0; temp_chosen_name < chosen_names.length; temp_chosen_name++){
           // Check if the element is in the select field
           if (jQuery.inArray(chosen_names[temp_chosen_name], select_names) == -1){
             removed_element = chosen_names[temp_chosen_name];
@@ -551,7 +551,7 @@ var retroTrack = {
     
     // Add everything in active_satellites
     temp_satellites = new Array();
-    for (curr_satellite_index in active_satellites){
+    for (var curr_satellite_index=0; curr_satellite_index < active_satellites.length; curr_satellite_index++){ 
       // Load TLE data into PLib
       curr_satellite_name = active_satellites[curr_satellite_index];
       if (curr_satellite_name in tles){
@@ -566,7 +566,7 @@ var retroTrack = {
     active_satellites = temp_satellites.slice(0);
     
     selected_satellite = retroTrack_interface.getLastElement();
-      
+    
     // Initialize PLib
     PLib.InitializeData();
   },
@@ -805,7 +805,7 @@ var retroTrack = {
     }
     
     // Plot each satellite marker, including the selected satellite
-    for (curr_satellite_index in PLib.sat){
+    for (var curr_satellite_index = 0; curr_satellite_index < PLib.sat.length; curr_satellite_index++){
       // Load the satellite from PLib
       curr_satellite_info = PLib.QuickFind(PLib.sat[curr_satellite_index].name);
       curr_satellite_name = PLib.sat[curr_satellite_index].name;
@@ -823,7 +823,7 @@ var retroTrack = {
     }
     
     // Plot the ground stations
-    for (curr_station_index in active_stations){
+    for (var curr_station_index = 0; curr_station_index < active_stations.length; curr_station_index++){
       // Plot the station
       retroTrack.plotStationPosition(active_stations[curr_station_index]);
             
