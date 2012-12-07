@@ -59,7 +59,7 @@ This file contains the styles for the retroTrack display.
 }
 
 #rt_top_controls {
-  width: 301px;
+  width: 300px;
   padding: 0px;
   margin: 0px 0px 0px 0px !important;
 }
@@ -97,11 +97,11 @@ This file contains the styles for the retroTrack display.
 }
 
 #rt_satellite_parameters {
-  margin: 0px;
+  margin: 0px 0px 0px 0px !important;
 }
 
 #rt_station_parameters {
-  margin: 0px;
+  margin: 0px 0px 0px 0px !important;
 }
 
 #rt_satellite_parameters li {
