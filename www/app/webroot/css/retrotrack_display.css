@@ -59,15 +59,15 @@ This file contains the styles for the retroTrack display.
 }
 
 #rt_top_controls {
-  width: 300px;
+  width: 301px;
   padding: 0px;
-  margin: 0px !important;
+  margin: 0px 0px 0px 0px !important;
 }
 
 #rt_bottom_controls {
   width: 130px;
   padding: 0px;
-  margin: 0px !important;
+  margin: 0px 0px 0px 0px !important;
 }
 
 #rt_top_controls li, #rt_bottom_menu li {
