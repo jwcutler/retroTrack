@@ -42,6 +42,7 @@ This file contains the styles for the retroTrack display.
   margin: 0px auto 0px auto;
   font-family: "Arial",sans-serif;
   font-size: 12px;
+  line-height: 1 !important;
 }
 
 #rt_top_menu {
