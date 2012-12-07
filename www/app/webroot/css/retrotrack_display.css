@@ -45,6 +45,10 @@ This file contains the styles for the retroTrack display.
   line-height: 1 !important;
 }
 
+#rt_tracker_container ul {
+  margin: 0px 0px 0px 0px !important;
+}
+
 #rt_top_menu {
   background-color: #071831;
   color: white;
