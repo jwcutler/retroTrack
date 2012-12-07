@@ -152,7 +152,7 @@ instance with the attributes provided by DisplayController.
     
     var rt_menu_options = $("<div id='rt_menu_options' class='rt_menu_pane'></div>");
     rt_menu_options.append("<div class='rt_menu_pane_header'>Click on any of the options below to toggle them.</div>");
-    var rt_option_list = $("<ol id='rt_option_list' class='rt_menu_list' style='margin-left:-35px;'></ol>");
+    var rt_option_list = $("<ol id='rt_option_list' class='rt_menu_list' style='margin-left:0px;'></ol>");
     rt_option_list.append("<li id='rt_show_sun'>Disable Sun</li>");
     rt_option_list.append("<li id='rt_show_grid'>Disable Grid</li>");
     rt_option_list.append("<li id='rt_show_satellite_names'>Hide Satellite Names</li>");
