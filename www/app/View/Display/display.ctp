@@ -8,22 +8,15 @@
 <?php 
 // Include the retroTrack display javascript
 $default_elements = (isset($default_elements))?$default_elements:'';
-echo $this->element('retrotrack_javascript', array(
-  "satellite_json" => $satellite_json,
-  "group_json" => $group_json,
-  "station_json" => $station_json,
-  "default_elements" => $default_elements,
-  "tle_json" => $tle_json,
-  "configuration_json" => $configuration_json
-));
+echo $this->element('retrotrack_javascript');
 ?>
 
 $().ready(function(){
-  // Register the menu listeners
-  retroTrack_interface.registerListeners();
-  
   // Configure retroTrack
-  retroTrack_interface.setupConfiguration();
+  retroTrack_interface.setupConfiguration('<?php echo $satellite_json; ?>', '<?php echo $group_json; ?>', '<?php echo $station_json; ?>', '<?php echo $default_elements; ?>', '<?php echo $tle_json; ?>', '<?php echo $configuration_json; ?>', '<?php echo Router::url('/', true); ?>');
+  
+  // Start retroTrack
+  retroTrack_interface.startTracker();
   
   // Toggle the embed code display
   $("#embed_link").click(function(){

@@ -1,258 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>retroTrack</title>
-    <link type="text/css" rel="stylesheet" charset='utf-8' href="css/retrotrack.css">
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="css/jquery-ui-1.8.21.custom.css">
-    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/retroTrack.js"></script>
-    <script type="text/javascript" src="js/retroTrack_interface.js"></script>
-    <script type="text/javascript" src="js/predictlib.js"></script>
-    <script type="text/javascript" src="js/jquery-ui-1.8.21.custom.min.js"></script>
-    <script type="text/javascript" src="js/modernizr.custom.js"></script>
-    <!--[if !IE 7]>
-	<style type="text/css">
-	    #wrap {display:table;height:100%}
-	</style>
-    <![endif]-->
+  <title>retroTrack</title>
+  <link type="text/css" rel="stylesheet" charset='utf-8' href="css/retrotrack_display.css">
+  <link type="text/css" rel="stylesheet" href="css/chosen.css">
+  <link type="text/css" rel="stylesheet" href="css/jquery-ui-1.9.1.custom.min.css">
+  <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/modernizr.custom.js"></script>
+  <script type="text/javascript" src="js/chosen.jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.9.1.custom.min.js"></script>
+  <script type="text/javascript" src="js/retrotrack_javascript.js"></script>
+  <!--[if !IE 7]>
+  <style type="text/css">
+    #wrap {display:table;height:100%}
+  </style>
+  <![endif]-->
 </head>
 <body>
-    <div id="wrap">
+  <style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    height: 100%;
+    font-family: "Arial",sans-serif;
+    font-size: 12px;
+  }
+  
+  #wrap {
+    min-height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #content_container {
+    overflow: auto;
+    padding-bottom: 66px; /* Footer height + borders + vertical margins/padding + 10 px (margin between footer) */
+    width: 70%;
+    min-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    position: relative;
+  }
+
+  #footer {
+    position: relative;
+    margin-top: -56px; /* Negation of footer height + borders + vertical margins/padding */
+    height: 50px;
+    clear: both;
+    width: 70%;
+    min-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px dotted #cccccc;
+    border-width: 2px 0px 0px 0px;
+    color: #666666;
+    font-size: 12px;
+    padding-top: 4px;
+  }
+
+  #footer_left {
+    width: 130px;
+    float: left;
+  }
+
+  #footer_middle {
+    width: 350px;
+    float: left;
+  }
+
+  #footer_right {
+    width: 320px;
+    float: right;
+  }
+  
+  a:link {color: #000000; text-decoration: underline;}
+  a:visited {color: #000000; text-decoration: underline;}
+  a:hover {color: #666666; text-decoration: none;}
+  a:active {color: #666666; text-decoration: none;}
+  </style>
+  <div id="wrap">
 		<div id="content_container">
-			<!-- Display retroTrack -->
-            <script type="text/javascript">
-            // Global Variables
-            var satellites = null;
-            var active_satellites = new Array();
-            var groups = null;
-            var stations = null;
-            var active_stations = new Array();
-            var active_station = null;
-            var tles = null;
-            var configuration = null;
-            var selected_satellite = null;
-            var selected_station = null;
-            var background_image_path = null;
-            var default_elements = null;
-
-            $().ready(function(){
-                /*
-                Initialize retroTrack
-                */
-                
-                /*
-                Make sure canvas is supported
-                */
-                $('#canvas_modal').modal({
-                    keyboard: false,
-                    backdrop: 'static',
-                    show: false
-                });
-                if (!Modernizr.canvas){
-                    $("#canvas_modal").modal('show');
-                }
-                
-                /*
-                Initialize the loading progress modal
-                */
-                $('#load_modal').modal({
-                    keyboard: false,
-                    backdrop: 'static',
-                    show: true
-                });
-                
-                /*
-                Tracker Configuration
-                */
-                $("#load_progress_message").html('Loading configuration.');
-                satellites = jQuery.parseJSON('{satellite_json}'); // All satellites this page can display
-                active_satellites = new Array(); // Array of the IDs of all active satellites (the IDs are also the indexes in satellites)
-                groups = jQuery.parseJSON('{group_json}'); // All groups this page can display
-                stations = jQuery.parseJSON('{station_json}'); // All ground stations this page can display
-                default_elements = jQuery.parseJSON('{default_elements}'); // Default elements
-                configuration = jQuery.parseJSON('{configuration_json}');
-                active_station = null;
-                $("#load_bar").css('width','20%');
-                
-                // Load the TLE json
-                $("#load_progress_message").html('Loading satellite TLEs.');
-                tles = new Array();
-                $.ajax({
-                    url: '{tle_base_path}{encoded_satellites}.json?callback=tlefetch',
-                    async: false,
-                    dataType: 'jsonp',
-                    success: function(data) {
-                        // TLE's loaded. Convert the array to an acceptable format
-                        for (satellite in data['satellites']){
-                            tles[satellite] = data['satellites'][satellite]['tle'];
-                        }
-                        
-                        continueSetup();
-                    },
-                    error: function(xhr, textStatus, errorThrown) {
-                        // Error loading TLE source
-                        $("#load_progress_message").html('Error loading satellite TLEs. Please try refreshing your browser.');
-                        $("#load_bar").parent().addClass("progress-danger");
-                        throw new Error();
-                    }
-                });
-            });
+      <script type="text/javascript">
+        $(document).ready(function(){
+          // First setup all of the HTML needed to run retroTrack
+          retroTrack_interface.populateInterface('retroTrack_container', '{base_url}');
+          
+          // Configure retroTrack
+          retroTrack_interface.setupConfiguration('{satellite_json}', '{group_json}', '{station_json}', '{default_elements_json}', '', '{configuration_json}', '{base_url}');
+          
+          // Fetch the most recent satellite TLEs
+          $("#rt_load_progress_message").html('Loading satellite TLEs.');
+          fetched_tles = new Array();
+          $.ajax({
+            url: '{tle_base_path}{encoded_satellites}.json',
+            async: false,
+            dataType: 'jsonp',
+            success: function(data) {
+              // TLE's loaded. Convert the array to an acceptable format
+              for (temp_satellite in data['satellites']){
+                fetched_tles[temp_satellite] = data['satellites'][temp_satellite]['tle'];
+              }
             
-            function continueSetup(){
-                /*
-                Continues the retroTracker setup.
+              // Update the TLEs in the retroTrack_interface class
+              retroTrack_interface.updateTles(fetched_tles);
                 
-                jQuery doesn't not allow synchronous cross-site requests, so this function gets called after the TLEs get loaded.
-                */
-                
-                /*
-                Setup menus
-                */
-                $("#load_progress_message").html('Setting up application menus.');
-                populateSatellitesMenu(satellites, active_satellites);
-                populateGroupsMenu(groups);
-                populateStationsMenu(stations, active_station);
-                populateOptionsMenu(configuration);
-                initializeActiveSatellites();
-                initializeActiveGroups();
-                initializeActiveStations();
-                $("#load_bar").css('width', '50%');
-                
-                /*
-                Initialize retroTracker object
-                */
-                $("#load_progress_message").html('Setting up tracker object.');
-                background_image_path = "img/"+configuration['map_file']['value'];
-                retroTrack.initialize('tracker_canvas');
+              continue_setup();
+            },
+            error: function(xhr, textStatus, errorThrown) {
+              // Error loading TLE source
+              $("#load_progress_message").html('Error loading satellite TLEs. Please try refreshing your browser.');
+              $("#load_bar").parent().addClass("progress-danger");
+              throw new Error();
             }
-            </script>
-
-            <!-- START retroTrack Display -->
-            <div id="tracker_container">
-                <!-- START top menu bar -->
-                <div id="top_menu">
-                    <div style="float: left;">
-                        <ul id="top_controls">
-                            <li><a id="show_menu_satellites" rel="menu_satellites">Satellites</a></li>
-                            <li><a id="show_menu_groups" rel="menu_groups">Satellite Groups</a></li>
-                            <li><a id="show_menu_options" rel="menu_options">Options</a></li>
-                        </ul>
-                    </div>
-                    <div style="float: right;">
-                        <ol id="satellite_parameters"></ol>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-                <div id="menu_satellites" class="menu_pane">
-                    <div class="menu_pane_header">Select the satellites you would like to display. Use CTRL to select multiple satellites.</div>
-                    <ol id="satellite_list" class="menu_list"></ol>
-                    <div style="clear:both;"></div>
-                </div>
-                <div id="menu_groups" class="menu_pane">
-                    <div class="menu_pane_header">Select the groups you would like to display. Use CTRL to select multiple groups.</div>
-                    <ol id="group_list" class="menu_list"></ol>
-                    <div style="clear:both;"></div>
-                </div>
-                <div id="menu_options" class="menu_pane">
-                    <div class="menu_pane_header">Click on any of the options below to toggle them.</div>
-                    <ol id="option_list" class="menu_list">
-                        <li id="show_sun">Disable Sun</li>
-                        <li id="show_grid">Disable Grid</li>
-                        <li id="show_satellite_names">Hide Satellite Names</li>
-                        <li id="show_path">Hide Satellite Path</li>
-                        <li id="show_satellite_footprint">Hide Satellite Footprint</li>
-                        <li id="show_station_footprint">Hide Station Footprint</li>
-                        <li id="show_station_names">Hide Station Names</li>
-                    </ol>
-                    <div style="clear:both;"></div>
-                </div>
-                <!-- END top menu bar -->
-                
-                <!-- START primary display canvas -->
-                <canvas id="tracker_canvas" width="860px" height="430px" style="border: 1px solid #071831;border-width: 0px 1px 0px 1px;display: block;"></canvas>
-                <!-- END primary display canvas -->
-                
-                <!-- START bottom menu bar -->
-                <div id="menu_stations" class="menu_pane">
-                    <div class="menu_pane_header">Select the ground stations you would like to display.</div>
-                    <ol id="station_list" class="menu_list"></ol>
-                    <div style="clear:both;"></div>
-                </div>
-                <div id="bottom_menu">
-                    <div style="float: left;">
-                        <ul id="bottom_controls">
-                            <li><a id="show_menu_stations" rel="menu_stations">Ground Stations</a></li>
-                        </ul>
-                    </div>
-                    <div style="float: left; margin-left: 20px;">
-                        <ol id="station_parameters"></ol>
-                    </div>
-                    <div style="float: right;">
-                        <div id="top_clock">-</div>
-                    </div>
-                    <div style="clear: both;"></div>
-                </div>
-                <!-- END bottom menu bar -->
-            </div>
-            <!-- END retroTrack Display -->
-
-            <!-- START Loading Modal -->
-            <div class="modal hide" id="load_modal" style="width: 400px;margin-left: -200px;">
-                <div class="modal-header">
-                    <h3>Initializing retroTrack</h3>
-                </div>
-                <div class="modal-body">
-                    retroTrack is currently being initialized. Please stand by.
-                    <div style="padding: 10px 0px 10px 0px;">
-                        <span style="font-style: italic;">Progress: </span> <span id="load_progress_message"></span>
-                    </div>
-                    <div class="progress progress-striped active">
-                        <div class="bar" id="load_bar" style="width: 0%;"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- END Loading Modal -->
-
-            <!-- START Canvas Support Modal -->
-            <div class="modal hide" id="canvas_modal" style="width: 400px;margin-left: -200px;display: none;">
-                <div class="modal-header">
-                    <h3>Your browser does not support HTML5 canvas.</h3>
-                </div>
-                <div class="modal-body">
-                    <p>The browser you are currently using does not appear to support HTML5 canvas, which is required to render retroTracker. You may continue anyway, but be aware retroTrack may not behave as intended. We recommend switching to a more modern browser.</p>
-                    <center>
-                        <div class="browser_warning_box">
-                            <a href="https://www.google.com/intl/en/chrome/browser/" style="color: #666666;">
-                                <img src='img/browser_chrome.gif' /><br />Google Chrome 4.0+
-                            </a>
-                        </div>
-                        <div class="browser_warning_box">
-                            <a href="http://www.mozilla.org/en-US/firefox/new/" style="color: #666666;">
-                                <img src='img/browser_firefox.gif' /><br />Mozilla Firefox 2.0+
-                            </a>
-                        </div>
-                    </center>
-                </div>
-                <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">Continue Anyway</a>
-            </div>
-            </div>
-            <!-- END Canvas Support Modal -->
+          });
+        });
+        
+        /*
+        This method continues the setup process after the TLEs have been loaded.
+        */
+        function continue_setup(){
+          retroTrack_interface.startTracker();
+        }
+      </script>
+      <div id="retroTrack_container"></div>
 		</div>
 	</div>
 	<div id="footer">
-		<div id="footer_left">
-			<img src='img/mxl_logo.png' alt='MXL Labs' />
-		</div>
-		<div id="footer_middle">
-			Copyright &copy; 2012 James W. Cutler<br />
-			Developed by <a href="http://exploration.engin.umich.edu/" target="_blank" class="link">MXL</a>
-		</div>
-		<div id="footer_right">
-			<span style="color: red;">Note: This application is in a BETA state and may occasionally not behave as expected.</span>
-		</div>
-	</div>
+    <div id="footer_left">
+      <a href="http://exploration.engin.umich.edu/" target="_blank" ><img src='img/mxl_logo.png' alt='MXL Logo' /></a>
+    </div>
+    <div id="footer_middle">
+      Copyright &copy; The University of Michigan<br />
+      Visit <a href="https://github.com/jwcutler/retroTrack" target="_blank" >retroTrack on github</a>
+    </div>
+    <div id="footer_right">
+      <span style="font-size: 10px;">Note: This application is being actively developed and occasionally may not behave as expected. If you encounter a bug, please report it on <a href="https://github.com/jwcutler/retroTrack/issues?state=open" target="blank" >Github</a>.</span>
+    </div>
+  </div>
 </body>
 </html>
