@@ -118,6 +118,13 @@ class Tle extends AppModel {
                     $new_tle_entries[$tle_entry_counter]['element_number'] = trim(substr($tle_line, 65, 3));
                     $new_tle_entries[$tle_entry_counter]['checksum_l1'] = trim(substr($tle_line, 68, 1));
                     $new_tle_entries[$tle_entry_counter]['raw_l1'] = trim($tle_line);
+
+                    // Error check on TLEs.  Sometimes TLEs have empty values, so stuffing with 0.
+                    if ($new_tle_entries[$tle_entry_counter]['launch_year'] == '' )
+                    	$new_tle_entries[$tle_entry_counter]['launch_year'] = 00;
+                    if ($new_tle_entries[$tle_entry_counter]['launch_number'] == '' )
+                    	$new_tle_entries[$tle_entry_counter]['launch_number'] = 00;
+
                 }
                 
                 // Parse the third line
