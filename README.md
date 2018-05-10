@@ -6,7 +6,7 @@ Dependencies
 ------------
 retroTrack was developed on top of the popular CakePHP MVC framework and shares its requirements. Namely:
 * An HTTP server (e.g. Apache)
-* PHP >= 5.2.8
+* PHP >= 5.2.8  (note, php7 is not yet usable, stick with 5.*)
 * MySQL >= 4
 
 In addition, the retroTracker satellite tracker display requires that the user's browser supports:
@@ -19,7 +19,8 @@ Installation
 ------------
 To install retroTrack, perform the following configurations:
 
-1. Modify app/Config/database.php.default to reflect your database and save it as 'database.php'
+0. Create a database in MySql for use by retrotrack.  Keep track of db name, user, and password.  Database tables will be created in step 2.
+1. Modify www/app/Config/database.php.default to reflect your database and save it as 'database.php'
 2. Import Development_Resources/SQL_Schema/retrotrack.sql into your newly created database.
 3. Modify app/Config/core.php.default by changing Security.salt (line 187) and Security.cipherseed (line 192) to random values specific to your application and save it as 'core.php'.
 4. Change the permissions of the app/tmp directory to 777.
