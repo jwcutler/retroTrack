@@ -182,7 +182,7 @@ var retroTrack_interface = {
   initializeActiveStations: function(){
     // Loop through all of the available stations
     active_stations = [];
-		// jwc - uncommenting this for loop.  Not sure why it was.  Shows ground station now
+    // jwc - uncommenting this for loop.  Not sure why it was.  Shows ground station now
     for (curr_station_index in stations){
       // Add to active_stations
       active_stations[active_stations.length] = stations[curr_station_index]['name'];
@@ -720,7 +720,7 @@ var retroTrack = {
     // Create the clock update loop
     retroTrack.updateClock();
     setInterval(retroTrack.updateClock, configuration['clock_update_period']['value']);
-    
+
     // Create primary display update loop
     retroTrack.updatePlot();
     retroTrack.updatePlot(); // For some reason this needs to be called twice initially for the sun to display correctly
@@ -2785,7 +2785,8 @@ var PLib = {
 		
 			var sat_geodetic = new PLib.geodetic_t();
 			var sun_geodetic = new PLib.geodetic_t();
-		
+
+			PLib.daynum = PLib.CurrentDaynum();	// Added this so that Daynum set even when there is no satellite (QuickFind not run, which sets this.)
 			PLib.jul_utc = PLib.daynum + 2444238.5;
 		
 			PLib.jul_epoch = PLib.Julian_Date_of_Epoch(PLib.tle.epoch);
