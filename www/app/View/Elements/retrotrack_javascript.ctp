@@ -182,10 +182,11 @@ var retroTrack_interface = {
   initializeActiveStations: function(){
     // Loop through all of the available stations
     active_stations = [];
-    /*for (curr_station_index in stations){
+		// jwc - uncommenting this for loop.  Not sure why it was.  Shows ground station now
+    for (curr_station_index in stations){
       // Add to active_stations
       active_stations[active_stations.length] = stations[curr_station_index]['name'];
-    }*/
+    }
     active_stations[active_stations.length] = configuration['default_ground_station']['value'];
     
     // Set the active station
@@ -1018,7 +1019,7 @@ var retroTrack = {
       // Plot the station
       retroTrack.plotStationPosition(active_stations[curr_station_index]);
             
-      if (active_stations[curr_station_index]==selected_station){
+      if (selected_station != false && active_stations[curr_station_index]==selected_station){
         retroTrack.updateStationBar(selected_station);
       }
     }
@@ -1082,6 +1083,10 @@ var retroTrack = {
   plotStationPosition: function(curr_station_name){
     // Load the station
     temp_station = stations[curr_station_name];
+
+		if (typeof temp_station === 'undefined'  )
+						return;
+
     
     // Calculate the position of the station
     station_x_pos = Math.round((Number(temp_station['longitude'])+180)/360*tracker_canvas_width);

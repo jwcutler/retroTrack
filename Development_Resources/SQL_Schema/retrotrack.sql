@@ -80,8 +80,8 @@ CREATE TABLE stations (
     latitude text NOT NULL,
     name varchar(50) NOT NULL,
     description text,
-    created_on datetime NOT NULL,
-    updated_on datetime NOT NULL,
+    created_on datetime NOT NULL DEFAULT '1970-01-01 00:00:01',
+    updated_on datetime NOT NULL DEFAULT '1970-01-01 00:00:01',
     PRIMARY KEY(`id`)
 );
 
@@ -89,6 +89,7 @@ CREATE TABLE stations (
 Load in initial data and default configurations.
 */
 INSERT INTO `admins` (`id`, `username`, `password`) VALUES (1, 'admin', 'dummypassword');
+INSERT INTO `stations` (`longitude`, `latitude`, `name`) VALUES ('-83.710423', '42.293803', 'MXL_FXB');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('tle_last_update', '0');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('map_file', 'map_bg_simple.png');
 INSERT INTO `configurations` (`name`, `value`) VALUES ('clock_update_period', '1000');
