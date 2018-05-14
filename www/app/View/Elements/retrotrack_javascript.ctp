@@ -182,11 +182,11 @@ var retroTrack_interface = {
   initializeActiveStations: function(){
     // Loop through all of the available stations
     active_stations = [];
-    // jwc - uncommenting this for loop.  Not sure why it was.  Shows ground station now
-    for (curr_station_index in stations){
+    /*for (curr_station_index in stations){
       // Add to active_stations
       active_stations[active_stations.length] = stations[curr_station_index]['name'];
     }
+    */
     active_stations[active_stations.length] = configuration['default_ground_station']['value'];
     
     // Set the active station
@@ -1059,11 +1059,20 @@ var retroTrack = {
   */
   updateStationBar: function(curr_station_name){
     // Display the status bar
-    if (selected_satellite){
+    if (selected_satellite)
+    {
       selected_satellite_trimmed = (selected_satellite.length<=10)?selected_satellite:selected_satellite.substring(0,10)+"...";
-      $("#rt_station_parameters").append("<li id='rt_station_info_name'><span style='color: #"+configuration['station_selected_color']['value']+";'>"+curr_station_name+"</span> - <span style='color: #"+configuration['satellite_selected_color']['value']+";'>"+selected_satellite_trimmed+"</span></li>");
-    } else {
-       $("#rt_station_parameters").append("<li id='rt_station_info_name'><span style='color: #"+configuration['station_selected_color']['value']+";'>"+curr_station_name+"</span></li>");
+      $("#rt_station_parameters").append("<li id='rt_station_info_name'><span style='color: #" +
+		                          configuration['station_selected_color']['value']+";'>" +
+                                          curr_station_name+"</span> - <span style='color: #"+
+                                          configuration['satellite_selected_color']['value']+";'>"+
+                                          selected_satellite_trimmed+"</span></li>");
+    } 
+    else 
+    {
+       $("#rt_station_parameters").append("<li id='rt_station_info_name'><span style='color: #"+
+                                          configuration['station_selected_color']['value']+";'>"+
+                                          curr_station_name+"</span></li>");
     }
     $("#rt_station_parameters").append("<li>Lat: "+Number(stations[curr_station_name]['latitude']).toFixed(3)+"</li>");
     $("#rt_station_parameters").append("<li>Lon: "+Number(stations[curr_station_name]['longitude']).toFixed(3)+"</li>");
@@ -2786,7 +2795,7 @@ var PLib = {
 			var sat_geodetic = new PLib.geodetic_t();
 			var sun_geodetic = new PLib.geodetic_t();
 
-			PLib.daynum = PLib.CurrentDaynum();	// Added this so that Daynum set even when there is no satellite (QuickFind not run, which sets this.)
+			//PLib.daynum = PLib.CurrentDaynum();	// Added this so that Daynum set even when there is no satellite (QuickFind not run, which sets this.)  //argh
 			PLib.jul_utc = PLib.daynum + 2444238.5;
 		
 			PLib.jul_epoch = PLib.Julian_Date_of_Epoch(PLib.tle.epoch);
