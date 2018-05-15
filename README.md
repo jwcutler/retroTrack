@@ -1,4 +1,4 @@
-#retroTrack#
+# retroTrack #
 
 retroTrack is a web-based satellite tracking program that uses TLE's to calculate and display the orbits of satellites using HTML5 canvas.
 
@@ -17,17 +17,17 @@ Finally, cURL must be installed and loaded into PHP.
 
 Installation
 ------------
-To install retroTrack, perform the following configurations:
+Here are some brief installation instructions.  
 
-0. Create a database in MySql for use by retrotrack.  Keep track of db name, user, and password.  Database tables will be created in step 2.
+### Prep the Servers
+1. Create a database in MySql for use by retroTrack.  Keep track of db name, user, and password.  Database tables will be created in step 2.
 1. Modify www/app/Config/database.php.default to reflect your database and save it as 'database.php'
-2. Import Development_Resources/SQL_Schema/retrotrack.sql into your newly created database.
-3. Modify app/Config/core.php.default by changing Security.salt (line 187) and Security.cipherseed (line 192) to random values specific to your application and save it as 'core.php'.
-4. Change the permissions of the app/tmp directory to 777.
-5. Generate an admin password hash by visiting retrotrackerlocation.com/admin/panel/makehash.
-6. Update the 'admin' user in the database by replacing 'dummypassword' with the hash you just created.
+1. Import Development_Resources/SQL_Schema/retrotrack.sql into your newly created database.
+1. Modify app/Config/core.php.default by changing Security.salt (line 187) and Security.cipherseed (line 192) to random values specific to your application and save it as 'core.php'.
+1. Change the permissions of the app/tmp directory to 777.
 
-### Installing retroTrack to a directory
+
+### Install retroTrack onto webserver
 If you want to install retroTrack to a directory (or use Apache's Alias feature), you must add a rewrite base for the directory to three .htaccess files. These files are:
 * /path/to/retroTrack/.htaccess
 * /path/to/retroTrack/app/.htaccess
@@ -59,6 +59,16 @@ To configure Apache to run retroTrack from a directory, simply setup an alias an
 </VirtualHost>
 ```
 This is preferred to just copying retroTrack to a directory of /var/www because it only allows access to the app/webroot folder. 
+
+
+
+### Configure For Running
+
+1. Generate an admin password hash by visiting retrotrackerlocation.com/admin/panel/makehash.
+1. Update the 'admin' user in the database by replacing 'dummypassword' with the hash you just created.
+1. Add a ground station at retrotrackerlocation.com/admin/.
+1. Load a TLE URL and add satellites at retrotrackerlocation.com/admin/.
+
 
 Using retroTrack
 ----------------
